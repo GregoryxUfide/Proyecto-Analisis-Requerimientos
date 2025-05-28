@@ -1,6 +1,8 @@
 # Proyecto-Analisis-Requerimientos
 
 Integrantes 
+- Mario Andres Chavarria Roque
 - Jean Paulo Monge Alfaro
-- Gregory Salazar Avalos
 - Keylor Quesada Mora
+- Gregory Salazar Avalos
+  
