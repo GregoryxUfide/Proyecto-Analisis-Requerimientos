@@ -1,7 +1,16 @@
+using FrontEnd.Helpers.Implementations;
+using FrontEnd.Helpers.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSession();
+
+builder.Services.AddHttpClient<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+
 
 var app = builder.Build();
 
@@ -13,6 +22,7 @@ if (!app.Environment.IsDevelopment())
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthorization();
 

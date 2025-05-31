@@ -1,3 +1,8 @@
+using DAL.Implementations;
+using DAL.Interfaces;
+using Entities.Entities;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +11,27 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+#region BD
+builder.Services.AddDbContext<GranHotelDesamparadosContext>(optionsAction =>
+                    optionsAction
+                    .UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+
+    );
+
+#endregion
+
+#region DI
+
+builder.Services.AddScoped<IUnidadDeTrabajo, UnidadDeTrabajo>();
+//builder.Services.AddScoped<IProgramaService, ProgramaService>();   EJEMPLO CODIGO VIEJO
+//builder.Services.AddScoped<IProgramasDAL, ProgramasDAL>();
+
+
+
+#endregion
+
 
 var app = builder.Build();
 
