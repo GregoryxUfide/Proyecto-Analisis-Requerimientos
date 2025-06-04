@@ -14,6 +14,6 @@ namespace DAL.Implementations
         public ProductoDAL(GranHotelDesamparadosContext context) : base(context)
         {
             _context = context;
-        }   
+        }
     }
 }

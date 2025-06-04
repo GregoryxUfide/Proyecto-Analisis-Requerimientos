@@ -39,16 +39,15 @@ public partial class GranHotelDesamparadosContext : DbContext
     {
         base.OnConfiguring(optionsBuilder);
     }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Empleado>(entity =>
         {
-            entity.HasKey(e => e.IdEmpleado).HasName("PK__Empleado__CE6D8B9E81CC9C37");
+            entity.HasKey(e => e.IdEmpleado).HasName("PK__Empleado__CE6D8B9ED89C0AD5");
 
             entity.ToTable("Empleado");
 
-            entity.Property(e => e.IdEmpleado).ValueGeneratedNever();
+            entity.Property(e => e.IdEmpleado).ValueGeneratedOnAdd();
             entity.Property(e => e.PuestoEmpleado)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -66,9 +65,8 @@ public partial class GranHotelDesamparadosContext : DbContext
 
         modelBuilder.Entity<Habitacione>(entity =>
         {
-            entity.HasKey(e => e.IdHabitacion).HasName("PK__Habitaci__8BBBF90118A565A6");
+            entity.HasKey(e => e.IdHabitacion).HasName("PK__Habitaci__8BBBF901C4ED08E7");
 
-            entity.Property(e => e.IdHabitacion).ValueGeneratedNever();
             entity.Property(e => e.DescripcionHabitacion)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -79,18 +77,17 @@ public partial class GranHotelDesamparadosContext : DbContext
 
             entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.Habitaciones)
                 .HasForeignKey(d => d.IdProducto)
-                .HasConstraintName("FK__Habitacio__IdPro__70DDC3D8");
+                .HasConstraintName("FK__Habitacio__IdPro__4AB81AF0");
 
             entity.HasOne(d => d.IdUbicacionHabitacionNavigation).WithMany(p => p.Habitaciones)
                 .HasForeignKey(d => d.IdUbicacionHabitacion)
-                .HasConstraintName("FK__Habitacio__IdUbi__6FE99F9F");
+                .HasConstraintName("FK__Habitacio__IdUbi__49C3F6B7");
         });
 
         modelBuilder.Entity<LimpiezaHabitacione>(entity =>
         {
-            entity.HasKey(e => e.IdLimpiezaHabitacion).HasName("PK__Limpieza__CFFB3464307D4001");
+            entity.HasKey(e => e.IdLimpiezaHabitacion).HasName("PK__Limpieza__CFFB3464543DFFC4");
 
-            entity.Property(e => e.IdLimpiezaHabitacion).ValueGeneratedNever();
             entity.Property(e => e.ComentariosLimpiezaHabitacion)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -100,20 +97,19 @@ public partial class GranHotelDesamparadosContext : DbContext
 
             entity.HasOne(d => d.IdEmpleadoNavigation).WithMany(p => p.LimpiezaHabitaciones)
                 .HasForeignKey(d => d.IdEmpleado)
-                .HasConstraintName("FK__LimpiezaH__IdEmp__75A278F5");
+                .HasConstraintName("FK__LimpiezaH__IdEmp__4F7CD00D");
 
             entity.HasOne(d => d.IdHabitacionNavigation).WithMany(p => p.LimpiezaHabitaciones)
                 .HasForeignKey(d => d.IdHabitacion)
-                .HasConstraintName("FK__LimpiezaH__IdHab__74AE54BC");
+                .HasConstraintName("FK__LimpiezaH__IdHab__4E88ABD4");
         });
 
         modelBuilder.Entity<Producto>(entity =>
         {
-            entity.HasKey(e => e.IdProducto).HasName("PK__Producto__098892107D595501");
+            entity.HasKey(e => e.IdProducto).HasName("PK__Producto__09889210A465B7FD");
 
             entity.ToTable("Producto");
 
-            entity.Property(e => e.IdProducto).ValueGeneratedNever();
             entity.Property(e => e.DescripcionProducto)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -126,31 +122,28 @@ public partial class GranHotelDesamparadosContext : DbContext
 
             entity.HasOne(d => d.IdUbicacionProductoNavigation).WithMany(p => p.Productos)
                 .HasForeignKey(d => d.IdUbicacionProducto)
-                .HasConstraintName("FK__Producto__IdUbic__52593CB8");
+                .HasConstraintName("FK__Producto__IdUbic__44FF419A");
         });
 
         modelBuilder.Entity<Reserva>(entity =>
         {
-            entity.HasKey(e => e.IdReserva).HasName("PK__Reserva__0E49C69DF4F9F9B6");
+            entity.HasKey(e => e.IdReserva).HasName("PK__Reserva__0E49C69D2511DF7C");
 
             entity.ToTable("Reserva");
 
-            entity.Property(e => e.IdReserva).ValueGeneratedNever();
-
             entity.HasOne(d => d.IdHabitacionNavigation).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.IdHabitacion)
-                .HasConstraintName("FK__Reserva__IdHabit__797309D9");
+                .HasConstraintName("FK__Reserva__IdHabit__534D60F1");
 
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Reservas)
                 .HasForeignKey(d => d.IdUsuario)
-                .HasConstraintName("FK__Reserva__IdUsuar__787EE5A0");
+                .HasConstraintName("FK__Reserva__IdUsuar__52593CB8");
         });
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.IdRol).HasName("PK__Roles__2A49584CF23723BC");
+            entity.HasKey(e => e.IdRol).HasName("PK__Roles__2A49584C91E9DECD");
 
-            entity.Property(e => e.IdRol).ValueGeneratedNever();
             entity.Property(e => e.DescripcionRol)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -161,9 +154,8 @@ public partial class GranHotelDesamparadosContext : DbContext
 
         modelBuilder.Entity<UbicacionHabitacione>(entity =>
         {
-            entity.HasKey(e => e.IdUbicacionHabitacion).HasName("PK__Ubicacio__F8F04B2B942FCD96");
+            entity.HasKey(e => e.IdUbicacionHabitacion).HasName("PK__Ubicacio__F8F04B2B6879F4DB");
 
-            entity.Property(e => e.IdUbicacionHabitacion).ValueGeneratedNever();
             entity.Property(e => e.DescripcionUbicacionHabitacion)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -174,11 +166,10 @@ public partial class GranHotelDesamparadosContext : DbContext
 
         modelBuilder.Entity<UbicacionProducto>(entity =>
         {
-            entity.HasKey(e => e.IdUbicacionProducto).HasName("PK__Ubicacio__323AE4A9DBA0CF26");
+            entity.HasKey(e => e.IdUbicacionProducto).HasName("PK__Ubicacio__323AE4A9BE1607CB");
 
             entity.ToTable("UbicacionProducto");
 
-            entity.Property(e => e.IdUbicacionProducto).ValueGeneratedNever();
             entity.Property(e => e.DescripcionUbicacionProducto)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -189,11 +180,10 @@ public partial class GranHotelDesamparadosContext : DbContext
 
         modelBuilder.Entity<Usuario>(entity =>
         {
-            entity.HasKey(e => e.IdUsuario).HasName("PK__Usuario__5B65BF973C47CAC2");
+            entity.HasKey(e => e.IdUsuario).HasName("PK__Usuario__5B65BF97D592DEA1");
 
             entity.ToTable("Usuario");
 
-            entity.Property(e => e.IdUsuario).ValueGeneratedNever();
             entity.Property(e => e.ContrasenaUsuario)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -220,16 +210,15 @@ public partial class GranHotelDesamparadosContext : DbContext
                         .HasConstraintName("FK__RolesUsua__IdUsu__3B75D760"),
                     j =>
                     {
-                        j.HasKey("IdUsuario", "IdRol").HasName("PK__RolesUsu__89C12A1316D1657F");
+                        j.HasKey("IdUsuario", "IdRol").HasName("PK__RolesUsu__89C12A1349B6FCE3");
                         j.ToTable("RolesUsuarios");
                     });
         });
 
         modelBuilder.Entity<Ventum>(entity =>
         {
-            entity.HasKey(e => e.IdVenta).HasName("PK__Venta__BC1240BD29340A55");
+            entity.HasKey(e => e.IdVenta).HasName("PK__Venta__BC1240BD43EEE325");
 
-            entity.Property(e => e.IdVenta).ValueGeneratedNever();
             entity.Property(e => e.DescripcionVenta)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -244,15 +233,15 @@ public partial class GranHotelDesamparadosContext : DbContext
 
             entity.HasOne(d => d.IdEmpleadoNavigation).WithMany(p => p.Venta)
                 .HasForeignKey(d => d.IdEmpleado)
-                .HasConstraintName("FK__Venta__IdEmplead__04E4BC85");
+                .HasConstraintName("FK__Venta__IdEmplead__59063A47");
 
             entity.HasOne(d => d.IdReservaNavigation).WithMany(p => p.Venta)
                 .HasForeignKey(d => d.IdReserva)
-                .HasConstraintName("FK__Venta__IdReserva__03F0984C");
+                .HasConstraintName("FK__Venta__IdReserva__5812160E");
 
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Venta)
                 .HasForeignKey(d => d.IdUsuario)
-                .HasConstraintName("FK__Venta__IdUsuario__02FC7413");
+                .HasConstraintName("FK__Venta__IdUsuario__571DF1D5");
         });
 
         OnModelCreatingPartial(modelBuilder);

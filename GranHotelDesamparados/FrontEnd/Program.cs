@@ -10,6 +10,8 @@ builder.Services.AddSession();
 
 builder.Services.AddHttpClient<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IProductoHelper, ProductoHelper>();
+
 
 
 var app = builder.Build();

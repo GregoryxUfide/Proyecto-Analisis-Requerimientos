@@ -11,11 +11,11 @@ namespace DAL.Implementations
     public class UnidadDeTrabajo : IUnidadDeTrabajo
     {
 
-        public IProductoDAL ProductoDAL { get; set; }       
+        public IProductoDAL ProductoDAL { get; set; }
 
         private GranHotelDesamparadosContext _granHotelDesamparadosContext;
 
-        public UnidadDeTrabajo(GranHotelDesamparadosContext granHotelDesamparadosContext, 
+        public UnidadDeTrabajo(GranHotelDesamparadosContext granHotelDesamparadosContext,
             IProductoDAL productoDAL)
 
         {
