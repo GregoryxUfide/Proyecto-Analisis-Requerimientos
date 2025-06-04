@@ -1,3 +1,5 @@
+using BackEnd.Services.Implementations;
+using BackEnd.Services.Interfaces;
 using DAL.Implementations;
 using DAL.Interfaces;
 using Entities.Entities;
@@ -25,8 +27,8 @@ builder.Services.AddDbContext<GranHotelDesamparadosContext>(optionsAction =>
 #region DI
 
 builder.Services.AddScoped<IUnidadDeTrabajo, UnidadDeTrabajo>();
-//builder.Services.AddScoped<IProgramaService, ProgramaService>();   EJEMPLO CODIGO VIEJO
-//builder.Services.AddScoped<IProgramasDAL, ProgramasDAL>();
+builder.Services.AddScoped<IProductoDAL, ProductoDAL>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
 
 
 
