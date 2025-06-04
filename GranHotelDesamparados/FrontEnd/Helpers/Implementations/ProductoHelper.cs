@@ -23,7 +23,7 @@ namespace FrontEnd.Helpers.Implementations
                 IdProducto = producto.IdProducto,
                 NombreProducto = producto.NombreProducto,
                 DescripcionProducto = producto.DescripcionProducto,
-                IdUbicacionProducto = producto.IdUbicacionProducto,
+                IdUbicacionProducto = (int) producto.IdUbicacionProducto,
                 CantidadProducto = producto.CantidadProducto,
                 CaducidadProducto = producto.CaducidadProducto,
                 MarcaProducto = producto.MarcaProducto,

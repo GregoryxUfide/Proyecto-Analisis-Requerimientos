@@ -6,6 +6,15 @@
 
 <h1>Modulo de Inventario</h1>
 
+<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="UbicacionProducto" asp-action="Index">Ubicacion de Productos</a>
+        </li>
+    </ul>
+</div>
+
+
 <p>
     <a asp-action="Create">Agrega un Producto</a>
 </p>
@@ -22,13 +31,7 @@
                 Descripcion
             </th>
             <th>
-                ID de ubicacion
-            </th>
-            <th>
                 Cantidad
-            </th>
-            <th>
-                Marca
             </th>
             <th>
                 Disponibilidad
@@ -51,14 +54,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DescripcionProducto)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdUbicacionProducto)
-            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.CantidadProducto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MarcaProducto)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EstadoProducto)

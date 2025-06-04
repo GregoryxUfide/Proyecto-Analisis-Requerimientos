@@ -10,6 +10,7 @@ namespace DAL.Interfaces
     public interface IUnidadDeTrabajo : IDisposable
     {
         IProductoDAL ProductoDAL { get; }
+        IUbicacionProductoDAL UbicacionProductoDAL { get; }
         bool Complete();
     }
 }

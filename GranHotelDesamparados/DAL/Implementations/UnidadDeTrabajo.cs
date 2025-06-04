@@ -12,16 +12,18 @@ namespace DAL.Implementations
     {
 
         public IProductoDAL ProductoDAL { get; set; }
+        public IUbicacionProductoDAL UbicacionProductoDAL { get; set; }
 
         private GranHotelDesamparadosContext _granHotelDesamparadosContext;
 
         public UnidadDeTrabajo(GranHotelDesamparadosContext granHotelDesamparadosContext,
-            IProductoDAL productoDAL)
+            IProductoDAL productoDAL,
+            IUbicacionProductoDAL ubicacionProductoDAL)
 
         {
             this._granHotelDesamparadosContext = granHotelDesamparadosContext;
             this.ProductoDAL = productoDAL;
-
+            this.UbicacionProductoDAL = ubicacionProductoDAL;
         }
 
         public bool Complete()

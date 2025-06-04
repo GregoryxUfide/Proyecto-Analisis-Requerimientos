@@ -29,6 +29,8 @@ builder.Services.AddDbContext<GranHotelDesamparadosContext>(optionsAction =>
 builder.Services.AddScoped<IUnidadDeTrabajo, UnidadDeTrabajo>();
 builder.Services.AddScoped<IProductoDAL, ProductoDAL>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<IUbicacionProductoDAL, UbicacionProductoDAL>();
+builder.Services.AddScoped<IUbicacionProductoService, UbicacionProductoService>();
 
 
 

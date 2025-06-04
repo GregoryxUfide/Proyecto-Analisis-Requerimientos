@@ -1,4 +1,6 @@
-﻿namespace FrontEnd.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FrontEnd.Models
 {
     public class ProductoViewModel
     {
@@ -8,7 +10,11 @@
 
         public string? DescripcionProducto { get; set; }
 
-        public int? IdUbicacionProducto { get; set; }
+        public int IdUbicacionProducto { get; set; }
+
+        public IEnumerable<UbicacionProductoViewModel> UbicacionProductos { get; set; }
+        [Display(Name = "Nombre de Ubicacion")]
+        public string NombreUbicacionProducto { get; set; }
 
         public int? CantidadProducto { get; set; }
 

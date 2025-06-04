@@ -7,12 +7,13 @@ namespace FrontEnd.Controllers
     public class ProductoController : Controller
     {
         IProductoHelper _ProductoHelper;
-        //Agrego UbicacionProducto para que se pueda mostrar en la vista
+        IUbicacionProductoHelper _UbicacionProductoHelper; 
 
 
-        public ProductoController(IProductoHelper ProductoHelper)
+        public ProductoController(IProductoHelper ProductoHelper, IUbicacionProductoHelper ubicacionProductoHelper)
         {
             _ProductoHelper = ProductoHelper;
+            _UbicacionProductoHelper = ubicacionProductoHelper;
         }
 
 
@@ -24,12 +25,16 @@ namespace FrontEnd.Controllers
         public ActionResult Details(int id)
         {
             ProductoViewModel Producto = _ProductoHelper.GetById(id);
+            Producto.NombreUbicacionProducto = _UbicacionProductoHelper
+                                                .GetById(Producto.IdUbicacionProducto)
+                                                .NombreUbicacionProducto;
             return View(Producto);
         }
 
         public ActionResult Create()
         {
             ProductoViewModel Producto = new ProductoViewModel();
+            Producto.UbicacionProductos = _UbicacionProductoHelper.GetAll();
             return View(Producto);
         }
 
@@ -51,6 +56,7 @@ namespace FrontEnd.Controllers
         public ActionResult Edit(int id)
         {
             ProductoViewModel Producto = _ProductoHelper.GetById(id);
+            Producto.UbicacionProductos = _UbicacionProductoHelper.GetAll();
             return View(Producto);
         }
 
@@ -73,6 +79,9 @@ namespace FrontEnd.Controllers
         public ActionResult Delete(int id)
         {
             ProductoViewModel Producto = _ProductoHelper.GetById(id);
+            Producto.NombreUbicacionProducto = _UbicacionProductoHelper
+                                                .GetById(Producto.IdUbicacionProducto)
+                                                .NombreUbicacionProducto;
             return View(Producto);
         }
 

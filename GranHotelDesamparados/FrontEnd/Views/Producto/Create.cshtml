@@ -24,7 +24,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IdUbicacionProducto" class="control-label">ID de la ubicacion</label>
-                <input asp-for="IdUbicacionProducto" class="form-control" />
+                @Html.DropDownListFor(model => model.IdUbicacionProducto, new SelectList(Model.UbicacionProductos, "IdUbicacionProducto", "NombreUbicacionProducto"), "--Seleccione Ubicacion--")
                 <span asp-validation-for="IdUbicacionProducto" class="text-danger"></span>
             </div>
             <div class="form-group">
