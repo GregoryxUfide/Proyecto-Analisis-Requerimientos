@@ -11,27 +11,23 @@ namespace DAL.Implementations
     public class UnidadDeTrabajo : IUnidadDeTrabajo
     {
 
-        //public IProgramasDAL ProgramasDAL { get; set; }              REF CODIGO VIEJO
-        //public IParametroDAL ParametroDAL { get; set; }
+        public IProductoDAL ProductoDAL { get; set; }
+        public IUbicacionProductoDAL UbicacionProductoDAL { get; set; }
 
         private GranHotelDesamparadosContext _granHotelDesamparadosContext;
 
-        public UnidadDeTrabajo(GranHotelDesamparadosContext granHotelDesamparadosContext)
-            //, 
-            //IProgramasDAL programasDAL, 
-            //IParametroDAL parametroDAL)
-            
+        public UnidadDeTrabajo(GranHotelDesamparadosContext granHotelDesamparadosContext,
+            IProductoDAL productoDAL,
+            IUbicacionProductoDAL ubicacionProductoDAL)
+
         {
             this._granHotelDesamparadosContext = granHotelDesamparadosContext;
-            //this.ProgramasDAL = programasDAL;
-            //this.ParametroDAL = parametroDAL;
-
+            this.ProductoDAL = productoDAL;
+            this.UbicacionProductoDAL = ubicacionProductoDAL;
         }
 
         public bool Complete()
         {
-            //throw new NotImplementedException();
-
             try
             {
                 _granHotelDesamparadosContext.SaveChanges();
@@ -45,8 +41,6 @@ namespace DAL.Implementations
 
         public void Dispose()
         {
-            //throw new NotImplementedException();
-
             this._granHotelDesamparadosContext.Dispose();
         }
     }

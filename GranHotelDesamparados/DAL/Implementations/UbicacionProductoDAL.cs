@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace DAL.Implementations
 {
-    public class ProductoDAL : DALGenericoImpl<Producto>, IProductoDAL
+    public class UbicacionProductoDAL : DALGenericoImpl<UbicacionProducto>, IUbicacionProductoDAL
     {
         GranHotelDesamparadosContext _context;
-        public ProductoDAL(GranHotelDesamparadosContext context) : base(context)
+        public UbicacionProductoDAL(GranHotelDesamparadosContext context) : base(context)
         {
             _context = context;
         }

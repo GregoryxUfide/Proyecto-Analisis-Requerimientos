@@ -1,0 +1,72 @@
+﻿@model IEnumerable<FrontEnd.Models.ProductoViewModel>
+
+@{
+    ViewData["Title"] = "Index Inventario";
+}
+
+<h1>Modulo de Inventario</h1>
+
+<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="UbicacionProducto" asp-action="Index">Ubicacion de Productos</a>
+        </li>
+    </ul>
+</div>
+
+
+<p>
+    <a asp-action="Create">Agrega un Producto</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID del Producto
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Descripcion
+            </th>
+            <th>
+                Cantidad
+            </th>
+            <th>
+                Disponibilidad
+            </th>
+            <th>
+                Acciones
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescripcionProducto)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadProducto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoProducto)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdProducto }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.IdProducto }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdProducto })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

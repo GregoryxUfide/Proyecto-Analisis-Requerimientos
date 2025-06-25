@@ -1,6 +1,6 @@
-﻿namespace BackEnd.DTO
+﻿namespace FrontEnd.ApiModels
 {
-    public class ProductoDTO
+    public class ProductoAPI
     {
         public int IdProducto { get; set; }
 

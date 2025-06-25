@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL.Implementations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,8 @@ namespace DAL.Interfaces
 {
     public interface IUnidadDeTrabajo : IDisposable
     {
-        //IProgramasDAL ProgramasDAL { get; }
-        //IParametroDAL ParametroDAL { get; }
-
-        bool Complete ();
+        IProductoDAL ProductoDAL { get; }
+        IUbicacionProductoDAL UbicacionProductoDAL { get; }
+        bool Complete();
     }
 }

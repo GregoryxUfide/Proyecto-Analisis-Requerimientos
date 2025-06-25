@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Interfaces
 {
-    public interface IDALGenerico <TEntity> where TEntity : class
+    public interface IDALGenerico<TEntity> where TEntity : class
     {
 
         bool Add(TEntity entity);
