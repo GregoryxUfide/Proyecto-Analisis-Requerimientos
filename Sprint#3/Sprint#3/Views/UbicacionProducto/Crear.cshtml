@@ -1,0 +1,35 @@
+﻿@model Sprint_2.ViewModel.UbicacionProductoViewModel
+
+@{
+    ViewData["Title"] = "Crear Ubicación de Producto";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Crear" method="post">
+    <div class="form-group">
+        <label asp-for="NombreUbicacionProducto"></label>
+        <input asp-for="NombreUbicacionProducto" class="form-control" />
+        <span asp-validation-for="NombreUbicacionProducto" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DescripcionUbicacionProducto"></label>
+        <textarea asp-for="DescripcionUbicacionProducto" class="form-control"></textarea>
+        <span asp-validation-for="DescripcionUbicacionProducto" class="text-danger"></span>
+    </div>
+
+    <div class="form-check">
+        <input asp-for="Estado" class="form-check-input" />
+        <label asp-for="Estado" class="form-check-label">Activo</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary mt-2">Cancelar</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

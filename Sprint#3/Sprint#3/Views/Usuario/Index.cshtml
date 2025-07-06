@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Sprint2.ViewModel.UsuarioViewModel>
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<h2>Usuarios</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Correo</th>
+            <th>Username</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.Nombre</td>
+                <td>@usuario.Apellidos</td>
+                <td>@usuario.Gmail</td>
+                <td>@usuario.Username</td>
+                <td>@(usuario.Roles?.FirstOrDefault(r => r.Id == usuario.RolId)?.Nombre ?? "N/A")</td>
+                <td>@(usuario.Estado ? "Activo" : "Inactivo")</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@usuario.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Detalles" asp-route-id="@usuario.Id" class="btn btn-sm btn-info">Detalles</a>
+                    <a asp-action="CambiarEstado" asp-route-id="@usuario.Id" asp-route-estado="@(usuario.Estado ? false : true)"
+                       class="btn btn-sm btn-secondary">
+                        @(usuario.Estado ? "Desactivar" : "Activar")
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Crear" class="btn btn-primary">Crear Nuevo Usuario</a>

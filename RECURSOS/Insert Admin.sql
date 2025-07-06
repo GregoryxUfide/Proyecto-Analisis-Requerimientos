@@ -4,5 +4,7 @@ VALUES ('Administrador', 'Principal', 'admin@hotel.com', 'admin', '$2a$11$1wBu0U
     SELECT Id FROM Roles WHERE Nombre = 'Admin'
 ));
 clave 123456
-
-
+Insert Into Roles (Nombre, Descripcion, Estado)
+values('Admin','Administrador del Sistema','1');
+Insert Into Roles (Nombre, Descripcion, Estado)
+values('Usuario','Cliente del Sistema','1');

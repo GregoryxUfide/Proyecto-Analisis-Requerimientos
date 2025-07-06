@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Cambiar Contraseña";
+}
+
+<h2>Cambiar Contraseña</h2>
+
+<form asp-action="CambiarContrasena" method="post">
+    <input type="hidden" name="id" value="@ViewBag.UsuarioId" />
+
+    <div class="mb-3">
+        <label>Nueva Contraseña</label>
+        <input type="password" name="nuevaContrasena" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Confirmar Contraseña</label>
+        <input type="password" name="confirmarContrasena" class="form-control" required />
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
