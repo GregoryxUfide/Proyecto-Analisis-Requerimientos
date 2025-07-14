@@ -13,6 +13,8 @@ builder.Services.AddScoped<RolData>();
 builder.Services.AddScoped<UsuarioData>();
 builder.Services.AddScoped<UbicacionProductoData>();
 builder.Services.AddScoped<ProductoData>();
+builder.Services.AddScoped<HabitacionData>();
+builder.Services.AddScoped<LimpiezaHabitacionData>();
 
 // Registro de servicios 
 builder.Services.AddScoped<AuthService>();
@@ -20,6 +22,8 @@ builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<RolService>();
 builder.Services.AddScoped<UbicacionProductoService>();
 builder.Services.AddScoped<ProductoService>();
+builder.Services.AddScoped<HabitacionService>();
+builder.Services.AddScoped<LimpiezaHabitacionService>();
 
 // Tiempo de sesión y autenticación
 builder.Services.AddSession(options =>

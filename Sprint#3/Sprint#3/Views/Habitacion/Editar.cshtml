@@ -1,0 +1,65 @@
+﻿@model Sprint2.ViewModel.HabitacionViewModel
+
+@{
+    ViewData["Title"] = "Editar Habitación";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+    <hr />
+
+    <form asp-action="Editar" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="NumHabitacion" class="form-label"></label>
+                    <input asp-for="NumHabitacion" class="form-control"/>
+                    <span asp-validation-for="NumHabitacion" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Capacidad" class="form-label"></label>
+                    <input asp-for="Capacidad" class="form-control" />
+                    <span asp-validation-for="Capacidad" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label asp-for="Precio" class="form-label"></label>
+                    <input asp-for="Precio" class="form-control" />
+                    <span asp-validation-for="Precio" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="NumCamas" class="form-label"></label>
+                    <input asp-for="NumCamas" class="form-control" />
+                    <span asp-validation-for="NumCamas" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Extras" class="form-label"></label>
+            <textarea asp-for="Extras" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Comentarios" class="form-label"></label>
+            <textarea asp-for="Comentarios" class="form-control" rows="2"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a asp-action="Index" class="btn btn-secondary">Volver</a>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
