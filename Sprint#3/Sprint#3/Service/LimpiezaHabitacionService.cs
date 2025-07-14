@@ -31,15 +31,25 @@ namespace Sprint_2.Services
         #region "Actualizar"
         public async Task ActualizarLimpiezaAsync(LimpiezaHabitacionViewModel vm)
         {
+            var limpiezaExistente = await _limpiezaData.ObtenerLimpiezaPorIdAsync(vm.Id);
+
             var limpieza = new LimpiezaHabitacion
             {
                 Id = vm.Id,
                 TareasCompletadas = vm.TareasCompletadas,
                 NombreConserje = vm.NombreConserje,
-                Foto = vm.Foto
+                Foto = vm.FotoArchivo != null ? await ConvertFileToByteArray(vm.FotoArchivo) : limpiezaExistente?.Foto, 
+                FechaHora = DateTime.Now
             };
 
             await _limpiezaData.ActualizarLimpiezaAsync(limpieza);
+        }
+
+        private async Task<byte[]> ConvertFileToByteArray(IFormFile file)
+        {
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+            return memoryStream.ToArray();
         }
         #endregion
 

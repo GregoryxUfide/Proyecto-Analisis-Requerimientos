@@ -38,7 +38,7 @@ namespace Sprint_2.Data
             cmd.Parameters.AddWithValue("@Id", limpieza.Id);
             cmd.Parameters.AddWithValue("@TareasCompletadas", limpieza.TareasCompletadas);
             cmd.Parameters.AddWithValue("@NombreConserje", limpieza.NombreConserje);
-            cmd.Parameters.AddWithValue("@Foto", limpieza.Foto ?? (object)DBNull.Value);
+            var fotoParam = cmd.Parameters.Add("@Foto", SqlDbType.VarBinary); fotoParam.Value = limpieza.Foto != null && limpieza.Foto.Length > 0? limpieza.Foto : (object)DBNull.Value;
 
             await cmd.ExecuteNonQueryAsync();
         }
