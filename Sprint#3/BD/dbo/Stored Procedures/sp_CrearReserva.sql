@@ -1,5 +1,4 @@
 ﻿CREATE PROCEDURE sp_CrearReserva
-    @IdReserva INT,
     @fechaInicio DATE,
     @fechaFinal DATE,
     @nombreReservante NVARCHAR(50),
@@ -10,33 +9,49 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    IF EXISTS (SELECT 1 FROM dbo.Habitacion WHERE NumHabitacion = @numHabitacion)
+    -- Verificar si la habitación existe
+    IF NOT EXISTS (SELECT 1 FROM dbo.Habitacion WHERE NumHabitacion = @numHabitacion)
     BEGIN
-        INSERT INTO dbo.Reservas
-        (
-            IdReserva,
-            fechaInicio,
-            fechaFinal,
-            nombreReservante,
-            telefono,
-            correo,
-            numHabitacion
-        )
-        VALUES
-        (
-            @IdReserva,
-            @fechaInicio,
-            @fechaFinal,
-            @nombreReservante,
-            @telefono,
-            @correo,
-            @numHabitacion
-        );
+        SELECT -1 AS Codigo, 'Error: La habitación especificada no existe.' AS Mensaje;
+        RETURN;
+    END
 
-        SELECT 'Reserva creada correctamente.' AS Mensaje;
-    END
-    ELSE
+    -- Verificar si la habitación ya está reservada en el rango de fechas
+    IF EXISTS (
+        SELECT 1
+        FROM dbo.Reservas
+        WHERE numHabitacion = @numHabitacion
+          AND (
+              (@fechaInicio BETWEEN fechaInicio AND fechaFinal)
+              OR (@fechaFinal BETWEEN fechaInicio AND fechaFinal)
+              OR (fechaInicio BETWEEN @fechaInicio AND @fechaFinal)
+              OR (fechaFinal BETWEEN @fechaInicio AND @fechaFinal)
+          )
+    )
     BEGIN
-        SELECT 'Error: La habitación especificada no existe.' AS Mensaje;
+        SELECT -2 AS Codigo, 'Error: La habitación ya está reservada en esas fechas.' AS Mensaje;
+        RETURN;
     END
+
+    -- Insertar nueva reserva
+    INSERT INTO dbo.Reservas
+    (
+        fechaInicio,
+        fechaFinal,
+        nombreReservante,
+        telefono,
+        correo,
+        numHabitacion
+    )
+    VALUES
+    (
+        @fechaInicio,
+        @fechaFinal,
+        @nombreReservante,
+        @telefono,
+        @correo,
+        @numHabitacion
+    );
+
+    SELECT 1 AS Codigo, 'Reserva creada correctamente.' AS Mensaje;
 END;

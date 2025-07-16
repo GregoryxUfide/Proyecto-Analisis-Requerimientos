@@ -15,6 +15,8 @@ builder.Services.AddScoped<UbicacionProductoData>();
 builder.Services.AddScoped<ProductoData>();
 builder.Services.AddScoped<HabitacionData>();
 builder.Services.AddScoped<LimpiezaHabitacionData>();
+builder.Services.AddScoped<ReservaData>();
+
 
 // Registro de servicios 
 builder.Services.AddScoped<AuthService>();
@@ -24,6 +26,8 @@ builder.Services.AddScoped<UbicacionProductoService>();
 builder.Services.AddScoped<ProductoService>();
 builder.Services.AddScoped<HabitacionService>();
 builder.Services.AddScoped<LimpiezaHabitacionService>();
+builder.Services.AddScoped<ReservaService>();
+
 
 // Tiempo de sesión y autenticación
 builder.Services.AddSession(options =>

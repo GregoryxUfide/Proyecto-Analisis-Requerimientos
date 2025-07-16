@@ -52,6 +52,7 @@
                                         <li><a class="dropdown-item dropdown-item-custom" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a></li>
                                         <li><a class="dropdown-item dropdown-item-custom" asp-area="" asp-controller="Habitacion" asp-action="Index">Habitaciones</a></li>
                                         <li><a class="dropdown-item dropdown-item-custom" asp-area="" asp-controller="LimpiezaHabitacion" asp-action="Index">Limpieza Habitaciones</a></li>
+                                        <li><a class="dropdown-item dropdown-item-custom" asp-area="" asp-controller="Reserva" asp-action="Index">Reservas</a></li>
                                     </ul>
                                 </li>
                             }
@@ -64,6 +65,8 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Logout">Cerrar Sesión (@Context.Session.GetString("Nombre"))</a>
                             </li>
+
+
                         }
                     </ul>
 

@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE sp_ModificarReserva
+﻿CREATE PROCEDURE sp_ActualizarReserva
     @IdReserva INT,  
     @fechaInicio DATE,
     @fechaFinal DATE,

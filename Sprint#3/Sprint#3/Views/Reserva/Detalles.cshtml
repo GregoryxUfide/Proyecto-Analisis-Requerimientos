@@ -1,0 +1,42 @@
+﻿@model Sprint_2.ViewModel.ReservaViewModel
+
+@{
+    ViewData["Title"] = "Detalles de Reserva";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+    <hr />
+
+    <div class="card shadow">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">ID Reserva:</dt>
+                <dd class="col-sm-9">@Model.IdReserva</dd>
+
+                <dt class="col-sm-3">Fecha Inicio:</dt>
+                <dd class="col-sm-9">@Model.FechaInicio.ToString("dd/MM/yyyy")</dd>
+
+                <dt class="col-sm-3">Fecha Final:</dt>
+                <dd class="col-sm-9">@Model.FechaFinal.ToString("dd/MM/yyyy")</dd>
+
+                <dt class="col-sm-3">Nombre Reservante:</dt>
+                <dd class="col-sm-9">@Model.NombreReservante</dd>
+
+                <dt class="col-sm-3">Teléfono:</dt>
+                <dd class="col-sm-9">@Model.Telefono</dd>
+
+                <dt class="col-sm-3">Correo Electrónico:</dt>
+                <dd class="col-sm-9">@(string.IsNullOrEmpty(Model.Correo) ? "N/A" : Model.Correo)</dd>
+
+                <dt class="col-sm-3">Número de Habitación:</dt>
+                <dd class="col-sm-9">@Model.NumHabitacion</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-outline-primary">Volver al Listado</a>
+        <a asp-action="Editar" asp-route-id="@Model.IdReserva" class="btn btn-warning ms-2">Editar</a>
+    </div>
+</div>

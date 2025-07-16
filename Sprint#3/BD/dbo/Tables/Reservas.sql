@@ -1,6 +1,6 @@
 ﻿    CREATE TABLE [dbo].[Reservas]
     (
-	    [IdReserva] INT NOT NULL PRIMARY KEY, 
+	    [IdReserva] INT IDENTITY(1,1) PRIMARY KEY,
         [fechaInicio] DATE NOT NULL, 
         [fechaFinal] DATE NOT NULL, 
         [nombreReservante] NVARCHAR(50) NOT NULL, 

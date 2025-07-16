@@ -16,6 +16,7 @@ namespace Sprint_2.Controllers
         }
 
         #region "Listar"
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var lista = await _reservaService.ListarReservasAsync();
@@ -40,15 +41,25 @@ namespace Sprint_2.Controllers
         #endregion
 
         #region "Crear"
+
+        [HttpGet]
         public IActionResult Crear()
         {
-            return View(new ReservaViewModel());
+            // Fecha por defecto: hoy y mañana
+            var model = new ReservaViewModel
+            {
+                FechaInicio = DateTime.Today,
+                FechaFinal = DateTime.Today.AddDays(1)
+            };
+            return View(model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(ReservaViewModel vm)
         {
-            if (!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid)
+                return View(vm);
 
             try
             {
@@ -58,6 +69,7 @@ namespace Sprint_2.Controllers
             }
             catch (Exception ex)
             {
+                // Captura el error para mostrar mensaje al usuario
                 ModelState.AddModelError("", $"Error al crear la reserva: {ex.Message}");
                 return View(vm);
             }
@@ -65,18 +77,23 @@ namespace Sprint_2.Controllers
         #endregion
 
         #region "Editar"
+
+        [HttpGet]
         public async Task<IActionResult> Editar(int id)
         {
             var vm = await _reservaService.ObtenerReservaViewModelPorIdAsync(id);
-            if (vm == null) return NotFound();
+            if (vm == null)
+                return NotFound();
 
             return View(vm);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(ReservaViewModel vm)
         {
-            if (!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid)
+                return View(vm);
 
             try
             {
@@ -93,7 +110,9 @@ namespace Sprint_2.Controllers
         #endregion
 
         #region "Eliminar"
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Eliminar(int id)
         {
             try
@@ -105,8 +124,23 @@ namespace Sprint_2.Controllers
             {
                 TempData["Error"] = $"Error al eliminar la reserva: {ex.Message}";
             }
+
             return RedirectToAction("Index");
         }
+        #endregion
+
+        #region "Detalles"
+
+        [HttpGet]
+        public async Task<IActionResult> Detalles(int id)
+        {
+            var reserva = await _reservaService.ObtenerReservaViewModelPorIdAsync(id);
+            if (reserva == null)
+                return NotFound();
+
+            return View(reserva);
+        }
+
         #endregion
     }
 }

@@ -20,7 +20,7 @@ namespace Sprint_2.Data
             using var cmd = new SqlCommand("sp_CrearReserva", conexion);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@IdReserva", reserva.IdReserva);
+
             cmd.Parameters.AddWithValue("@fechaInicio", reserva.FechaInicio);
             cmd.Parameters.AddWithValue("@fechaFinal", reserva.FechaFinal);
             cmd.Parameters.AddWithValue("@nombreReservante", reserva.NombreReservante);
