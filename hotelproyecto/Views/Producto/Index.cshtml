@@ -1,0 +1,79 @@
+﻿@model IEnumerable<hotelproyecto.ViewModel.ProductoViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Gestión de Productos";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+        <a asp-action="Crear" class="btn btn-primary">
+           Crear Producto
+        </a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="products-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Ubicación</th>
+                    <th>Cantidad</th>
+                    <th>Caducidad</th>
+                    <th>Marca</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var producto in Model)
+                {
+                    <tr>
+                        <td data-label="Nombre">@producto.NombreProducto</td>
+                        <td data-label="Descripción">@producto.DescripcionProducto</td>
+                        <td data-label="Ubicación">
+                            @{
+                                @producto.IdUbicacionProducto
+                            }
+                        </td>
+                        <td data-label="Cantidad" class="@(producto.CantidadProducto <= 5 ? "low-stock" : "")">
+                            @producto.CantidadProducto
+                            @if(producto.CantidadProducto <= 5)
+                            {
+                                <i class="bi bi-exclamation-triangle text-warning"></i>
+                            }
+                        </td>
+                        <td data-label="Caducidad">
+                            @if(producto.CaducidadProducto.HasValue)
+                            {
+                                <span class="@((producto.CaducidadProducto.Value - DateTime.Now).TotalDays <= 30 ? "expiry-soon" : "")">
+                                    @producto.CaducidadProducto?.ToString("dd/MM/yyyy")
+                                </span>
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+                        </td>
+                        <td data-label="Marca">@(string.IsNullOrEmpty(producto.MarcaProducto) ? "-" : producto.MarcaProducto)</td>
+                        <td data-label="Estado">
+                            <span class="status-badge @(producto.EstadoProducto ? "active" : "inactive")">
+                                @(producto.EstadoProducto ? "Activo" : "Inactivo")
+                            </span>
+                        </td>
+                        <td data-label="Acciones" class="actions">
+                            <a asp-action="Editar" asp-route-id="@producto.IdProducto" class="btn-action edit">Editar</a>
+                            <a asp-action="Detalles" asp-route-id="@producto.IdProducto" class="btn-action details">Detalles</a>
+                            <a asp-action="CambiarEstado" asp-route-id="@producto.IdProducto" 
+                               asp-route-estado="@(producto.EstadoProducto ? "false" : "true")"
+                               class="btn-action @(producto.EstadoProducto ? "deactivate" : "activate")">
+                                @(producto.EstadoProducto ? "Desactivar" : "Activar")
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

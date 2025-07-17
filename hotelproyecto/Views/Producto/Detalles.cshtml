@@ -1,0 +1,82 @@
+﻿@model hotelproyecto.ViewModel.ProductoViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Detalles del Producto";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    
+    <div class="card-body">
+        <div class="product-details">
+            <div class="detail-item">
+                <span class="detail-label">Nombre:</span>
+                <span class="detail-value">@Model.NombreProducto</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Descripción:</span>
+                <span class="detail-value">@Model.DescripcionProducto</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Marca:</span>
+                <span class="detail-value">@(string.IsNullOrEmpty(Model.MarcaProducto) ? "No especificada" : Model.MarcaProducto)</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Cantidad:</span>
+                <span class="detail-value @(Model.CantidadProducto <= 5 ? "low-stock" : "")">
+                    @Model.CantidadProducto
+                    @if(Model.CantidadProducto <= 5)
+                    {
+                        <i class="bi bi-exclamation-triangle text-warning ms-2"></i>
+                    }
+                </span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Caducidad:</span>
+                <span class="detail-value">
+                    @if(Model.CaducidadProducto.HasValue)
+                    {
+                        <span class="@((Model.CaducidadProducto.Value - DateTime.Now).TotalDays <= 30 ? "expiry-soon" : "")">
+                            @Model.CaducidadProducto?.ToString("dd/MM/yyyy")
+                        </span>
+                    }
+                    else
+                    {
+                        <span>No aplica</span>
+                    }
+                </span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Ubicación:</span>
+                <span class="detail-value">
+                    @Model.Ubicaciones?.FirstOrDefault(u => u.Value == Model.IdUbicacionProducto.ToString())?.Text
+                </span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Estado:</span>
+                <span class="detail-value">
+                    <span class="status-badge @(Model.EstadoProducto ? "active" : "inactive")">
+                        @(Model.EstadoProducto ? "Activo" : "Inactivo")
+                    </span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="detail-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Listado
+            </a>
+            <a asp-action="Editar" asp-route-id="@Model.IdProducto" class="btn btn-primary">
+                Editar Producto
+            </a>
+        </div>
+    </div>
+</div>

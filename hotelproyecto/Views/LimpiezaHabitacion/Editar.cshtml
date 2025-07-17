@@ -1,0 +1,87 @@
+﻿@model hotelproyecto.ViewModel.LimpiezaHabitacionViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Editar Registro de Limpieza";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    
+    <div class="card-body">
+        <form asp-action="Editar" method="post" enctype="multipart/form-data" class="cleaning-form">
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="NombreConserje" class="form-label">Nombre del Conserje</label>
+                    <input asp-for="NombreConserje" class="form-control" placeholder="Ingrese el nombre completo" />
+                    <span asp-validation-for="NombreConserje" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="FechaHora" class="form-label">Fecha y Hora</label>
+                    <input asp-for="FechaHora" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="FechaHora" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Foto" class="form-label">Foto de Evidencia</label>
+                <div class="file-upload">
+                    <input type="file" asp-for="Foto" class="form-control" accept="image/*" id="fotoInput" />
+                    <small class="text-muted">Formatos aceptados: JPG, PNG (Máx. 5MB)</small>
+                    
+                    @if (Model.Foto != null)
+                    {
+                        <div class="current-photo mt-3">
+                            <p class="text-muted">Foto actual:</p>
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.Foto)" 
+                                 class="img-thumbnail" id="currentPhoto" />
+                            <button type="button" class="btn btn-sm btn-outline-danger mt-2" id="removePhoto">
+                                <i class="bi bi-trash"></i> Eliminar foto
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TareasCompletadas" class="form-label">Tareas Completadas</label>
+                <textarea asp-for="TareasCompletadas" class="form-control" rows="5" 
+                          placeholder="Describa las tareas de limpieza realizadas"></textarea>
+                <span asp-validation-for="TareasCompletadas" class="validation-message"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    Guardar Cambios
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Manejar eliminación de foto
+        document.getElementById('removePhoto')?.addEventListener('click', function() {
+            document.getElementById('currentPhoto').style.display = 'none';
+            this.style.display = 'none';
+            // Agregar un campo hidden para indicar que se debe eliminar la foto
+            const form = document.querySelector('.cleaning-form');
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'EliminarFoto';
+            hiddenInput.value = 'true';
+            form.appendChild(hiddenInput);
+        });
+    </script>
+}

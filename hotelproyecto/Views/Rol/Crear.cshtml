@@ -1,0 +1,48 @@
+﻿@model hotelproyecto.ViewModel.RolViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Crear Nuevo Rol";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    
+    <div class="card-body">
+        <form asp-action="Crear" method="post" class="role-form">
+            <div class="form-group">
+                <label asp-for="Nombre" class="form-label"></label>
+                <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre del rol" />
+                <span asp-validation-for="Nombre" class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Descripcion" class="form-label"></label>
+                <textarea asp-for="Descripcion" class="form-control" rows="3" 
+                          placeholder="Agregue una descripción para este rol"></textarea>
+                <span asp-validation-for="Descripcion" class="validation-message"></span>
+            </div>
+
+            <div class="form-group form-switch">
+                <input asp-for="Estado" class="form-check-input" role="switch" />
+                <label asp-for="Estado" class="form-check-label"></label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Guardar Rol
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

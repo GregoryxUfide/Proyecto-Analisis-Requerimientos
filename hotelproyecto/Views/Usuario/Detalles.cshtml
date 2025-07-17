@@ -1,0 +1,73 @@
+﻿@model hotelproyecto.ViewModel.UsuarioViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Detalles del Usuario";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>Detalles del Usuario</h2>
+    </div>
+    
+    <div class="card-body">
+        <div class="user-details">
+            <div class="detail-item">
+                <span class="detail-label">Nombre:</span>
+                <span class="detail-value">@Model.Nombre</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Apellidos:</span>
+                <span class="detail-value">@Model.Apellidos</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Correo:</span>
+                <span class="detail-value">@Model.Gmail</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Nombre de Usuario:</span>
+                <span class="detail-value">@Model.Username</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Rol:</span>
+                <span class="detail-value">
+                    @if (Model.Roles != null)
+                    {
+                        var rol = Model.Roles.FirstOrDefault(r => r.Id == Model.RolId);
+                        @rol?.Nombre
+                    }
+                    else
+                    {
+                        <span class="text-muted">No asignado</span>
+                    }
+                </span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Estado:</span>
+                <span class="detail-value">
+                    @if (Model.Estado)
+                    {
+                        <span class="status-badge active">Activo</span>
+                    }
+                    else
+                    {
+                        <span class="status-badge inactive">Inactivo</span>
+                    }
+                </span>
+            </div>
+        </div>
+        
+        <div class="detail-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Listado
+            </a>
+            <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">
+                Editar Usuario
+            </a>
+        </div>
+    </div>
+</div>

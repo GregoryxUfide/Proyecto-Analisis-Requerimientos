@@ -1,0 +1,47 @@
+﻿@model List<hotelproyecto.ViewModel.RolViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Gestión de Roles";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>Listado de Roles</h2>
+        <a asp-action="Crear" class="btn btn-primary">Crear Nuevo Rol</a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="roles-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var rol in Model)
+                {
+                    <tr>
+                        <td data-label="Nombre">@rol.Nombre</td>
+                        <td data-label="Descripción">@rol.Descripcion</td>
+                        <td data-label="Estado">
+                            <span class="status-badge @(rol.Estado ? "active" : "inactive")">
+                                @(rol.Estado ? "Activo" : "Inactivo")
+                            </span>
+                        </td>
+                        <td data-label="Acciones" class="actions">
+                            <a asp-action="Editar" asp-route-id="@rol.Id" class="btn-action edit">Editar</a>
+                            <a asp-action="Detalles" asp-route-id="@rol.Id" class="btn-action details">Detalles</a>
+                            <a asp-action="CambiarEstado" asp-route-id="@rol.Id" asp-route-estado="@(rol.Estado ? false : true)" 
+                               class="btn-action @(rol.Estado ? "deactivate" : "activate")">
+                                @(rol.Estado ? "Desactivar" : "Activar")
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

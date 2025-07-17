@@ -1,0 +1,2013 @@
+:root {
+    --turquesa: #2c5d61;
+    --turquesa-claro: #3a7a7f;
+    --beige-claro: #f5ece7;
+    --beige-oscuro: #dfc29a;
+    --texto-oscuro: #333333;
+    --texto-claro: #f8f9fa;
+    --sombra: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--texto-oscuro);
+    background-color: #f9f9f9;
+}
+
+/* Layout principal */
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.admin-sidebar {
+    width: 250px;
+    background-color: var(--turquesa);
+    color: var(--beige-claro);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    box-shadow: var(--sombra);
+    z-index: 100;
+}
+
+.sidebar-header {
+    padding: 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(223, 194, 154, 0.2);
+}
+
+.sidebar-logo {
+    width: 60px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.sidebar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--beige-claro);
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 1rem 0;
+    overflow-y: auto;
+}
+
+    .sidebar-nav ul {
+        list-style: none;
+    }
+
+    .sidebar-nav li {
+        margin: 0.2rem 0;
+    }
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.5rem;
+    color: var(--beige-claro);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+    .nav-link i {
+        font-size: 1.1rem;
+        margin-right: 1rem;
+        width: 20px;
+        text-align: center;
+    }
+
+    .nav-link:hover {
+        background-color: var(--turquesa-claro);
+        color: var(--beige-oscuro);
+    }
+
+    .nav-link.active {
+        background-color: var(--turquesa-claro);
+        border-left: 4px solid var(--beige-oscuro);
+        padding-left: calc(1.5rem - 4px);
+    }
+
+.sidebar-footer {
+    padding: 1rem;
+    border-top: 1px solid rgba(223, 194, 154, 0.2);
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    color: var(--beige-claro);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+    .logout-btn i {
+        font-size: 1.1rem;
+        margin-right: 1rem;
+    }
+
+    .logout-btn:hover {
+        background-color: rgba(223, 194, 154, 0.2);
+        color: var(--beige-oscuro);
+    }
+
+/* Main Content */
+.admin-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: white;
+    box-shadow: var(--sombra);
+    z-index: 90;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    margin-right: 1rem;
+    color: var(--turquesa);
+    cursor: pointer;
+    display: none;
+}
+
+.admin-header h4 {
+    font-weight: 600;
+    margin: 0;
+    color: var(--turquesa);
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.8rem;
+    border: 2px solid var(--beige-oscuro);
+}
+
+.profile-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.admin-content {
+    flex: 1;
+    padding: 1.5rem;
+    background-color: #f5f5f5;
+    overflow-y: auto;
+}
+
+/* Tarjetas (para contenido) */
+.admin-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: var(--sombra);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Sidebar Toggle */
+.sidebar-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--turquesa);
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-right: 1rem;
+}
+
+.close-sidebar {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--beige-claro);
+    display: none;
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .admin-sidebar {
+        position: fixed;
+        left: -250px;
+        top: 0;
+        bottom: 0;
+        width: 250px;
+        transition: all 0.3s ease;
+        z-index: 1050;
+    }
+
+        .admin-sidebar.active {
+            left: 0;
+        }
+
+    .close-sidebar {
+        display: block;
+    }
+
+    .admin-main {
+        margin-left: 0;
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 576px) {
+    .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    .header-right {
+        margin-top: 0.5rem;
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .admin-content {
+        padding: 1rem;
+    }
+}
+
+
+/*TABLAS*/
+
+/*--------------------------------------*/
+/*ROL*/
+/*--------------------------------------*/
+
+/* Estilos para la tarjeta contenedora */
+.admin-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+/* Estilos para la tabla */
+.roles-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+    .roles-table thead {
+        background-color: var(--turquesa);
+        color: white;
+    }
+
+    .roles-table th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .roles-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .roles-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .roles-table tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+/* Badge de estado */
+.status-badge {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+    .status-badge.active {
+        background-color: #e6f7ee;
+        color: #28a745;
+    }
+
+    .status-badge.inactive {
+        background-color: #feeceb;
+        color: #dc3545;
+    }
+
+/* Botones de acción */
+.actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+    .btn-action.edit {
+        background-color: var(--turquesa);
+        color: white;
+    }
+
+        .btn-action.edit:hover {
+            background-color: var(--turquesa-claro);
+        }
+
+    .btn-action.details {
+        background-color: #f0f0f0;
+        color: var(--texto-oscuro);
+    }
+
+        .btn-action.details:hover {
+            background-color: #e0e0e0;
+        }
+
+    .btn-action.activate {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-action.deactivate {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-action.activate:hover {
+        background-color: #218838;
+    }
+
+    .btn-action.deactivate:hover {
+        background-color: #c82333;
+    }
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .roles-table {
+        display: block;
+    }
+
+        .roles-table thead {
+            display: none;
+        }
+
+        .roles-table tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .roles-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+            .roles-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 1rem;
+                color: var(--turquesa);
+            }
+
+    .actions {
+        justify-content: flex-end;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+/*--------------------------------------*/
+/*USUARIO*/
+/*--------------------------------------*/
+
+/* Filtros */
+.card-filters {
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #eee;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 180px;
+}
+
+    .filter-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: var(--texto-oscuro);
+        font-size: 0.9rem;
+    }
+
+.filter-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-self: flex-end;
+}
+
+.btn-filter {
+    background-color: var(--turquesa);
+    color: white;
+    padding: 0.5rem 1rem;
+}
+
+.btn-clear {
+    background-color: #f8f9fa;
+    color: var(--texto-oscuro);
+    border: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+}
+
+/* Tabla de usuarios */
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+    .users-table thead {
+        background-color: var(--turquesa);
+        color: white;
+    }
+
+    .users-table th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .users-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .users-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .users-table tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .filter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        min-width: 100%;
+    }
+
+    .filter-actions {
+        align-self: stretch;
+        justify-content: flex-end;
+    }
+
+    .users-table {
+        display: block;
+    }
+
+        .users-table thead {
+            display: none;
+        }
+
+        .users-table tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .users-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+            .users-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 1rem;
+                color: var(--turquesa);
+            }
+
+    .actions {
+        justify-content: flex-end;
+    }
+}
+
+/*--------------------------------------*/
+/*PRODUCTOS*/
+/*--------------------------------------*/
+
+/* Estilos para tabla de productos */
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+    .products-table thead {
+        background-color: var(--turquesa);
+        color: white;
+    }
+
+    .products-table th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .products-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .products-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .products-table tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .products-table {
+        display: block;
+    }
+
+        .products-table thead {
+            display: none;
+        }
+
+        .products-table tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .products-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+            .products-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 1rem;
+                color: var(--turquesa);
+            }
+
+    .actions {
+        justify-content: flex-end;
+    }
+}
+.low-stock {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.expiry-soon {
+    color: #fd7e14;
+    font-weight: 500;
+}
+
+.products-table td[data-label="Cantidad"],
+.products-table td[data-label="Caducidad"] {
+    font-family: 'Courier New', monospace;
+}
+
+/*--------------------------------------*/
+/*EMPLEADOS*/
+/*--------------------------------------*/
+
+/* Estilos para tabla de empleados */
+.employees-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+    .employees-table thead {
+        background-color: var(--turquesa);
+        color: white;
+    }
+
+    .employees-table th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .employees-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .employees-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .employees-table tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .employees-table {
+        display: block;
+    }
+
+        .employees-table thead {
+            display: none;
+        }
+
+        .employees-table tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .employees-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+            .employees-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 1rem;
+                color: var(--turquesa);
+            }
+
+    .actions {
+        justify-content: flex-end;
+    }
+}
+
+.employees-table td[data-label="Salario"] {
+    font-family: 'Courier New', monospace;
+    font-weight: 500;
+}
+
+/*--------------------------------------*/
+/*HABITACIONES*/
+/*--------------------------------------*/
+/* Estilos específicos para tabla de habitaciones */
+.room-capacity, .room-beds {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+/* Estilos para tabla de habitaciones */
+.rooms-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+    .rooms-table thead {
+        background-color: var(--turquesa);
+        color: white;
+    }
+
+    .rooms-table th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .rooms-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .rooms-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .rooms-table tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .rooms-table {
+        display: block;
+    }
+
+        .rooms-table thead {
+            display: none;
+        }
+
+        .rooms-table tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .rooms-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+            .rooms-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 1rem;
+                color: var(--turquesa);
+            }
+
+    .actions {
+        justify-content: flex-end;
+    }
+}
+
+/*--------------------------------------*/
+/*LIMPIEZA*/
+/*--------------------------------------*/
+
+.employee-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tasks-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background-color: #e6f7ee;
+    color: #28a745;
+    padding: 0.35rem 0.7rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+}
+
+.datetime-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+    .datetime-info i {
+        color: var(--turquesa);
+    }
+/* Estilos para tabla de limpieza */
+.cleaning-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+    .cleaning-table thead {
+        background-color: var(--turquesa);
+        color: white;
+    }
+
+    .cleaning-table th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    .cleaning-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .cleaning-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .cleaning-table tbody tr:hover {
+        background-color: #f9f9f9;
+    }
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    .cleaning-table {
+        display: block;
+    }
+
+        .cleaning-table thead {
+            display: none;
+        }
+
+        .cleaning-table tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 0.5rem;
+        }
+
+        .cleaning-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+            .cleaning-table td::before {
+                content: attr(data-label);
+                font-weight: 600;
+                margin-right: 1rem;
+                color: var(--turquesa);
+            }
+
+    .actions {
+        justify-content: flex-end;
+    }
+
+    .datetime-info {
+        justify-content: flex-end;
+    }
+}
+
+/*CREAR*/
+
+
+/*--------------------------------------*/
+/*ROL*/
+/*--------------------------------------*/
+
+/* Estilos para formularios */
+.role-form {
+    padding: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--texto-oscuro);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: var(--turquesa);
+        box-shadow: 0 0 0 3px rgba(44, 93, 97, 0.1);
+        outline: none;
+    }
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Switch personalizado */
+.form-switch {
+    display: flex;
+    align-items: center;
+}
+
+    .form-switch .form-check-input {
+        width: 48px;
+        height: 24px;
+        margin-right: 0.5rem;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+        cursor: pointer;
+    }
+
+        .form-switch .form-check-input:checked {
+            background-color: var(--turquesa);
+            border-color: var(--turquesa);
+        }
+
+    .form-switch .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+/* Mensajes de validación */
+.validation-message {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--error);
+    font-size: 0.85rem;
+}
+
+.input-validation-error {
+    border-color: var(--error) !important;
+}
+
+/* Botones del formulario */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+    .btn i {
+        font-size: 1rem;
+    }
+
+.btn-primary {
+    background-color: var(--turquesa);
+    color: white;
+}
+
+    .btn-primary:hover {
+        background-color: var(--turquesa-claro);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+.btn-secondary {
+    background-color: #f0f0f0;
+    color: var(--texto-oscuro);
+}
+
+    .btn-secondary:hover {
+        background-color: #e0e0e0;
+    }
+
+/* Responsive */
+@media (max-width: 576px) {
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/*--------------------------------------*/
+/*USUARIOS*/
+/*--------------------------------------*/
+/* Estilos específicos para formulario de usuario */
+.user-form {
+    padding: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+.password-input {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--turquesa);
+    cursor: pointer;
+}
+
+.password-strength {
+    margin-top: 0.5rem;
+}
+
+.strength-bar {
+    height: 4px;
+    width: 0;
+    background-color: #eee;
+    border-radius: 2px;
+    margin-bottom: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.strength-text {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+/*--------------------------------------*/
+/*PRODUCTOS*/
+/*--------------------------------------*/
+
+/* Estilos específicos para formulario de producto */
+.product-form {
+    padding: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+/* Estilo para el switch de estado */
+.form-switch {
+    display: flex;
+    align-items: center;
+    margin-top: 1.8rem; /* Para alinear con otros campos */
+}
+
+    .form-switch .form-check-input {
+        width: 48px;
+        height: 24px;
+        margin-right: 0.5rem;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+        cursor: pointer;
+    }
+
+        .form-switch .form-check-input:checked {
+            background-color: var(--turquesa);
+            border-color: var(--turquesa);
+        }
+
+    .form-switch .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-switch {
+        margin-top: 0;
+    }
+}
+
+/* Estilos específicos para formulario de producto */
+.product-form {
+    padding: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+/* Estilo para el switch de estado */
+.form-switch {
+    display: flex;
+    align-items: center;
+    margin-top: 1.8rem; /* Para alinear con otros campos */
+}
+
+    .form-switch .form-check-input {
+        width: 48px;
+        height: 24px;
+        margin-right: 0.5rem;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+        cursor: pointer;
+    }
+
+        .form-switch .form-check-input:checked {
+            background-color: var(--turquesa);
+            border-color: var(--turquesa);
+        }
+
+    .form-switch .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-switch {
+        margin-top: 0;
+    }
+}
+
+/*--------------------------------------*/
+/*EMPLEADOS*/
+/*--------------------------------------*/
+
+/* Estilos específicos para formulario de empleado */
+.employee-form {
+    padding: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-right: none;
+    color: #495057;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+/*--------------------------------------*/
+/*HABITACIONES*/
+/*--------------------------------------*/
+
+/* Estilos específicos para formulario de habitación */
+.room-form {
+    padding: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-right: none;
+    color: #495057;
+}
+
+/* Estilo para textareas */
+.form-control[rows="2"] {
+    min-height: 80px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/*--------------------------------------*/
+/*LIMPIEZA*/
+/*--------------------------------------*/
+
+/* Estilos específicos para formulario de limpieza */
+.cleaning-form {
+    padding: 1.5rem;
+}
+
+.file-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.file-upload-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--turquesa);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+    .file-upload-label:hover {
+        background-color: var(--turquesa-claro);
+    }
+
+    .file-upload-label input[type="file"] {
+        display: none;
+    }
+
+.file-name {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+/*DETALLES*/
+
+/*--------------------------------------*/
+/*ROL*/
+/*--------------------------------------*/
+
+/* Estilos para vista de detalles */
+.role-details {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+    .detail-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+.detail-label {
+    font-weight: 600;
+    color: var(--turquesa);
+    min-width: 150px;
+    padding-right: 1rem;
+}
+
+.detail-value {
+    flex: 1;
+    color: var(--texto-oscuro);
+}
+
+/* Badge de estado (reutilizable) */
+.status-badge {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+    .status-badge.active {
+        background-color: #e6f7ee;
+        color: #28a745;
+    }
+
+    .status-badge.inactive {
+        background-color: #feeceb;
+        color: #dc3545;
+    }
+
+/* Acciones */
+.detail-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detail-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .detail-label {
+        min-width: auto;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+    }
+
+        .detail-actions .btn {
+            width: 100%;
+        }
+}
+/*--------------------------------------*/
+/*USUARIOS*/
+/*--------------------------------------*/
+/* Estilos para vista de detalles */
+.user-details {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+    .detail-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+.detail-label {
+    font-weight: 600;
+    color: var(--turquesa);
+    min-width: 150px;
+    padding-right: 1rem;
+}
+
+.detail-value {
+    flex: 1;
+    color: var(--texto-oscuro);
+}
+
+/* Badge de estado */
+.status-badge {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+    .status-badge.active {
+        background-color: #e6f7ee;
+        color: #28a745;
+    }
+
+    .status-badge.inactive {
+        background-color: #feeceb;
+        color: #dc3545;
+    }
+
+/* Acciones */
+.detail-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detail-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .detail-label {
+        min-width: auto;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+    }
+
+        .detail-actions .btn {
+            width: 100%;
+        }
+}
+/* Estilos específicos para formulario de cambio de contraseña */
+.password-form {
+    padding: 1.5rem;
+}
+
+.password-input {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--turquesa);
+    cursor: pointer;
+}
+
+.password-strength {
+    margin: 1rem 0;
+}
+
+.strength-bar {
+    height: 4px;
+    width: 0;
+    background-color: #eee;
+    border-radius: 2px;
+    margin-bottom: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+.strength-text {
+    font-size: 0.8rem;
+    color: #777;
+}
+
+.alert-danger {
+    background-color: #feeceb;
+    border-color: #f5c6cb;
+    color: #721c24;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+    .alert-danger i {
+        margin-right: 0.5rem;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .password-form {
+        padding: 1rem;
+    }
+}
+
+/*--------------------------------------*/
+/*PRODUCTOS*/
+/*--------------------------------------*/
+
+/* Estilos específicos para formulario de producto */
+.product-form {
+    padding: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+/* Estilo para el switch de estado */
+.form-switch {
+    display: flex;
+    align-items: center;
+    margin-top: 1.8rem; /* Para alinear con otros campos */
+}
+
+    .form-switch .form-check-input {
+        width: 48px;
+        height: 24px;
+        margin-right: 0.5rem;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+        cursor: pointer;
+    }
+
+        .form-switch .form-check-input:checked {
+            background-color: var(--turquesa);
+            border-color: var(--turquesa);
+        }
+
+    .form-switch .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-switch {
+        margin-top: 0;
+    }
+}
+
+/* Estilos específicos para formulario de edición de producto */
+.product-form {
+    padding: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+/* Estilo para el switch de estado */
+.form-switch {
+    display: flex;
+    align-items: center;
+    margin-top: 1.8rem; /* Para alinear con otros campos */
+}
+
+    .form-switch .form-check-input {
+        width: 48px;
+        height: 24px;
+        margin-right: 0.5rem;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+        cursor: pointer;
+    }
+
+        .form-switch .form-check-input:checked {
+            background-color: var(--turquesa);
+            border-color: var(--turquesa);
+        }
+
+    .form-switch .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+.low-stock {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.expiry-soon {
+    color: #fd7e14;
+    font-weight: 500;
+}
+/* Mensajes de validación */
+.validation-message {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--error);
+    font-size: 0.85rem;
+}
+
+.input-validation-error {
+    border-color: var(--error) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-switch {
+        margin-top: 0;
+    }
+}
+
+/*--------------------------------------*/
+/*EMPLEADOS*/
+/*--------------------------------------*/
+
+/* Estilos específicos para formulario de edición de empleado */
+.employee-form {
+    padding: 1.5rem;
+}
+
+.form-control-static {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .form-control-static i {
+        color: var(--turquesa);
+    }
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-right: none;
+    color: #495057;
+}
+
+/* Estilo para el switch de estado */
+.form-switch {
+    display: flex;
+    align-items: center;
+    margin-top: 1.8rem; /* Para alinear con otros campos */
+}
+
+    .form-switch .form-check-input {
+        width: 48px;
+        height: 24px;
+        margin-right: 0.5rem;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+        cursor: pointer;
+    }
+
+        .form-switch .form-check-input:checked {
+            background-color: var(--turquesa);
+            border-color: var(--turquesa);
+        }
+
+    .form-switch .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-switch {
+        margin-top: 0;
+    }
+}
+
+/*--------------------------------------*/
+/*HABITACIONES*/
+/*--------------------------------------*/
+/* Estilos específicos para formulario de habitación */
+.room-form {
+    padding: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+.input-group-text {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-right: none;
+    color: #495057;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+/* Estilos para vista de detalles de habitación */
+.room-details {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+    .detail-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+.detail-label {
+    font-weight: 600;
+    color: var(--texto-oscuro);
+    min-width: 200px;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.detail-value {
+    flex: 1;
+    color: var(--texto-oscuro);
+}
+
+/* Acciones */
+.detail-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eee;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detail-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .detail-label {
+        min-width: auto;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+    }
+
+        .detail-actions .btn {
+            width: 100%;
+        }
+}
+.room-details {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.detail-label i {
+    color: var(--turquesa);
+    margin-right: 0.5rem;
+    width: 20px;
+}
+
+/*--------------------------------------*/
+/*LIMPIEZA*/
+/*--------------------------------------*/
+/* Estilos específicos para formulario de limpieza */
+.cleaning-form {
+    padding: 1.5rem;
+}
+
+.file-upload {
+    margin-bottom: 1rem;
+}
+
+.current-photo {
+    border: 1px dashed #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+    .current-photo img {
+        max-width: 100%;
+        max-height: 200px;
+        display: block;
+        margin: 0 auto;
+    }
+
+/* Estilo para el switch de verificación */
+.form-switch {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+    .form-switch .form-check-input {
+        width: 48px;
+        height: 24px;
+        margin-right: 0.5rem;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+        cursor: pointer;
+    }
+
+        .form-switch .form-check-input:checked {
+            background-color: var(--turquesa);
+            border-color: var(--turquesa);
+        }
+
+    .form-switch .form-check-label {
+        cursor: pointer;
+        user-select: none;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .current-photo img {
+        max-height: 150px;
+    }
+}
+.cleaning-photo {
+    position: relative;
+    max-width: 300px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+    .cleaning-photo:hover {
+        transform: scale(1.02);
+    }
+
+    .cleaning-photo img {
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+.photo-zoom-hint {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 0.25rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.cleaning-photo {
+    position: relative;
+    max-width: 300px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+    .cleaning-photo:hover {
+        transform: scale(1.02);
+    }
+
+    .cleaning-photo img {
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+.photo-zoom-hint {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 0.25rem;
+    text-align: center;
+    font-size: 0.8rem;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}

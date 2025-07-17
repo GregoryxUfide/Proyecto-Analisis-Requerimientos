@@ -1,0 +1,99 @@
+﻿@model hotelproyecto.Models.Usuario
+
+@{
+    ViewData["Title"] = "Registro de Usuario";
+    Layout = "_Layout";
+}
+
+<div class="register-container">
+    <div class="register-card">
+        <div class="register-header">            
+            <h2>Crear una cuenta</h2>
+            <p>Únete al Gran Hotel Desamparados</p>
+        </div>
+
+        <form asp-action="Register" method="post" class="register-form">
+
+            <div class="form-group">
+                <label asp-for="Nombre" class="form-label"></label>
+                <input asp-for="Nombre" class="form-control" placeholder="Ingresa tu nombre"/>
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Apellidos" class="form-label"></label>
+                <input asp-for="Apellidos" class="form-control" placeholder="Ingresa tus apellidos"  />
+                <span asp-validation-for="Apellidos" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Gmail" class="form-label">Correo</label>
+                <input asp-for="Gmail" class="form-control" placeholder="ejemplo@email.com"  />
+                <span asp-validation-for="Gmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Username" class="form-label"></label>
+                <input asp-for="Username" class="form-control" placeholder="Crea un nombre de usuario"  />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Contrasena" class="form-label"></label>
+                <input asp-for="Contrasena" type="password" class="form-control" placeholder="••••••••" />
+                <span asp-validation-for="Contrasena" class="text-danger"></span>
+                <div class="password-strength">
+                    <div class="strength-bar"></div>
+                    <div class="strength-text">Seguridad de la contraseña</div>
+                </div>
+            </div>
+
+    <button type="submit" class="register-button">Registrarse</button>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+    }
+                <p class="login-link">
+                ¿Ya tienes una cuenta? <a asp-action="Login">Inicia sesión aquí</a>
+            </p>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+   
+        // Validación de fuerza de contraseña
+        document.getElementById('Contrasena').addEventListener('input', function() {
+            const strengthBar = document.querySelector('.strength-bar');
+            const strengthText = document.querySelector('.strength-text');
+            const password = this.value;
+            let strength = 0;
+            
+            // Validaciones de complejidad
+            if (password.length > 0) strength += 1;
+            if (password.length >= 8) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            // Actualizar barra y texto
+            const width = (strength / 5) * 100;
+            strengthBar.style.width = width + '%';
+            
+            // Cambiar colores según fuerza
+            if (strength <= 2) {
+                strengthBar.style.backgroundColor = '#e74c3c';
+                strengthText.textContent = 'Contraseña débil';
+            } else if (strength <= 4) {
+                strengthBar.style.backgroundColor = '#f39c12';
+                strengthText.textContent = 'Contraseña moderada';
+            } else {
+                strengthBar.style.backgroundColor = '#2ecc71';
+                strengthText.textContent = 'Contraseña fuerte';
+            }
+        });
+    </script>
+}

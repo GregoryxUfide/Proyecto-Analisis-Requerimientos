@@ -1,0 +1,55 @@
+﻿@model hotelproyecto.ViewModel.HabitacionViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Detalles de Habitación";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    
+    <div class="card-body">
+        <div class="room-details">
+            <div class="detail-item">
+                <span class="detail-label">Número:</span>
+                <span class="detail-value">@Model.NumHabitacion</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Capacidad:</span>
+                <span class="detail-value">@Model.Capacidad personas</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label"> Precio:</span>
+                <span class="detail-value">@Model.Precio.ToString("C")</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Camas:</span>
+                <span class="detail-value">@Model.NumCamas</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label"> Extras:</span>
+                <span class="detail-value">@(string.IsNullOrEmpty(Model.Extras) ? "No especificado" : Model.Extras)</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Comentarios:</span>
+                <span class="detail-value">@(string.IsNullOrEmpty(Model.Comentarios) ? "No hay comentarios" : Model.Comentarios)</span>
+            </div>
+        </div>
+        
+        <div class="detail-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Listado
+            </a>
+            <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">
+                 Editar Habitación
+            </a>
+        </div>
+    </div>
+</div>
+

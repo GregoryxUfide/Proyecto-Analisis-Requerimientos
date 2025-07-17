@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Panel de Administración";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="mb-4">Bienvenido al Panel Administrativo</h1>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Usuarios registrados</h5>
+                <p class="card-text">Accede a la gestión de empleados del hotel como administradores, vendedores y conserjes.</p>
+                <a asp-controller="Usuario" asp-action="Index" class="btn btn-primary">Ver usuarios</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Gestión de habitaciones</h5>
+                <p class="card-text">Consulta, registra y edita habitaciones disponibles en el hotel.</p>
+                <a asp-controller="Habitacion" asp-action="Index" class="btn btn-primary">Ir a habitaciones</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Productos en inventario</h5>
+                <p class="card-text">Revisa el inventario y las ubicaciones de los productos disponibles.</p>
+                <a asp-controller="Producto" asp-action="Index" class="btn btn-primary">Ver productos</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Limpieza de habitaciones</h5>
+                <p class="card-text">Registra o consulta las limpiezas programadas.</p>
+                <a asp-controller="LimpiezaHabitacion" asp-action="Index" class="btn btn-primary">Ver limpieza</a>
+            </div>
+        </div>
+    </div>
+</div>

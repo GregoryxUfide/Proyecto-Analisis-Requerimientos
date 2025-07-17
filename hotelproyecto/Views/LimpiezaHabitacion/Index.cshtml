@@ -1,0 +1,70 @@
+﻿@model List<hotelproyecto.ViewModel.LimpiezaHabitacionViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Registros de Limpieza";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+        <a asp-action="Crear" class="btn btn-primary">
+             Nuevo Registro
+        </a>
+    </div>
+
+    <div class="card-body">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                <i class="bi bi-check-circle"></i> @TempData["Success"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="cleaning-table">
+                <thead>
+                    <tr>
+                        <th>Conserje</th>
+                        <th>Tareas Completadas</th>
+                        <th>Fecha/Hora</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var limpieza in Model)
+                    {
+                        <tr>
+                            <td data-label="Conserje">
+                                <div class="employee-info">                                    
+                                    <span>@limpieza.NombreConserje</span>
+                                </div>
+                            </td>
+                            <td data-label="Tareas">
+                                <span class="badge tasks-badge">
+                                    <i class="bi bi-check2-all"></i> @limpieza.TareasCompletadas
+                                </span>
+                            </td>
+                            <td data-label="Fecha/Hora">
+                                <div class="datetime-info">
+                                    <i class="bi bi-calendar"></i>
+                                    <span>@limpieza.FechaHora.ToString("dd/MM/yyyy")</span>
+                                    <i class="bi bi-clock"></i>
+                                    <span>@limpieza.FechaHora.ToString("hh:mm tt")</span>
+                                </div>
+                            </td>
+                            <td data-label="Acciones" class="actions">
+                                <a asp-action="Editar" asp-route-id="@limpieza.Id" class="btn-action edit">
+                                     Editar
+                                </a>
+                                <a asp-action="Detalles" asp-route-id="@limpieza.Id" class="btn-action details">
+                                    Detalles
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

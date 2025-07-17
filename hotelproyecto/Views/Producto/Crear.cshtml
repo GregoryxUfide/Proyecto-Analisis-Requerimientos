@@ -1,0 +1,87 @@
+﻿@model hotelproyecto.ViewModel.ProductoViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Crear Nuevo Producto";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    
+    <div class="card-body">
+        <form asp-action="Crear" method="post" class="product-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="NombreProducto" class="form-label"></label>
+                    <input asp-for="NombreProducto" class="form-control" placeholder="Ej: Toallas blancas" />
+                    <span asp-validation-for="NombreProducto" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="MarcaProducto" class="form-label"></label>
+                    <input asp-for="MarcaProducto" class="form-control" placeholder="Ej: Hilton" />
+                    <span asp-validation-for="MarcaProducto" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DescripcionProducto" class="form-label"></label>
+                <textarea asp-for="DescripcionProducto" class="form-control" rows="3" 
+                          placeholder="Descripción detallada del producto"></textarea>
+                <span asp-validation-for="DescripcionProducto" class="validation-message"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="IdUbicacionProducto" class="form-label">Ubicación</label>
+                    <select asp-for="IdUbicacionProducto" asp-items="Model.Ubicaciones" class="form-control">
+                        <option value="">Seleccione una ubicación</option>
+                    </select>
+                    <span asp-validation-for="IdUbicacionProducto" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CantidadProducto" class="form-label">Cantidad</label>
+                    <input asp-for="CantidadProducto" class="form-control" type="number" min="0" placeholder="0" />
+                    <span asp-validation-for="CantidadProducto" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="CaducidadProducto" class="form-label">Fecha de Caducidad</label>
+                    <input asp-for="CaducidadProducto" class="form-control" type="date" />
+                    <span asp-validation-for="CaducidadProducto" class="validation-message"></span>
+                </div>
+
+                <div class="form-group form-switch">
+                    <input asp-for="EstadoProducto" class="form-check-input" role="switch" />
+                    <label asp-for="EstadoProducto" class="form-check-label">Producto activo</label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    Guardar Producto
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                     Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Establecer fecha mínima como hoy para el campo de caducidad
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('CaducidadProducto').min = today;
+        });
+    </script>
+}

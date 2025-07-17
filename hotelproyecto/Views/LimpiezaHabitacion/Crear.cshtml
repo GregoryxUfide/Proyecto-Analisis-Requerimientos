@@ -1,0 +1,64 @@
+﻿@model hotelproyecto.ViewModel.LimpiezaHabitacionViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Registrar Limpieza";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    
+    <div class="card-body">
+        <form asp-action="Crear" method="post" enctype="multipart/form-data" class="cleaning-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="NombreConserje" class="form-label">Nombre del Conserje</label>
+                    <input asp-for="NombreConserje" class="form-control" placeholder="Ingrese el nombre completo" autofocus />
+                    <span asp-validation-for="NombreConserje" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="FotoArchivo" class="form-label">Foto de Evidencia</label>
+                    <div class="file-upload">
+                        <label class="file-upload-label">
+                            <i class="bi bi-cloud-arrow-up"></i> Seleccionar archivo
+                            <input type="file" asp-for="FotoArchivo" accept="image/*" />
+                        </label>
+                        <span class="file-name">Ningún archivo seleccionado</span>
+                    </div>
+                    <small class="text-muted">Formatos aceptados: JPG, PNG (opcional)</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TareasCompletadas" class="form-label">Tareas Completadas</label>
+                <textarea asp-for="TareasCompletadas" class="form-control" rows="4" 
+                          placeholder="Describa las tareas realizadas (cambio de sábanas, limpieza de baño, reposición de amenities...)"></textarea>
+                <span asp-validation-for="TareasCompletadas" class="validation-message"></span>
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="Index" class="btn btn-secondary">
+                    Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    Registrar Limpieza
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Mostrar nombre de archivo seleccionado
+        document.querySelector('input[type="file"]').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'Ningún archivo seleccionado';
+            document.querySelector('.file-name').textContent = fileName;
+        });
+    </script>
+}

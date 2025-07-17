@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<!-- Agrega home-body al body (deberías hacerlo en tu _Layout.cshtml para esta vista) -->
+<body class="home-body">
+
+<section class="home-section">
+    <!-- Carrusel de Habitaciones -->
+    <div id="habitacionesCarousel" class="home-carousel carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="~/img/habitacion1.jpg" class="d-block w-100" alt="Habitación 1">
+            </div>
+            <div class="carousel-item">
+                <img src="~/img/habitacion2.jpg" class="d-block w-100" alt="Habitación 2">
+            </div>
+            <div class="carousel-item">
+                <img src="~/img/habitacion3.jpg" class="d-block w-100" alt="Habitación 3">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#habitacionesCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#habitacionesCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+<section class="home-section">
+    <!-- ¿Quiénes somos? -->
+    <h2 class="home-section-title">¿Quiénes somos?</h2>
+    <p class="home-section-text">
+        Somos el Gran Hotel Desamparados, un hotel acogedor con atención personalizada, comodidad y calidad. 
+        Nuestro objetivo es brindar a nuestros visitantes una experiencia memorable, ya sea por trabajo, descanso o turismo.
+    </p>
+</section>
+
+<section class="home-section">
+    <h2 class="home-section-title">¿Dónde nos ubicamos?</h2>
+    <p class="home-section-text">Nos encontramos en el corazón de Desamparados, San José, Costa Rica.</p>
+
+    <div class="home-map">
+        <iframe class="mapa" 
+                src="https://www.google.com/maps/embed?pb=..."
+                allowfullscreen 
+                loading="lazy">
+        </iframe>
+    </div>
+</section>
+
+</body>

@@ -1,0 +1,53 @@
+﻿@model hotelproyecto.ViewModel.RolViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Detalles del Rol";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>Detalles del Rol</h2>
+    </div>
+    
+    <div class="card-body">
+        <div class="role-details">
+            <div class="detail-item">
+                <span class="detail-label">ID:</span>
+                <span class="detail-value">@Model.Id</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Nombre:</span>
+                <span class="detail-value">@Model.Nombre</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Descripción:</span>
+                <span class="detail-value">@Model.Descripcion</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Estado:</span>
+                <span class="detail-value">
+                    @if (Model.Estado)
+                    {
+                        <span class="status-badge active">Activo</span>
+                    }
+                    else
+                    {
+                        <span class="status-badge inactive">Inactivo</span>
+                    }
+                </span>
+            </div>
+        </div>
+        
+        <div class="detail-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Listado
+            </a>
+            <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">
+                <i class="bi bi-pencil"></i> Editar Rol
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<hotelproyecto.ViewModel.EmpleadoViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Gestión de Empleados";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+        <a asp-action="Crear" class="btn btn-primary">
+            Nuevo Empleado
+        </a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="employees-table">
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Salario</th>
+                    <th>Usuario</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var e in Model)
+                {
+                    <tr>
+                        <td data-label="Número">@e.NumeroEmpleado</td>
+                        <td data-label="Salario">@e.SalarioEmpleado.ToString("C")</td>
+                        <td data-label="Usuario">@e.UsuarioUsername</td>
+                        <td data-label="Rol">@e.RolNombre</td>
+                        <td data-label="Estado">
+                            <span class="status-badge @(e.Estado ? "active" : "inactive")">
+                                @(e.Estado ? "Activo" : "Inactivo")
+                            </span>
+                        </td>
+                        <td data-label="Acciones" class="actions">
+                            <a asp-action="Editar" asp-route-id="@e.Id" class="btn-action edit">Editar</a>
+                            <a asp-action="Detalles" asp-route-id="@e.Id" class="btn-action details">Detalles</a>
+                            <a asp-action="CambiarEstado" asp-route-id="@e.Id" 
+                               asp-route-estado="@(e.Estado ? "false" : "true")"
+                               class="btn-action @(e.Estado ? "deactivate" : "activate")">
+                                @(e.Estado ? "Desactivar" : "Activar")
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

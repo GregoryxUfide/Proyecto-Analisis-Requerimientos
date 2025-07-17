@@ -1,0 +1,62 @@
+﻿@model List<hotelproyecto.ViewModel.HabitacionViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Gestión de Habitaciones";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+        <a asp-action="Crear" class="btn btn-primary">
+            Nueva Habitación
+        </a>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">
+            <i class="bi bi-check-circle"></i> @TempData["Success"]
+        </div>
+    }
+    
+    <div class="table-responsive">
+        <table class="rooms-table">
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Capacidad</th>
+                    <th>Precio</th>
+                    <th>Camas</th>                    
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var habitacion in Model)
+                {
+                    <tr>
+                        <td data-label="Número">@habitacion.NumHabitacion</td>
+                        <td data-label="Capacidad">
+                            <span class="room-capacity">
+                                <i class="bi bi-people"></i> @habitacion.Capacidad
+                            </span>
+                        </td>
+                        <td data-label="Precio" class="text-nowrap">@habitacion.Precio.ToString("C")</td>
+                        <td data-label="Camas">
+                            <span class="room-beds">
+                                <i class="bi bi-badge-ad"></i> @habitacion.NumCamas
+                            </span>
+                        </td>
+                        <td data-label="Acciones" class="actions">
+                            <a asp-action="Editar" asp-route-id="@habitacion.Id" class="btn-action edit">
+                                Editar
+                            </a>
+                            <a asp-action="Detalles" asp-route-id="@habitacion.Id" class="btn-action details">
+                                <i class="bi bi-info-circle"></i> Detalles
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

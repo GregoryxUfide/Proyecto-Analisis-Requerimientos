@@ -1,0 +1,97 @@
+﻿@model hotelproyecto.ViewModel.UsuarioFiltroViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Gestión de Usuarios";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>Listado de Usuarios</h2>
+        <a asp-action="Crear" class="btn btn-primary">Crear Nuevo Usuario</a>
+    </div>
+
+    <!-- Filtros -->
+    <div class="card-filters">
+        <form method="get" asp-action="Index" class="filter-form">
+            <div class="filter-group">
+                <label for="rolFiltro">Rol:</label>
+                <select name="rolId" id="rolFiltro" class="form-control">
+                    <option value="">Todos los roles</option>
+                    @foreach (var rol in Model.Roles)
+                    {
+                        <option value="@rol.Id" selected="@(rol.Id == Model.RolSeleccionadoId ? "selected" : null)">@rol.Nombre</option>
+                    }
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="estadoFiltro">Estado:</label>
+                <select name="estado" id="estadoFiltro" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="true" selected="@(Model.EstadoSeleccionado == true ? "selected" : null)">Activo</option>
+                    <option value="false" selected="@(Model.EstadoSeleccionado == false ? "selected" : null)">Inactivo</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="busqueda">Buscar:</label>
+                <input type="text" name="busqueda" id="busqueda" value="@Model.Busqueda" 
+                       class="form-control" placeholder="Nombre o correo" />
+            </div>
+
+            <div class="filter-actions">
+                <button type="submit" class="btn btn-filter">
+                    <i class="bi bi-search"></i> Buscar
+                </button>
+                @if (Model.RolSeleccionadoId.HasValue || Model.EstadoSeleccionado.HasValue || !string.IsNullOrEmpty(Model.Busqueda))
+                {
+                    <a href="@Url.Action("Index", "Usuario")" class="btn btn-clear">
+                        <i class="bi bi-x-circle"></i> Limpiar
+                    </a>
+                }
+            </div>
+        </form>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="users-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Correo</th>
+                    <th>Username</th>
+                    <th>Rol</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var usuario in Model.Usuarios)
+                {
+                    <tr>
+                        <td data-label="Nombre">@usuario.Nombre</td>
+                        <td data-label="Apellidos">@usuario.Apellidos</td>
+                        <td data-label="Correo">@usuario.Gmail</td>
+                        <td data-label="Username">@usuario.Username</td>
+                        <td data-label="Rol">@(usuario.Roles?.FirstOrDefault(r => r.Id == usuario.RolId)?.Nombre ?? "N/A")</td>
+                        <td data-label="Estado">
+                            <span class="status-badge @(usuario.Estado ? "active" : "inactive")">
+                                @(usuario.Estado ? "Activo" : "Inactivo")
+                            </span>
+                        </td>
+                        <td data-label="Acciones" class="actions">
+                            <a asp-action="Editar" asp-route-id="@usuario.Id" class="btn-action edit">Editar</a>
+                            <a asp-action="Detalles" asp-route-id="@usuario.Id" class="btn-action details">Detalles</a>
+                            <a asp-action="CambiarEstado" asp-route-id="@usuario.Id" 
+                               asp-route-estado="@(usuario.Estado ? false : true)" 
+                               class="btn-action @(usuario.Estado ? "deactivate" : "activate")">
+                                @(usuario.Estado ? "Desactivar" : "Activar")
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

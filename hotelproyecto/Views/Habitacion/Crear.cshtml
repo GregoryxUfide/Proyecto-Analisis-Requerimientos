@@ -1,0 +1,84 @@
+﻿@model hotelproyecto.ViewModel.HabitacionViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Crear Nueva Habitación";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    
+    <div class="card-body">
+        <form asp-action="Crear" method="post" class="room-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="NumHabitacion" class="form-label">Número de Habitación</label>
+                    <input asp-for="NumHabitacion" class="form-control" placeholder="Ej: 101" />
+                    <span asp-validation-for="NumHabitacion" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Capacidad" class="form-label">Capacidad (personas)</label>
+                    <input asp-for="Capacidad" class="form-control" type="number" min="1" placeholder="Ej: 2" />
+                    <span asp-validation-for="Capacidad" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Precio" class="form-label">Precio por noche</label>
+                    <div class="input-group">
+                        <span class="input-group-text">₡</span>
+                        <input asp-for="Precio" class="form-control" placeholder="Ej: 45000" />
+                    </div>
+                    <span asp-validation-for="Precio" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NumCamas" class="form-label">Número de camas</label>
+                    <input asp-for="NumCamas" class="form-control" type="number" min="1" placeholder="Ej: 2" />
+                    <span asp-validation-for="NumCamas" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Extras" class="form-label">Servicios adicionales</label>
+                    <textarea asp-for="Extras" class="form-control" rows="2" 
+                              placeholder="Ej: TV pantalla plana, Aire acondicionado, WiFi gratis"></textarea>
+                    <span asp-validation-for="Extras" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Comentarios" class="form-label">Comentarios adicionales</label>
+                    <textarea asp-for="Comentarios" class="form-control" rows="2" 
+                              placeholder="Notas importantes sobre la habitación"></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    Guardar Habitación
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                     Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Formatear precio al perder foco
+        document.getElementById('Precio').addEventListener('blur', function() {
+            if(this.value) {
+                this.value = parseFloat(this.value).toFixed(2);
+            }
+        });
+    </script>
+}

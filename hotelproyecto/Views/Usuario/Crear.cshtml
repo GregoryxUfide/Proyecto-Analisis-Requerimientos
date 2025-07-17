@@ -1,0 +1,117 @@
+﻿@model hotelproyecto.ViewModel.UsuarioViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Crear Nuevo Usuario";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+
+    </div>
+    
+    <div class="card-body">
+        <form asp-action="Crear" method="post" class="user-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Nombre" class="form-label"></label>
+                    <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre" />
+                    <span asp-validation-for="Nombre" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Apellidos" class="form-label"></label>
+                    <input asp-for="Apellidos" class="form-control" placeholder="Ingrese los apellidos" />
+                    <span asp-validation-for="Apellidos" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Gmail" class="form-label">Correo</label>
+                    <input asp-for="Gmail" class="form-control" placeholder="ejemplo@correo.com" />
+                    <span asp-validation-for="Gmail" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Username" class="form-label"></label>
+                    <input asp-for="Username" class="form-control" placeholder="Nombre de usuario" />
+                    <span asp-validation-for="Username" class="validation-message"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Contrasena" class="form-label"></label>
+                <div class="password-input">
+                    <input asp-for="Contrasena" type="password" class="form-control" placeholder="Contraseña segura" />
+                    <button type="button" class="password-toggle"><i class="bi bi-eye"></i></button>
+                </div>
+                <span asp-validation-for="Contrasena" class="validation-message"></span>
+                <div class="password-strength">
+                    <div class="strength-bar"></div>
+                    <div class="strength-text">Seguridad de la contraseña</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RolId" class="form-label">Rol</label>
+                <select asp-for="RolId" class="form-control" asp-items="@(new SelectList(Model.Roles, "Id", "Nombre"))">
+                    <option value="">Seleccione un rol</option>
+                </select>
+                <span asp-validation-for="RolId" class="validation-message"></span>
+            </div>
+
+            <div class="form-group form-switch">
+                <input asp-for="Estado" class="form-check-input" role="switch" />
+                <label asp-for="Estado" class="form-check-label">Usuario activo</label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                     Guardar Usuario
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+
+        // Validación de fuerza de contraseña
+        document.getElementById('Contrasena').addEventListener('input', function() {
+            const strengthBar = document.querySelector('.strength-bar');
+            const strengthText = document.querySelector('.strength-text');
+            const password = this.value;
+            let strength = 0;
+            
+            // Validaciones de complejidad
+            if (password.length > 0) strength += 1;
+            if (password.length >= 8) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            // Actualizar barra y texto
+            const width = (strength / 5) * 100;
+            strengthBar.style.width = width + '%';
+            
+            // Cambiar colores según fuerza
+            if (strength <= 2) {
+                strengthBar.style.backgroundColor = '#e74c3c';
+                strengthText.textContent = 'Contraseña débil';
+            } else if (strength <= 4) {
+                strengthBar.style.backgroundColor = '#f39c12';
+                strengthText.textContent = 'Contraseña moderada';
+            } else {
+                strengthBar.style.backgroundColor = '#2ecc71';
+                strengthText.textContent = 'Contraseña fuerte';
+            }
+        });
+    </script>
+}

@@ -1,0 +1,88 @@
+﻿@model hotelproyecto.ViewModel.LimpiezaHabitacionViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Detalles de Limpieza";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    
+    <div class="card-body">
+        <div class="cleaning-details">
+            <div class="detail-item">
+                <span class="detail-label">
+                    <i class="bi bi-person-badge"></i> Conserje:
+                </span>
+                <span class="detail-value">@Model.NombreConserje</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">
+                    <i class="bi bi-check-circle"></i> Tareas Completadas:
+                </span>
+                <span class="detail-value">@Model.TareasCompletadas</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">
+                    <i class="bi bi-calendar-check"></i> Fecha/Hora:
+                </span>
+                <span class="detail-value">@Model.FechaHora.ToString("g")</span>
+            </div>
+            
+            @if (Model.Foto != null)
+            {
+                <div class="detail-item">
+                    <span class="detail-label">
+                        <i class="bi bi-camera"></i> Foto:
+                    </span>
+                    <span class="detail-value">
+                        <div class="cleaning-photo">
+                            <img src="data:image;base64,@Convert.ToBase64String(Model.Foto)" 
+                                 class="img-fluid rounded" 
+                                 alt="Foto de limpieza" 
+                                 data-bs-toggle="modal" 
+                                 data-bs-target="#photoModal" />
+                            <div class="photo-zoom-hint">
+                                <i class="bi bi-zoom-in"></i> Click para ampliar
+                            </div>
+                        </div>
+                    </span>
+                </div>
+                
+                <!-- Modal para foto ampliada -->
+                <div class="modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Foto de limpieza</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src="data:image;base64,@Convert.ToBase64String(Model.Foto)" 
+                                     class="img-fluid" 
+                                     alt="Foto ampliada de limpieza" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Cerrar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        
+        <div class="detail-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Listado
+            </a>
+            <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">
+                Editar
+            </a>
+        </div>
+    </div>
+</div>
