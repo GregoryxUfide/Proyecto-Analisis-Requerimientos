@@ -1,0 +1,55 @@
+﻿@model hotelproyecto.ViewModel.UbicacionProductoViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Detalles de Ubicación";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+    
+    <div class="card-body">
+        <div class="location-details">
+            <div class="detail-item">
+                <span class="detail-label">ID:</span>
+                <span class="detail-value">@Model.IdUbicacionProducto</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Nombre:</span>
+                <span class="detail-value">
+                    <i class="bi bi-geo-alt"></i> @Model.NombreUbicacionProducto
+                </span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Descripción:</span>
+                <span class="detail-value">@Model.DescripcionUbicacionProducto</span>
+            </div>
+            
+            <div class="detail-item">
+                <span class="detail-label">Estado:</span>
+                <span class="detail-value">
+                    <span class="status-badge @(Model.Estado ? "active" : "inactive")">
+                        @if(Model.Estado) {
+                            <i class="bi bi-check-circle"></i>
+                        } else {
+                            <i class="bi bi-x-circle"></i>
+                        }
+                        @(Model.Estado ? "Activo" : "Inactivo")
+                    </span>
+                </span>
+            </div>
+        </div>
+        
+        <div class="detail-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Listado
+            </a>
+            <a asp-action="Editar" asp-route-id="@Model.IdUbicacionProducto" class="btn btn-primary">
+                <i class="bi bi-pencil"></i> Editar Ubicación
+            </a>
+        </div>
+    </div>
+</div>

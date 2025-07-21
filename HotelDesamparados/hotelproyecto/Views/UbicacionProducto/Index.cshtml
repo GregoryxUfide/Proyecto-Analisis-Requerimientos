@@ -1,0 +1,54 @@
+﻿@model List<hotelproyecto.ViewModel.UbicacionProductoViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Gestión de Ubicaciones de Productos";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+        <a asp-action="Crear" class="btn btn-primary">
+            Nueva Ubicación
+        </a>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="locations-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td data-label="Nombre">@item.NombreUbicacionProducto</td>
+                        <td data-label="Descripción">@item.DescripcionUbicacionProducto</td>
+                        <td data-label="Estado">
+                            <span class="status-badge @(item.Estado ? "active" : "inactive")">
+                                @(item.Estado ? "Activo" : "Inactivo")
+                            </span>
+                        </td>
+                        <td data-label="Acciones" class="actions">
+                            <a asp-action="Detalles" asp-route-id="@item.IdUbicacionProducto" class="btn-action details">
+                                Detalles
+                            </a>
+                            <a asp-action="Editar" asp-route-id="@item.IdUbicacionProducto" class="btn-action edit">
+                                Editar
+                            </a>
+                            <a asp-action="CambiarEstado" asp-route-id="@item.IdUbicacionProducto" 
+                               asp-route-estado="@(item.Estado ? "false" : "true")"
+                               class="btn-action @(item.Estado ? "deactivate" : "activate")">
+                                @(item.Estado ? "Desactivar" : "Activar")
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
