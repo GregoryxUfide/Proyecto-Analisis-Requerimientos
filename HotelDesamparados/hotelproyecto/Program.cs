@@ -1,5 +1,7 @@
 using hotelproyecto.Data;
 using hotelproyecto.Services;
+using Sprint_2.Data;
+using Sprint_2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddScoped<ProductoData>();
 builder.Services.AddScoped<EmpleadoData>();
 builder.Services.AddScoped<HabitacionData>();
 builder.Services.AddScoped<LimpiezaHabitacionData>();
+builder.Services.AddScoped<ReservaData>();
+
 
 // Registro de servicios 
 builder.Services.AddScoped<AuthService>();
@@ -25,6 +29,8 @@ builder.Services.AddScoped<ProductoService>();
 builder.Services.AddScoped<EmpleadoService>();
 builder.Services.AddScoped<HabitacionService>();
 builder.Services.AddScoped<LimpiezaHabitacionService>();
+builder.Services.AddScoped<ReservaService>();
+
 
 // Tiempo de sesión y autenticación
 builder.Services.AddSession(options =>
