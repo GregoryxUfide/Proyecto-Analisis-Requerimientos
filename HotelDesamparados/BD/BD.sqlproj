@@ -108,5 +108,12 @@
     <Build Include="dbo\Stored Procedures\sp_ActualizarHabitacion.sql" />
     <Build Include="dbo\Stored Procedures\sp_ActualizarEmpleado.sql" />
     <Build Include="dbo\Stored Procedures\sp_ActualizarContrasena.sql" />
+    <Build Include="dbo\Tables\Reservas.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarReserva.sql" />
+    <Build Include="dbo\Stored Procedures\sp_CrearReserva.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EliminarReserva.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ListarReservaPorFecha.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ListarReservas.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerReservaPorId.sql" />
   </ItemGroup>
 </Project>
