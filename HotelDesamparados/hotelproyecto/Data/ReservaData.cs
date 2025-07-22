@@ -15,12 +15,11 @@ namespace Sprint_2.Data
         }
 
         #region "Crear"
-        public async Task CrearReservaAsync(Reserva reserva)
+        public async Task<(int Codigo, string Mensaje)> CrearReservaAsync(Reserva reserva)
         {
             using var conexion = await _conexionDB.ObtenerConexionAsync();
             using var cmd = new SqlCommand("sp_CrearReserva", conexion);
             cmd.CommandType = CommandType.StoredProcedure;
-
 
             cmd.Parameters.AddWithValue("@fechaInicio", reserva.FechaInicio);
             cmd.Parameters.AddWithValue("@fechaFinal", reserva.FechaFinal);
@@ -29,7 +28,15 @@ namespace Sprint_2.Data
             cmd.Parameters.AddWithValue("@correo", reserva.Correo ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@numHabitacion", reserva.NumHabitacion);
 
-            await cmd.ExecuteNonQueryAsync();
+            using var reader = await cmd.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                int codigo = reader.GetInt32(0);
+                string mensaje = reader.GetString(1);
+                return (codigo, mensaje);
+            }
+
+            return (-99, "Error desconocido al crear la reserva.");
         }
         #endregion
 
@@ -51,7 +58,6 @@ namespace Sprint_2.Data
             await cmd.ExecuteNonQueryAsync();
         }
         #endregion
-
         #region "Listar"
         public async Task<List<Reserva>> ListarReservasAsync()
         {

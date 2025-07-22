@@ -64,6 +64,12 @@
                         </a>
                     </li>
                     <li>
+                        <a asp-controller="Reserva" asp-action="Index" class="nav-link">
+                            <i class="bi bi-calendar-check"></i>
+                            <span>Reservas</span>
+                        </a>
+                    </li>
+                    <li>
                         <a asp-controller="LimpiezaHabitacion" asp-action="Index" class="nav-link">
                             <i class="bi bi-bucket"></i>
                             <span>Limpieza</span>
@@ -77,6 +83,7 @@
                     </li>
                 </ul>
             </nav>
+
             
             <div class="sidebar-footer">
                 <a asp-controller="Auth" asp-action="Logout" class="logout-btn">

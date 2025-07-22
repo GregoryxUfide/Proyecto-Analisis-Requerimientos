@@ -20,21 +20,6 @@ namespace Sprint_2.Services
         #region "Crear"
         public async Task CrearReservaAsync(ReservaViewModel vm)
         {
-            // Validar que no exista otra reserva con mismo NumHabitacion y fechas que se crucen
-            var reservasExistentes = await _reservaData.ListarReservasAsync();
-
-            bool existeConflicto = reservasExistentes.Any(r =>
-                r.NumHabitacion == vm.NumHabitacion &&
-                (
-                    (vm.FechaInicio >= r.FechaInicio && vm.FechaInicio < r.FechaFinal) ||  // fechaInicio cae dentro reserva existente
-                    (vm.FechaFinal > r.FechaInicio && vm.FechaFinal <= r.FechaFinal) ||    // fechaFinal cae dentro reserva existente
-                    (vm.FechaInicio <= r.FechaInicio && vm.FechaFinal >= r.FechaFinal)     // rango nuevo cubre toda reserva existente
-                )
-            );
-
-            if (existeConflicto)
-                throw new Exception("Ya existe una reserva para esa habitación en las fechas indicadas.");
-
             var reserva = new Reserva
             {
                 IdReserva = vm.IdReserva,
@@ -46,17 +31,27 @@ namespace Sprint_2.Services
                 NumHabitacion = vm.NumHabitacion
             };
 
-            await _reservaData.CrearReservaAsync(reserva);
+            var (codigo, mensaje) = await _reservaData.CrearReservaAsync(reserva);
+
+            if (codigo == -1)
+                throw new Exception("La habitación especificada no existe.");
+
+            if (codigo == -2)
+                throw new Exception("Ya existe una reserva para esa habitación en las fechas indicadas.");
+
+            if (codigo != 1)
+                throw new Exception($"Error al crear la reserva: {mensaje}");
         }
         #endregion
 
         #region "Actualizar"
         public async Task ActualizarReservaAsync(ReservaViewModel vm)
         {
+            // Opcional: Puedes hacer validación local de conflictos si quieres
             var reservasExistentes = await _reservaData.ListarReservasAsync();
 
             bool existeConflicto = reservasExistentes.Any(r =>
-                r.IdReserva != vm.IdReserva && // ignorar la misma reserva que se actualiza
+                r.IdReserva != vm.IdReserva &&
                 r.NumHabitacion == vm.NumHabitacion &&
                 (
                     (vm.FechaInicio >= r.FechaInicio && vm.FechaInicio < r.FechaFinal) ||

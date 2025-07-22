@@ -1,0 +1,112 @@
+﻿@model Sprint_2.ViewModel.ReservaViewModel
+
+@{
+    ViewData["Title"] = "Crear Reserva";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    @* Mensajes de éxito o error *@
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["Success"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["Error"]
+        </div>
+    }
+
+    <form asp-action="Crear" method="post" novalidate>
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="FechaInicio" class="form-label"></label>
+            <input asp-for="FechaInicio" class="form-control" type="date" id="fechaInicio" />
+            <span asp-validation-for="FechaInicio" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="FechaFinal" class="form-label"></label>
+            <input asp-for="FechaFinal" class="form-control" type="date" id="fechaFinal" />
+            <span asp-validation-for="FechaFinal" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NombreReservante" class="form-label"></label>
+            <input asp-for="NombreReservante" class="form-control" />
+            <span asp-validation-for="NombreReservante" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Telefono" class="form-label"></label>
+            <input id="TelefonoMasked" name="TelefonoMasked" class="form-control" type="text" maxlength="9" placeholder="0000-0000" />
+            <input type="hidden" asp-for="Telefono" />
+            <span asp-validation-for="Telefono" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Correo" class="form-label"></label>
+            <input asp-for="Correo" class="form-control" />
+            <span asp-validation-for="Correo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NumHabitacion" class="form-label"></label>
+            <input asp-for="NumHabitacion" class="form-control" />
+            <span asp-validation-for="NumHabitacion" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Crear</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        const inputMasked = document.getElementById('TelefonoMasked');
+        const hiddenInput = document.getElementById('Telefono');
+
+        inputMasked.addEventListener('input', function () {
+            let digits = this.value.replace(/\D/g, '').substring(0, 8);
+
+            if (digits.length > 4) {
+                this.value = digits.substring(0, 4) + '-' + digits.substring(4);
+            } else {
+                this.value = digits;
+            }
+
+            hiddenInput.value = digits;
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            hiddenInput.value = "";
+            inputMasked.value = "";
+        });
+
+        const fechaInicioInput = document.getElementById('fechaInicio');
+        const fechaFinalInput = document.getElementById('fechaFinal');
+
+        fechaInicioInput.addEventListener('change', function () {
+            const parts = this.value.split('-');
+            if (parts.length === 3) {
+                const fechaInicio = new Date(Date.UTC(parts[0], parts[1] - 1, parts[2]));
+                fechaInicio.setUTCDate(fechaInicio.getUTCDate() + 1);
+                const year = fechaInicio.getUTCFullYear();
+                const month = String(fechaInicio.getUTCMonth() + 1).padStart(2, '0');
+                const day = String(fechaInicio.getUTCDate()).padStart(2, '0');
+                fechaFinalInput.value = `${year}-${month}-${day}`;
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (fechaInicioInput.value && !fechaFinalInput.value) {
+                fechaInicioInput.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+}
