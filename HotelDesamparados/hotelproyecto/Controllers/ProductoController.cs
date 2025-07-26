@@ -82,7 +82,6 @@ namespace hotelproyecto.Controllers
         }
         #endregion
 
-
         #region "Estado"
         public async Task<IActionResult> CambiarEstado(int id, bool estado)
         {

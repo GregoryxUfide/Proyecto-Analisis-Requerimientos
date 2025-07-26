@@ -8,19 +8,19 @@ namespace hotelproyecto.Controllers
     public class UsuarioController : Controller
     {
         private readonly UsuarioService _usuarioService;
-        private readonly RolData _rolData;
+        private readonly RolService _rolService;
 
-        public UsuarioController(UsuarioService usuarioService, RolData rolData)
+        public UsuarioController(UsuarioService usuarioService, RolService rolService)
         {
             _usuarioService = usuarioService;
-            _rolData = rolData;
+            _rolService = rolService;
         }
 
         #region "Index"
         public async Task<IActionResult> Index(int? rolId, bool? estado, string busqueda)
         {
             var usuarios = await _usuarioService.ListarUsuariosViewModelAsync(rolId, estado, busqueda);
-            var roles = await _rolData.ListarRolesAsync();
+            var roles = await _rolService.ListarRolesAsync();
 
             var viewModel = new UsuarioFiltroViewModel
             {
@@ -39,7 +39,7 @@ namespace hotelproyecto.Controllers
         #region"Crear"
         public async Task<IActionResult> Crear()
         {
-            var roles = await _rolData.ListarRolesAsync();
+            var roles = await _rolService.ListarRolesAsync();
             var vm = new UsuarioViewModel { Roles = roles };
             return View(vm);
         }
@@ -48,7 +48,7 @@ namespace hotelproyecto.Controllers
         {
             if (!ModelState.IsValid)
             {
-                vm.Roles = await _rolData.ListarRolesAsync();
+                vm.Roles = await _rolService.ListarRolesAsync();
                 return View(vm);
             }
 
@@ -56,7 +56,7 @@ namespace hotelproyecto.Controllers
             if (existe)
             {
                 ModelState.AddModelError("", "El correo ya está registrado.");
-                vm.Roles = await _rolData.ListarRolesAsync();
+                vm.Roles = await _rolService.ListarRolesAsync();
                 return View(vm);
             }
 
@@ -71,14 +71,34 @@ namespace hotelproyecto.Controllers
             var vm = await _usuarioService.ObtenerUsuarioViewModelPorIdAsync(id);
             if (vm == null) return NotFound();
 
+            var usuarioLogueadoId = HttpContext.Session.GetInt32("UsuarioID");
+            var rolLogueado = HttpContext.Session.GetString("Rol");
+            
+            if (usuarioLogueadoId == id && rolLogueado?.ToLower() == "admin")
+            {
+                vm.EsEdicionPropiaComoAdmin = true;
+            }
             return View(vm);
+
         }        
         [HttpPost]
         public async Task<IActionResult> Editar(UsuarioViewModel vm)
         {
+            var usuarioLogueadoId = HttpContext.Session.GetInt32("UsuarioID");
+            var rolLogueado = HttpContext.Session.GetString("Rol");
+
+            // Si es el mismo usuario y es Admin
+            if (usuarioLogueadoId == vm.Id && rolLogueado?.ToLower() == "admin")
+            {
+                // No permitir modificar su rol ni estado
+                var original = await _usuarioService.ObtenerUsuarioViewModelPorIdAsync(vm.Id);
+                vm.RolId = original.RolId;
+                vm.Estado = original.Estado;
+            }
+
             if (!ModelState.IsValid)
             {
-                vm.Roles = await _rolData.ListarRolesAsync();
+                vm.Roles = await _rolService.ListarRolesAsync();
                 return View(vm);
             }
 
@@ -100,16 +120,19 @@ namespace hotelproyecto.Controllers
         [HttpPost]
         public async Task<IActionResult> CambiarContrasena(int id, string nuevaContrasena, string confirmarContrasena)
         {
-            if (string.IsNullOrWhiteSpace(nuevaContrasena) || nuevaContrasena.Length < 6)
-            {
-                ModelState.AddModelError("", "La contraseña debe tener al menos 6 caracteres.");
-                ViewBag.UsuarioId = id;
-                return View();
-            }
+            var regex = new System.Text.RegularExpressions.Regex(@"^(?=.*[!@#$%^&*(),.?""{}|<>]).{6,}$");
 
-            if (nuevaContrasena != confirmarContrasena)
+            if (string.IsNullOrWhiteSpace(nuevaContrasena) || !regex.IsMatch(nuevaContrasena))
+            {
+                ModelState.AddModelError("", "La contraseña debe tener al menos 6 caracteres y un carácter especial.");
+            }
+            else if (nuevaContrasena != confirmarContrasena)
             {
                 ModelState.AddModelError("", "Las contraseñas no coinciden.");
+            }
+
+            if (!ModelState.IsValid)
+            {
                 ViewBag.UsuarioId = id;
                 return View();
             }

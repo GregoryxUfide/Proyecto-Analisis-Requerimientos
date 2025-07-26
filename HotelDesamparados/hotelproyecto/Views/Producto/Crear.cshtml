@@ -36,9 +36,9 @@
                 <div class="form-group">
                     <label asp-for="IdUbicacionProducto" class="form-label">Ubicación</label>
                     <select asp-for="IdUbicacionProducto" asp-items="Model.Ubicaciones" class="form-control">
-                        <option value="">Seleccione una ubicación</option>
+                        <option value="0">Seleccione una ubicación</option>
                     </select>
-                    <span asp-validation-for="IdUbicacionProducto" class="validation-message"></span>
+                    <span asp-validation-for="IdUbicacionProducto" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">

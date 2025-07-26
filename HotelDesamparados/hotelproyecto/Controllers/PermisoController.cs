@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using hotelproyecto.Services;
-using hotelproyecto.ViewModel;
 
 namespace hotelproyecto.Controllers
 {    

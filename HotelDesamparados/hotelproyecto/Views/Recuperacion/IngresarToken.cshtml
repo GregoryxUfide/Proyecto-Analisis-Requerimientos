@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Ingresar Token";
+    var tokenGenerado = ViewBag.TokenGenerado as string;
+    var usuarioId = ViewBag.UsuarioId;
+}
+
+<h2>Recuperación de contraseña</h2>
+
+@if (!string.IsNullOrEmpty(tokenGenerado))
+{
+    <div class="alert alert-success">
+        <p><strong>Tu token de recuperación es:</strong></p>
+        <div class="alert alert-dark" style="user-select: all;">
+            @tokenGenerado
+        </div>
+        <p>Por favor, cópialo o memorízalo y úsalo en el siguiente formulario.</p>
+        <button type="button" class="btn btn-outline-secondary" onclick="copiarToken()">Copiar token</button>
+    </div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<form asp-action="IngresarToken" method="post">
+    <input type="hidden" name="usuarioId" value="@usuarioId" />
+    <div class="mb-3">
+        <label for="tokenInput" class="form-label">Token</label>
+        <input type="text" id="tokenInput" name="token" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Verificar token</button>
+</form>
+
+@section Scripts {
+    <script>
+        function copiarToken() {
+            const tokenText = "@tokenGenerado";
+            navigator.clipboard.writeText(tokenText).then(() => {
+                alert('Token copiado al portapapeles');
+            }).catch(() => {
+                alert('No se pudo copiar el token');
+            });
+        }
+    </script>
+}

@@ -24,22 +24,20 @@
             <div class="detail-item">
                 <span class="detail-label">Usuario:</span>
                 <span class="detail-value">
-                     @Model.UsuariosDisponibles.FirstOrDefault(u => u.Id == Model.UsuarioId)?.Username
+                     @Model.UsuariosLista.FirstOrDefault(u => u.Id == Model.UsuarioId)?.Username
                 </span>
             </div>
             
             <div class="detail-item">
                 <span class="detail-label">Correo:</span>
                 <span class="detail-value">
-                    @Model.UsuariosDisponibles.FirstOrDefault(u => u.Id == Model.UsuarioId)?.Gmail
+                    @Model.UsuariosLista.FirstOrDefault(u => u.Id == Model.UsuarioId)?.Gmail
                 </span>
             </div>
             
             <div class="detail-item">
                 <span class="detail-label">Rol:</span>
-                <span class="detail-value">
-                     @Model.RolesDisponibles.FirstOrDefault(r => r.Id == Model.RolId)?.Nombre
-                </span>
+                <span class="detail-value">@Model.RolNombre</span>
             </div>
             
             <div class="detail-item">

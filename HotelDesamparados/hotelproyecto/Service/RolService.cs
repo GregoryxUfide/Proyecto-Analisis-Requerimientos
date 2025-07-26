@@ -84,5 +84,18 @@ namespace hotelproyecto.Services
             return await _rolData.ObtenerRolPorNombreAsync(nombre);
         }
         #endregion
+
+        public RolViewModel MapearARolViewModel(Rol rol)
+        {
+            if (rol == null) return null;
+
+            return new RolViewModel
+            {
+                Id = rol.Id,
+                Nombre = rol.Nombre,
+                Descripcion = rol.Descripcion,
+                Estado = rol.Estado
+            };
+        }
     }
 }

@@ -115,5 +115,9 @@
     <Build Include="dbo\Stored Procedures\sp_ListarReservaPorFecha.sql" />
     <Build Include="dbo\Stored Procedures\sp_ListarReservas.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerReservaPorId.sql" />
+    <Build Include="dbo\Tables\TokensRecuperacion.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerTokenRecuperacion.sql" />
+    <Build Include="dbo\Stored Procedures\sp_MarcarTokenComoUsado.sql" />
+    <Build Include="dbo\Stored Procedures\sp_GuardarTokenRecuperacion.sql" />
   </ItemGroup>
 </Project>

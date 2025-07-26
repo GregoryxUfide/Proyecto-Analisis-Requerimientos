@@ -33,5 +33,8 @@ namespace hotelproyecto.Models
         public int RolId { get; set; }
         [BindNever]
         public Rol Rol { get; set; }
+
+        [NotMapped] // ?? Importante para que EF no lo intente mapear a BD
+        public string RolNombre { get; set; } // ? Necesario para usarlo en vista
     }
 }

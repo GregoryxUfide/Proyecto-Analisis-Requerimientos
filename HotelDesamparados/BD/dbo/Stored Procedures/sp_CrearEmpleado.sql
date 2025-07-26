@@ -2,10 +2,9 @@
     @NumeroEmpleado VARCHAR(50),
     @SalarioEmpleado DECIMAL(18,2),
     @UsuarioId INT,
-    @RolId INT,
     @Estado BIT
 AS
 BEGIN
-    INSERT INTO Empleado (NumeroEmpleado, SalarioEmpleado, UsuarioId, RolId, Estado)
-    VALUES (@NumeroEmpleado, @SalarioEmpleado, @UsuarioId, @RolId, @Estado)
+    INSERT INTO Empleado (NumeroEmpleado, SalarioEmpleado, UsuarioId, Estado)
+    VALUES (@NumeroEmpleado, @SalarioEmpleado, @UsuarioId, @Estado)
 END

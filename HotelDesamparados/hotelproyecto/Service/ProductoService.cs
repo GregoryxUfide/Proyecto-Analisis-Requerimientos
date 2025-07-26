@@ -8,12 +8,12 @@ namespace hotelproyecto.Services
     public class ProductoService
     {
         private readonly ProductoData _productoData;
-        private readonly UbicacionProductoData _ubicacionData;
+        private readonly UbicacionProductoService _ubicacionProductoService;
 
-        public ProductoService(ProductoData productoData, UbicacionProductoData ubicacionData)
+        public ProductoService(ProductoData productoData, UbicacionProductoService ubicacionProductoService)
         {
             _productoData = productoData;
-            _ubicacionData = ubicacionData;
+            _ubicacionProductoService = ubicacionProductoService;
         }
 
         #region "Listar"
@@ -26,7 +26,7 @@ namespace hotelproyecto.Services
                 IdProducto = p.IdProducto,
                 NombreProducto = p.NombreProducto,
                 DescripcionProducto = p.DescripcionProducto,
-                IdUbicacionProducto = p.IdUbicacionProducto,
+                NombreUbicacion = p.UbicacionProducto?.NombreUbicacionProducto,
                 CantidadProducto = p.CantidadProducto,
                 CaducidadProducto = p.CaducidadProducto,
                 MarcaProducto = p.MarcaProducto,
@@ -41,7 +41,7 @@ namespace hotelproyecto.Services
             var producto = await _productoData.ObtenerProductoPorIdAsync(id);
             if (producto == null) return null;
 
-            var ubicaciones = await _ubicacionData.ListarUbicacionesAsync();
+            var ubicaciones = await _ubicacionProductoService.ListarUbicacionesAsync();
 
             return new ProductoViewModel
             {
@@ -109,7 +109,7 @@ namespace hotelproyecto.Services
         #region "Cargar Ubicaciones"
         public async Task<List<SelectListItem>> ObtenerUbicacionesSelectListAsync()
         {
-            var ubicaciones = await _ubicacionData.ListarUbicacionesAsync();
+            var ubicaciones = await _ubicacionProductoService.ListarUbicacionesAsync();
 
             return ubicaciones.Select(u => new SelectListItem
             {

@@ -7,12 +7,12 @@ namespace hotelproyecto.Services
     public class UsuarioService
     {
         private readonly UsuarioData _usuarioData;
-        private readonly RolData _rolData;
+        private readonly RolService _rolService;
 
-        public UsuarioService(UsuarioData usuarioData, RolData rolData)
+        public UsuarioService(UsuarioData usuarioData, RolService rolService)
         {
             _usuarioData = usuarioData;
-            _rolData = rolData;
+            _rolService = rolService;
         }
 
         #region "Crear"
@@ -84,7 +84,7 @@ namespace hotelproyecto.Services
             var usuario = await _usuarioData.ObtenerUsuarioPorIdAsync(id);
             if (usuario == null) return null;
 
-            var roles = await _rolData.ListarRolesAsync();
+            var roles = await _rolService.ListarRolesAsync();
 
             return new UsuarioViewModel
             {
@@ -121,12 +121,12 @@ namespace hotelproyecto.Services
                 Username = u.Username,
                 Estado = u.Estado,
                 RolId = u.RolId,
-                Roles = new List<Rol> { u.Rol }
+                Roles = new List<RolViewModel> { _rolService.MapearARolViewModel(u.Rol) }
+
             }).ToList();
 
             return usuariosVm;
         }
-
         #endregion
 
         #region "Auth"
@@ -144,5 +144,6 @@ namespace hotelproyecto.Services
             return await _usuarioData.ExisteCorreoAsync(gmail);
         }
         #endregion
+        
+        }
     }
-}

@@ -30,7 +30,7 @@
                     <tr>
                         <td data-label="Número">@e.NumeroEmpleado</td>
                         <td data-label="Salario">@e.SalarioEmpleado.ToString("C")</td>
-                        <td data-label="Usuario">@e.UsuarioUsername</td>
+                        <td data-label="Usuario">@e.UsuarioNombre</td>
                         <td data-label="Rol">@e.RolNombre</td>
                         <td data-label="Estado">
                             <span class="status-badge @(e.Estado ? "active" : "inactive")">
@@ -40,11 +40,14 @@
                         <td data-label="Acciones" class="actions">
                             <a asp-action="Editar" asp-route-id="@e.Id" class="btn-action edit">Editar</a>
                             <a asp-action="Detalles" asp-route-id="@e.Id" class="btn-action details">Detalles</a>
-                            <a asp-action="CambiarEstado" asp-route-id="@e.Id" 
-                               asp-route-estado="@(e.Estado ? "false" : "true")"
-                               class="btn-action @(e.Estado ? "deactivate" : "activate")">
-                                @(e.Estado ? "Desactivar" : "Activar")
-                            </a>
+                            <form asp-action="CambiarEstado" method="post" style="display:inline">
+                                <input type="hidden" name="id" value="@e.Id" />
+                                <input type="hidden" name="estado" value="@(e.Estado ? "false" : "true")" />
+                                <button type="submit" class="btn-action @(e.Estado ? "deactivate" : "activate")">
+                                    @(e.Estado ? "Desactivar" : "Activar")
+                                </button>
+                            </form>
+
                         </td>
                     </tr>
                 }

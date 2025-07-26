@@ -1,21 +1,23 @@
 ﻿using hotelproyecto.Data;
 using hotelproyecto.Models;
 using hotelproyecto.ViewModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace hotelproyecto.Services
 {
     public class EmpleadoService
-    {
+    {        
         private readonly EmpleadoData _empleadoData;
-        private readonly RolData _rolData;
         private readonly UsuarioData _usuarioData;
+        private readonly UsuarioService _usuarioService;
 
-        public EmpleadoService(EmpleadoData empleadoData, RolData rolData, UsuarioData usuarioData)
+        public EmpleadoService(EmpleadoData empleadoData, UsuarioData usuarioData, UsuarioService usuarioService)
         {
             _empleadoData = empleadoData;
-            _rolData = rolData;
             _usuarioData = usuarioData;
+            _usuarioService = usuarioService;
         }
+
         #region Listar
         public async Task<List<EmpleadoViewModel>> ListarEmpleadosViewModelAsync()
         {
@@ -27,11 +29,9 @@ namespace hotelproyecto.Services
                 NumeroEmpleado = e.NumeroEmpleado,
                 SalarioEmpleado = e.SalarioEmpleado,
                 UsuarioId = e.UsuarioId,
-                UsuarioUsername = e.Usuario?.Username, // Username visible en Index
-                RolId = e.RolId,
-                RolNombre = e.Rol?.Nombre,             // Nombre de rol visible en Index
+                UsuarioNombre = e.Usuario?.Username,
+                RolNombre = e.Usuario?.Rol?.Nombre,
                 Estado = e.Estado
-                // No se cargan UsuariosDisponibles ni RolesDisponibles aquí
             }).ToList();
         }
         #endregion
@@ -44,7 +44,6 @@ namespace hotelproyecto.Services
                 NumeroEmpleado = vm.NumeroEmpleado,
                 SalarioEmpleado = vm.SalarioEmpleado,
                 UsuarioId = vm.UsuarioId,
-                RolId = vm.RolId,
                 Estado = true
             };
 
@@ -52,14 +51,13 @@ namespace hotelproyecto.Services
         }
         #endregion
 
-        #region ObtenerporId 
+        #region Obtener por ID
         public async Task<EmpleadoViewModel?> ObtenerEmpleadoViewModelPorIdAsync(int id)
         {
             var empleado = await _empleadoData.ObtenerEmpleadoPorIdAsync(id);
             if (empleado == null) return null;
 
-            var roles = await _rolData.ListarRolesAsync();
-            var usuarios = await _usuarioData.ListarUsuariosPorFiltroAsync(empleado.RolId, null, null);
+            var usuarios = await _usuarioService.ListarUsuariosViewModelAsync(null, true);
 
             return new EmpleadoViewModel
             {
@@ -67,25 +65,10 @@ namespace hotelproyecto.Services
                 NumeroEmpleado = empleado.NumeroEmpleado,
                 SalarioEmpleado = empleado.SalarioEmpleado,
                 UsuarioId = empleado.UsuarioId,
-                RolId = empleado.RolId,
+                UsuarioNombre = empleado.Usuario?.Username,
+                RolNombre = empleado.Usuario?.Rol?.Nombre,
                 Estado = empleado.Estado,
-                RolesDisponibles = roles.Select(r => new RolViewModel
-                {
-                    Id = r.Id,
-                    Nombre = r.Nombre,
-                    Descripcion = r.Descripcion,
-                    Estado = r.Estado
-                }).ToList(),
-                UsuariosDisponibles = usuarios.Select(u => new UsuarioViewModel
-                {
-                    Id = u.Id,
-                    Nombre = u.Nombre,
-                    Apellidos = u.Apellidos,
-                    Gmail = u.Gmail,
-                    Username = u.Username,
-                    Estado = u.Estado,
-                    RolId = u.RolId
-                }).ToList()
+                UsuariosLista = usuarios
             };
         }
         #endregion
@@ -98,7 +81,7 @@ namespace hotelproyecto.Services
                 Id = vm.Id,
                 NumeroEmpleado = vm.NumeroEmpleado,
                 SalarioEmpleado = vm.SalarioEmpleado,
-                RolId = vm.RolId,
+                UsuarioId = vm.UsuarioId,
                 Estado = vm.Estado
             };
 
@@ -106,10 +89,30 @@ namespace hotelproyecto.Services
         }
         #endregion
 
-        #region Estado
+        #region Cambiar Estado
         public async Task CambiarEstadoEmpleadoAsync(int id, bool estado)
         {
             await _empleadoData.CambiarEstadoEmpleadoAsync(id, estado);
+        }
+        #endregion
+
+        #region Usuarios Disponibles (para dropdown)
+        public async Task<List<SelectListItem>> ObtenerUsuariosDisponiblesAsync()
+        {
+            var usuarios = await _usuarioData.ListarUsuariosPorFiltroAsync(null, null, null);
+
+            var rolesPermitidos = new[] { "Admin", "Conserje", "Vendedor" };
+
+            var usuariosFiltrados = usuarios
+                .Where(u => rolesPermitidos.Contains(u.Rol.Nombre))
+                .Select(u => new SelectListItem
+                {
+                    Value = u.Id.ToString(),
+                    Text = $"{u.Gmail} - {u.Rol.Nombre}"
+                })
+                .ToList();
+
+            return usuariosFiltrados;
         }
         #endregion
     }

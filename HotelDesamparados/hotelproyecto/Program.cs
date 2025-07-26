@@ -12,6 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ConexionDB>();
 builder.Services.AddScoped<RolData>();
 builder.Services.AddScoped<UsuarioData>();
+builder.Services.AddScoped<TokenRecuperacionData>();
 builder.Services.AddScoped<UbicacionProductoData>();
 builder.Services.AddScoped<ProductoData>();
 builder.Services.AddScoped<EmpleadoData>();
@@ -23,6 +24,7 @@ builder.Services.AddScoped<ReservaData>();
 // Registro de servicios 
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<TokenRecuperacionService>();
 builder.Services.AddScoped<RolService>();
 builder.Services.AddScoped<UbicacionProductoService>();
 builder.Services.AddScoped<ProductoService>();

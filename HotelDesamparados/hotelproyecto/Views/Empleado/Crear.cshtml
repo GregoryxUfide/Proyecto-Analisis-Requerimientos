@@ -8,27 +8,23 @@
     <div class="card-header">
         <h2>@ViewData["Title"]</h2>
     </div>
-    
+
     <div class="card-body">
         <form asp-action="Crear" method="post" class="employee-form">
             <div class="form-row">
                 <div class="form-group">
-                    <label asp-for="RolId" class="form-label">Rol</label>
-                    <select asp-for="RolId" class="form-control" 
-                            asp-items="@(new SelectList(Model.RolesDisponibles, "Id", "Nombre"))"
-                            onchange="this.form.submit()">
-                        <option value="">Seleccione un rol</option>
-                    </select>
-                    <span asp-validation-for="RolId" class="validation-message"></span>
-                </div>
-
-                <div class="form-group">
                     <label asp-for="UsuarioId" class="form-label">Usuario</label>
-                    <select asp-for="UsuarioId" class="form-control" 
-                            asp-items="@(new SelectList(Model.UsuariosDisponibles, "Id", "Gmail"))">
+                    <select asp-for="UsuarioId" class="form-control"
+                            asp-items="Model.UsuariosDisponibles"
+                            onchange="this.form.submit()">
                         <option value="">Seleccione un usuario</option>
                     </select>
                     <span asp-validation-for="UsuarioId" class="validation-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Rol Asignado</label>
+                    <input type="text" class="form-control" value="@Model.RolNombre" readonly />
                 </div>
             </div>
 
@@ -66,7 +62,6 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
-        // Formatear salario al perder foco
         document.getElementById('SalarioEmpleado').addEventListener('blur', function() {
             if(this.value) {
                 this.value = parseFloat(this.value).toFixed(2);

@@ -231,7 +231,8 @@ namespace hotelproyecto.Data
             var resultado = await cmd.ExecuteScalarAsync();
             return Convert.ToInt32(resultado) > 0;
         }
+        #endregion
     }
 }
-#endregion
+
 

@@ -18,5 +18,7 @@ namespace hotelproyecto.Models
 
         [Required(ErrorMessage = "El estado es obligatorio.")]
         public bool Estado { get; set; }
+
+        public ICollection<Producto> Productos { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.Data.SqlClient;
 using hotelproyecto.Models;
 
-
 namespace hotelproyecto.Data
 {
     public class EmpleadoData
@@ -24,7 +23,6 @@ namespace hotelproyecto.Data
             cmd.Parameters.AddWithValue("@NumeroEmpleado", empleado.NumeroEmpleado);
             cmd.Parameters.AddWithValue("@SalarioEmpleado", empleado.SalarioEmpleado);
             cmd.Parameters.AddWithValue("@UsuarioId", empleado.UsuarioId);
-            cmd.Parameters.AddWithValue("@RolId", empleado.RolId);
             cmd.Parameters.AddWithValue("@Estado", empleado.Estado);
 
             await cmd.ExecuteNonQueryAsync();
@@ -52,13 +50,12 @@ namespace hotelproyecto.Data
                     Usuario = new Usuario
                     {
                         Id = reader.GetInt32(3),
-                        Username = reader.GetString(4)
-                    },
-                    RolId = reader.GetInt32(5),
-                    Rol = new Rol
-                    {
-                        Id = reader.GetInt32(5),
-                        Nombre = reader.GetString(6)
+                        Username = reader.GetString(4),
+                        Rol = new Rol
+                        {
+                            Id = reader.GetInt32(5),
+                            Nombre = reader.GetString(6)
+                        }
                     },
                     Estado = reader.GetBoolean(7)
                 };
@@ -89,13 +86,12 @@ namespace hotelproyecto.Data
                     Usuario = new Usuario
                     {
                         Id = reader.GetInt32(3),
-                        Username = reader.GetString(4)
-                    },
-                    RolId = reader.GetInt32(5),
-                    Rol = new Rol
-                    {
-                        Id = reader.GetInt32(5),
-                        Nombre = reader.GetString(6)
+                        Username = reader.GetString(4),
+                        Rol = new Rol
+                        {
+                            Id = reader.GetInt32(5),
+                            Nombre = reader.GetString(6)
+                        }
                     },
                     Estado = reader.GetBoolean(7)
                 });
@@ -115,7 +111,7 @@ namespace hotelproyecto.Data
             cmd.Parameters.AddWithValue("@Id", empleado.Id);
             cmd.Parameters.AddWithValue("@NumeroEmpleado", empleado.NumeroEmpleado);
             cmd.Parameters.AddWithValue("@SalarioEmpleado", empleado.SalarioEmpleado);
-            cmd.Parameters.AddWithValue("@RolId", empleado.RolId);
+            cmd.Parameters.AddWithValue("@UsuarioId", empleado.UsuarioId);
             cmd.Parameters.AddWithValue("@Estado", empleado.Estado);
 
             await cmd.ExecuteNonQueryAsync();

@@ -1,23 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using hotelproyecto.Services;
+﻿using hotelproyecto.Services;
 using hotelproyecto.ViewModel;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace hotelproyecto.Controllers
-{    
+{
     public class EmpleadoController : Controller
     {
         private readonly EmpleadoService _empleadoService;
-        private readonly UsuarioService _usuarioService;
-        private readonly RolService _rolService;
 
-        public EmpleadoController(EmpleadoService empleadoService, UsuarioService usuarioService, RolService rolService)
+        public EmpleadoController(EmpleadoService empleadoService)
         {
             _empleadoService = empleadoService;
-            _usuarioService = usuarioService;
-            _rolService = rolService;
         }
-        
-        #region Index
+
+        #region Index        
         public async Task<IActionResult> Index()
         {
             var empleados = await _empleadoService.ListarEmpleadosViewModelAsync();
@@ -25,44 +22,23 @@ namespace hotelproyecto.Controllers
         }
         #endregion
 
-        #region Detalles
-        public async Task<IActionResult> Detalles(int id)
-        {
-            var empleadoVM = await _empleadoService.ObtenerEmpleadoViewModelPorIdAsync(id);
-            if (empleadoVM == null)
-                return NotFound();
-
-            return View(empleadoVM);
-        }
-        #endregion
-
-        #region Crear
+        #region Crear        
         public async Task<IActionResult> Crear()
         {
-            var roles = await _rolService.ListarRolesAsync();
-
-            // Buscar el rol "Empleado" para filtrar usuarios que tengan ese rol
-            var rolEmpleado = roles.FirstOrDefault(r => r.Nombre.ToLower().Contains("empleado"));
-
-            var usuarios = rolEmpleado != null
-                ? await _usuarioService.ListarUsuariosViewModelAsync(rolEmpleado.Id, null, null)
-                : new System.Collections.Generic.List<UsuarioViewModel>();
-
             var vm = new EmpleadoViewModel
             {
-                RolesDisponibles = roles,
-                UsuariosDisponibles = usuarios
+                UsuariosDisponibles = await _empleadoService.ObtenerUsuariosDisponiblesAsync() ?? new List<SelectListItem>()
             };
-
             return View(vm);
         }
+        
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(EmpleadoViewModel vm)
         {
             if (!ModelState.IsValid)
             {
-                vm.RolesDisponibles = await _rolService.ListarRolesAsync();
-                vm.UsuariosDisponibles = await _usuarioService.ListarUsuariosViewModelAsync(vm.RolId, null, null);
+                vm.UsuariosDisponibles = await _empleadoService.ObtenerUsuariosDisponiblesAsync();
                 return View(vm);
             }
 
@@ -70,22 +46,27 @@ namespace hotelproyecto.Controllers
             return RedirectToAction(nameof(Index));
         }
         #endregion
-        
-        #region Editar
+
+        #region Editar        
         public async Task<IActionResult> Editar(int id)
         {
             var vm = await _empleadoService.ObtenerEmpleadoViewModelPorIdAsync(id);
             if (vm == null) return NotFound();
 
+            vm.UsuariosDisponibles = await _empleadoService.ObtenerUsuariosDisponiblesAsync();
+
             return View(vm);
         }
         
         [HttpPost]
-        public async Task<IActionResult> Editar(EmpleadoViewModel vm)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Editar(int id, EmpleadoViewModel vm)
         {
+            if (id != vm.Id) return BadRequest();
+
             if (!ModelState.IsValid)
             {
-                vm.RolesDisponibles = await _rolService.ListarRolesAsync();                
+                vm.UsuariosDisponibles = await _empleadoService.ObtenerUsuariosDisponiblesAsync();
                 return View(vm);
             }
 
@@ -94,11 +75,24 @@ namespace hotelproyecto.Controllers
         }
         #endregion
 
-        #region Estado
+        #region CambiarEstado        
+        [HttpPost]
         public async Task<IActionResult> CambiarEstado(int id, bool estado)
         {
             await _empleadoService.CambiarEstadoEmpleadoAsync(id, estado);
             return RedirectToAction(nameof(Index));
+        }
+        #endregion
+
+        #region Detalles
+        public async Task<IActionResult> Detalles(int id)
+        {
+            var vm = await _empleadoService.ObtenerEmpleadoViewModelPorIdAsync(id);
+            if (vm == null) return NotFound();
+            
+            vm.UsuariosDisponibles = await _empleadoService.ObtenerUsuariosDisponiblesAsync();
+
+            return View(vm);
         }
         #endregion
     }
