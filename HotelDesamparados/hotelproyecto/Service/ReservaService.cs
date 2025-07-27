@@ -1,12 +1,9 @@
-﻿using Sprint_2.Data;
-using Sprint_2.Models;
-using Sprint_2.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using hotelproyecto.Data;
+using hotelproyecto.Models;
+using hotelproyecto.ViewModel;
 
-namespace Sprint_2.Services
+
+namespace hotelproyecto.Services
 {
     public class ReservaService
     {

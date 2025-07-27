@@ -1,8 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Sprint_2.Validations;
+﻿using System.ComponentModel.DataAnnotations;
+using hotelproyecto.Validations;
 
-namespace Sprint_2.ViewModel
+namespace hotelproyecto.ViewModel
 {
     public class ReservaViewModel
     {

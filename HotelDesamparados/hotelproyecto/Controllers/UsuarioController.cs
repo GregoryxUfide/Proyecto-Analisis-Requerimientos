@@ -20,7 +20,7 @@ namespace hotelproyecto.Controllers
         public async Task<IActionResult> Index(int? rolId, bool? estado, string busqueda)
         {
             var usuarios = await _usuarioService.ListarUsuariosViewModelAsync(rolId, estado, busqueda);
-            var roles = await _rolService.ListarRolesAsync();
+            var roles = await _rolService.ObtenerRolesActivosAsync();
 
             var viewModel = new UsuarioFiltroViewModel
             {
@@ -36,19 +36,20 @@ namespace hotelproyecto.Controllers
 
         #endregion
 
-        #region"Crear"
+        #region "Crear"
         public async Task<IActionResult> Crear()
         {
-            var roles = await _rolService.ListarRolesAsync();
+            var roles = await _rolService.ObtenerRolesActivosAsync();
             var vm = new UsuarioViewModel { Roles = roles };
             return View(vm);
         }
+
         [HttpPost]
         public async Task<IActionResult> Crear(UsuarioViewModel vm)
         {
             if (!ModelState.IsValid)
             {
-                vm.Roles = await _rolService.ListarRolesAsync();
+                vm.Roles = await _rolService.ObtenerRolesActivosAsync();
                 return View(vm);
             }
 
@@ -56,7 +57,7 @@ namespace hotelproyecto.Controllers
             if (existe)
             {
                 ModelState.AddModelError("", "El correo ya está registrado.");
-                vm.Roles = await _rolService.ListarRolesAsync();
+                vm.Roles = await _rolService.ObtenerRolesActivosAsync();
                 return View(vm);
             }
 
@@ -65,7 +66,7 @@ namespace hotelproyecto.Controllers
         }
         #endregion
 
-        #region"Editar"
+        #region "Editar"
         public async Task<IActionResult> Editar(int id)
         {
             var vm = await _usuarioService.ObtenerUsuarioViewModelPorIdAsync(id);
@@ -73,24 +74,24 @@ namespace hotelproyecto.Controllers
 
             var usuarioLogueadoId = HttpContext.Session.GetInt32("UsuarioID");
             var rolLogueado = HttpContext.Session.GetString("Rol");
-            
+
             if (usuarioLogueadoId == id && rolLogueado?.ToLower() == "admin")
             {
                 vm.EsEdicionPropiaComoAdmin = true;
             }
-            return View(vm);
 
-        }        
+            vm.Roles = await _rolService.ObtenerRolesActivosAsync();
+            return View(vm);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Editar(UsuarioViewModel vm)
         {
             var usuarioLogueadoId = HttpContext.Session.GetInt32("UsuarioID");
             var rolLogueado = HttpContext.Session.GetString("Rol");
 
-            // Si es el mismo usuario y es Admin
             if (usuarioLogueadoId == vm.Id && rolLogueado?.ToLower() == "admin")
             {
-                // No permitir modificar su rol ni estado
                 var original = await _usuarioService.ObtenerUsuarioViewModelPorIdAsync(vm.Id);
                 vm.RolId = original.RolId;
                 vm.Estado = original.Estado;
@@ -98,7 +99,7 @@ namespace hotelproyecto.Controllers
 
             if (!ModelState.IsValid)
             {
-                vm.Roles = await _rolService.ListarRolesAsync();
+                vm.Roles = await _rolService.ObtenerRolesActivosAsync();
                 return View(vm);
             }
 

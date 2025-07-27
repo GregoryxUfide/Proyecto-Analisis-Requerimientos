@@ -109,7 +109,7 @@ namespace hotelproyecto.Services
         #region "Cargar Ubicaciones"
         public async Task<List<SelectListItem>> ObtenerUbicacionesSelectListAsync()
         {
-            var ubicaciones = await _ubicacionProductoService.ListarUbicacionesAsync();
+            var ubicaciones = await _ubicacionProductoService.ListarUbicacionesActivasAsync();
 
             return ubicaciones.Select(u => new SelectListItem
             {

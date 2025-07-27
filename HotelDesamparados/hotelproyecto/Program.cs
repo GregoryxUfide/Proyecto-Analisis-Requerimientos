@@ -1,7 +1,5 @@
 using hotelproyecto.Data;
 using hotelproyecto.Services;
-using Sprint_2.Data;
-using Sprint_2.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

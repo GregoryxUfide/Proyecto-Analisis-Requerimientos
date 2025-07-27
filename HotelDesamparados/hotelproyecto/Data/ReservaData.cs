@@ -1,9 +1,8 @@
 ﻿using System.Data;
-using Sprint_2.Models;
 using Microsoft.Data.SqlClient;
-using hotelproyecto.Data;
+using hotelproyecto.Models;
 
-namespace Sprint_2.Data
+namespace hotelproyecto.Data
 {
     public class ReservaData
     {
@@ -58,6 +57,7 @@ namespace Sprint_2.Data
             await cmd.ExecuteNonQueryAsync();
         }
         #endregion
+
         #region "Listar"
         public async Task<List<Reserva>> ListarReservasAsync()
         {

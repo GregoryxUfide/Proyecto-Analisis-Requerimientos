@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sprint_2.Services;
-using Sprint_2.ViewModel;
-using System;
-using System.Threading.Tasks;
+using hotelproyecto.Services;
+using hotelproyecto.ViewModel;
 
-namespace Sprint_2.Controllers
+namespace hotelproyecto.Controllers
 {
     public class ReservaController : Controller
     {

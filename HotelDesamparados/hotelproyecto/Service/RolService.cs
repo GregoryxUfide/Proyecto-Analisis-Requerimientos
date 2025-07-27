@@ -97,5 +97,14 @@ namespace hotelproyecto.Services
                 Estado = rol.Estado
             };
         }
+        public async Task<List<RolViewModel>> ObtenerRolesActivosAsync()
+        {
+            var roles = await _rolData.ListarRolesAsync();
+            return roles
+                .Where(r => r.Estado)
+                .Select(r => MapearARolViewModel(r))
+                .ToList();
+        }
+
     }
 }

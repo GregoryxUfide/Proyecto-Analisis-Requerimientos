@@ -27,6 +27,22 @@ namespace hotelproyecto.Services
         }
         #endregion
 
+        #region "Listar Activos"
+        public async Task<List<UbicacionProductoViewModel>> ListarUbicacionesActivasAsync()
+        {
+            var lista = await _ubicacionData.ListarUbicacionesAsync();
+            var activas = lista.Where(u => u.Estado).ToList();  // Solo activas
+
+            return activas.Select(u => new UbicacionProductoViewModel
+            {
+                IdUbicacionProducto = u.IdUbicacionProducto,
+                NombreUbicacionProducto = u.NombreUbicacionProducto,
+                DescripcionUbicacionProducto = u.DescripcionUbicacionProducto,
+                Estado = u.Estado
+            }).ToList();
+        }
+        #endregion
+
         #region "Crear"
         public async Task CrearUbicacionAsync(UbicacionProductoViewModel vm)
         {
