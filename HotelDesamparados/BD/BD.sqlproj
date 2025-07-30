@@ -119,5 +119,11 @@
     <Build Include="dbo\Stored Procedures\sp_ObtenerTokenRecuperacion.sql" />
     <Build Include="dbo\Stored Procedures\sp_MarcarTokenComoUsado.sql" />
     <Build Include="dbo\Stored Procedures\sp_GuardarTokenRecuperacion.sql" />
+    <Build Include="dbo\Tables\Contabilidad.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerContabilidadPorId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ListarContabilidad.sql" />
+    <Build Include="dbo\Stored Procedures\sp_FiltrarContabilidadPorFecha.sql" />
+    <Build Include="dbo\Stored Procedures\sp_CrearContabilidad.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarContabilidad.sql" />
   </ItemGroup>
 </Project>

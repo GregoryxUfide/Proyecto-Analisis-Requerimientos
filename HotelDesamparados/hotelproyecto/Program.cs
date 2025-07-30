@@ -1,4 +1,5 @@
 using hotelproyecto.Data;
+using hotelproyecto.Service;
 using hotelproyecto.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ builder.Services.AddScoped<EmpleadoData>();
 builder.Services.AddScoped<HabitacionData>();
 builder.Services.AddScoped<LimpiezaHabitacionData>();
 builder.Services.AddScoped<ReservaData>();
+builder.Services.AddScoped<ContabilidadData>();
+builder.Services.AddScoped<ReporteriaData>();
 
 
 // Registro de servicios 
@@ -30,6 +33,8 @@ builder.Services.AddScoped<EmpleadoService>();
 builder.Services.AddScoped<HabitacionService>();
 builder.Services.AddScoped<LimpiezaHabitacionService>();
 builder.Services.AddScoped<ReservaService>();
+builder.Services.AddScoped<ContabilidadService>();
+builder.Services.AddScoped<ReporteriaService>();
 
 
 // Tiempo de sesión y autenticación
@@ -64,4 +69,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 app.Run();

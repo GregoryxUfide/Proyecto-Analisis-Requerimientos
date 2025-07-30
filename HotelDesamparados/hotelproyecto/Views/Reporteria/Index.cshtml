@@ -1,0 +1,33 @@
+﻿@model List<hotelproyecto.ViewModel.ReporteriaViewModel>
+
+@{
+    ViewData["Title"] = "Reportes";
+}
+
+<h2>Reportes disponibles</h2>
+
+<form method="post" asp-action="DescargarPDF">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tabla</th>
+                <th>Descripción</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tabla in Model)
+            {
+                <tr>
+                    <td>@tabla.NombreTabla</td>
+                    <td>@tabla.DescripcionTabla</td>
+                    <td>
+                        <button type="submit" name="nombreTabla" value="@tabla.NombreTabla" class="btn btn-primary">
+                            Descargar PDF
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
