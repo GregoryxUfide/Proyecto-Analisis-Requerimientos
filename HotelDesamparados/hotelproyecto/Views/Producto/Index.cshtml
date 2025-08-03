@@ -63,8 +63,8 @@
                             </span>
                         </td>
                         <td data-label="Acciones" class="actions">
-                            <a asp-action="Editar" asp-route-id="@producto.IdProducto" class="btn-action edit">Editar</a>
                             <a asp-action="Detalles" asp-route-id="@producto.IdProducto" class="btn-action details">Detalles</a>
+                            <a asp-action="Editar" asp-route-id="@producto.IdProducto" class="btn-action edit">Editar</a>                            
                             <a asp-action="CambiarEstado" asp-route-id="@producto.IdProducto" 
                                asp-route-estado="@(producto.EstadoProducto ? "false" : "true")"
                                class="btn-action @(producto.EstadoProducto ? "deactivate" : "activate")">

@@ -29,14 +29,13 @@ namespace hotelproyecto.Data
         #endregion
 
         #region Obtener Token por Usuario
-        public async Task<TokenRecuperacion?> ObtenerTokenPorUsuarioAsync(int usuarioId, string token)
+        public async Task<TokenRecuperacion?> ObtenerTokenPorUsuarioAsync(int usuarioId)
         {
             using var conexion = await _conexionDB.ObtenerConexionAsync();
             using var cmd = new SqlCommand("sp_ObtenerTokenRecuperacion", conexion);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@UsuarioId", usuarioId);
-            cmd.Parameters.AddWithValue("@Token", token);
 
             using var reader = await cmd.ExecuteReaderAsync();
             if (await reader.ReadAsync())
@@ -51,7 +50,6 @@ namespace hotelproyecto.Data
                     Usado = reader.GetBoolean(5)
                 };
             }
-
             return null;
         }
         #endregion

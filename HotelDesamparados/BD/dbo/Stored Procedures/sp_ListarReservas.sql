@@ -4,17 +4,15 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT 
-        R.IdReserva,
-        R.fechaInicio,
-        R.fechaFinal,
-        R.nombreReservante,
-        R.telefono,
-        R.correo,
-        H.NumHabitacion
-    FROM 
-        dbo.Reservas R
-    INNER JOIN
-        dbo.Habitacion H ON R.numHabitacion = H.NumHabitacion
-    ORDER BY 
-        R.fechaInicio ASC;
-END;
+        r.IdReserva,
+        r.FechaInicio,
+        r.FechaFinal,
+        r.Nombre,
+        r.Telefono,
+        r.Correo,
+        r.HabitacionId,
+        r.Estado,
+        h.NumHabitacion
+    FROM Reservas r
+    INNER JOIN Habitacion h ON r.HabitacionId = h.Id;
+END

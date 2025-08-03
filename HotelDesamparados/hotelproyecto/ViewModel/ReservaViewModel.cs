@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using hotelproyecto.Validations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace hotelproyecto.ViewModel
 {
@@ -8,32 +10,40 @@ namespace hotelproyecto.ViewModel
         public int IdReserva { get; set; }
 
         [Required(ErrorMessage = "La fecha de inicio es obligatoria.")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Fecha Inicio")]
+        [DataType(DataType.DateTime, ErrorMessage = "Debe ingresar una fecha válida.")]
         public DateTime FechaInicio { get; set; }
 
         [Required(ErrorMessage = "La fecha final es obligatoria.")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Fecha Final")]
-        [DateGreaterThan("FechaInicio", ErrorMessage = "La fecha final debe ser mayor o igual a la fecha de inicio.")]
+        [DataType(DataType.DateTime, ErrorMessage = "Debe ingresar una fecha válida.")]
         public DateTime FechaFinal { get; set; }
 
-        [Required(ErrorMessage = "El nombre del reservante es obligatorio.")]
-        [StringLength(50, ErrorMessage = "El nombre del reservante no puede superar los 50 caracteres.")]
-        [Display(Name = "Nombre Reservante")]
-        public string NombreReservante { get; set; } = string.Empty;
+        [Required(ErrorMessage = "El nombre es obligatorio.")]
+        [StringLength(100, ErrorMessage = "El nombre no puede exceder los 100 caracteres.")]
+        [RegularExpression(@"^[A-ZÁÉÍÓÚÑa-záéíóúñ\s]+$", ErrorMessage = "El nombre solo debe contener letras y espacios.")]
+        public string Nombre { get; set; }
 
         [Required(ErrorMessage = "El teléfono es obligatorio.")]
-        [Range(10000000, 999999999, ErrorMessage = "El teléfono debe ser un número válido.")]
-        public int Telefono { get; set; }
+        [RegularExpression(@"^\d{8}$", ErrorMessage = "El teléfono debe contener exactamente 8 dígitos.")]
+        public string Telefono { get; set; }
 
-        [EmailAddress(ErrorMessage = "El correo electrónico no es válido.")]
-        [StringLength(50, ErrorMessage = "El correo no puede superar los 50 caracteres.")]
-        public string? Correo { get; set; }
+        [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
+        [EmailAddress(ErrorMessage = "Debe ingresar un correo electrónico válido.")]
+        [StringLength(100, ErrorMessage = "El correo no puede exceder los 100 caracteres.")]
+        public string Correo { get; set; }
 
-        [Required(ErrorMessage = "El número de habitación es obligatorio.")]
-        [Range(1, 1000, ErrorMessage = "El número de habitación debe estar entre 1 y 1000.")]
-        [Display(Name = "Número de Habitación")]
-        public int NumHabitacion { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar una habitación.")]
+        public int HabitacionId { get; set; }
+
+        [Required(ErrorMessage = "El estado de la reserva es obligatorio.")]
+        public bool Estado { get; set; } // true = Activa, false = Finalizada
+
+        [BindNever]
+        public IEnumerable<SelectListItem>? Habitaciones { get; set; } = Enumerable.Empty<SelectListItem>();
+
+        [BindNever]
+        public string? HabitacionNombre { get; set; }
+
+        [BindNever]
+        public string? EstadoTexto => Estado ? "Reserva Activa" : "Finalizó Reserva";
     }
 }

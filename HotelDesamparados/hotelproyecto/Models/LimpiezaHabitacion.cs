@@ -22,5 +22,8 @@ namespace hotelproyecto.Models
 
         [Display(Name = "Fecha y Hora de Registro")]
         public DateTime FechaHora { get; set; } = DateTime.Now;
+        [Required(ErrorMessage = "Debe seleccionar una habitación.")]
+        [Display(Name = "Habitación")]
+        public int HabitacionId { get; set; }
     }
 }

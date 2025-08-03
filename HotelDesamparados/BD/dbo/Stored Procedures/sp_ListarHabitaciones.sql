@@ -1,8 +1,7 @@
 ﻿CREATE PROCEDURE sp_ListarHabitaciones
 AS
 BEGIN
-    SELECT Id, Capacidad, Precio, NumHabitacion, NumCamas, Extras, Comentarios
+    SELECT Id, Capacidad, Precio, NumHabitacion, NumCamas, Extras, Comentarios, Estado
     FROM Habitacion
-	ORDER BY 
-	[NumHabitacion] ASC;-- Ordenar por número de habitación
+    ORDER BY NumHabitacion ASC;
 END;

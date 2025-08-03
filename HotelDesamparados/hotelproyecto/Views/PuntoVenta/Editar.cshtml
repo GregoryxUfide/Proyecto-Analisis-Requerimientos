@@ -1,0 +1,61 @@
+﻿@model hotelproyecto.ViewModel.PuntoVentaViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Editar Venta";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Editar" method="post" class="needs-validation" novalidate>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="DescripcionVenta" class="form-label"></label>
+        <input asp-for="DescripcionVenta" class="form-control" />
+        <span asp-validation-for="DescripcionVenta" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Metodo_Pago" class="form-label"></label>
+        <select asp-for="Metodo_Pago" class="form-select">
+            <option value="">-- Seleccione método de pago --</option>
+            <option value="Efectivo" selected="@(Model.Metodo_Pago == "Efectivo" ? "selected" : "")">Efectivo</option>
+            <option value="Tarjeta" selected="@(Model.Metodo_Pago == "Tarjeta" ? "selected" : "")">Tarjeta</option>
+            <option value="Transferencia" selected="@(Model.Metodo_Pago == "Transferencia" ? "selected" : "")">Transferencia</option>
+            <option value="Sinpe Movil" selected="@(Model.Metodo_Pago == "Sinpe Movil" ? "selected" : "")">Sinpe Movil</option>
+        </select>
+        <span asp-validation-for="Metodo_Pago" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Descuento" class="form-label"></label>
+        <input asp-for="Descuento" class="form-control" />
+        <span asp-validation-for="Descuento" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ReservaId" class="form-label"></label>
+        <select asp-for="ReservaId" asp-items="Model.Reservas" class="form-select">
+            <option value="">-- Seleccione una reserva --</option>
+        </select>
+        <span asp-validation-for="ReservaId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="EmpleadoId" class="form-label"></label>
+        <select asp-for="EmpleadoId" asp-items="Model.Empleados" class="form-select">
+            <option value="">-- Seleccione un empleado --</option>
+        </select>
+        <span asp-validation-for="EmpleadoId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

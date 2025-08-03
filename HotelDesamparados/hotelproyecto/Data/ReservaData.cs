@@ -1,6 +1,6 @@
-﻿using System.Data;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using hotelproyecto.Models;
+using System.Data;
 
 namespace hotelproyecto.Data
 {
@@ -14,28 +14,20 @@ namespace hotelproyecto.Data
         }
 
         #region "Crear"
-        public async Task<(int Codigo, string Mensaje)> CrearReservaAsync(Reserva reserva)
+        public async Task CrearReservaAsync(Reserva reserva)
         {
             using var conexion = await _conexionDB.ObtenerConexionAsync();
             using var cmd = new SqlCommand("sp_CrearReserva", conexion);
             cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.AddWithValue("@fechaInicio", reserva.FechaInicio);
-            cmd.Parameters.AddWithValue("@fechaFinal", reserva.FechaFinal);
-            cmd.Parameters.AddWithValue("@nombreReservante", reserva.NombreReservante);
-            cmd.Parameters.AddWithValue("@telefono", reserva.Telefono);
-            cmd.Parameters.AddWithValue("@correo", reserva.Correo ?? (object)DBNull.Value);
-            cmd.Parameters.AddWithValue("@numHabitacion", reserva.NumHabitacion);
+            cmd.Parameters.AddWithValue("@FechaInicio", reserva.FechaInicio);
+            cmd.Parameters.AddWithValue("@FechaFinal", reserva.FechaFinal);
+            cmd.Parameters.AddWithValue("@Nombre", reserva.Nombre);
+            cmd.Parameters.AddWithValue("@Telefono", reserva.Telefono);
+            cmd.Parameters.AddWithValue("@Correo", reserva.Correo);
+            cmd.Parameters.AddWithValue("@HabitacionId", reserva.HabitacionId);            
 
-            using var reader = await cmd.ExecuteReaderAsync();
-            if (await reader.ReadAsync())
-            {
-                int codigo = reader.GetInt32(0);
-                string mensaje = reader.GetString(1);
-                return (codigo, mensaje);
-            }
-
-            return (-99, "Error desconocido al crear la reserva.");
+            await cmd.ExecuteNonQueryAsync();
         }
         #endregion
 
@@ -47,12 +39,13 @@ namespace hotelproyecto.Data
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@IdReserva", reserva.IdReserva);
-            cmd.Parameters.AddWithValue("@fechaInicio", reserva.FechaInicio);
-            cmd.Parameters.AddWithValue("@fechaFinal", reserva.FechaFinal);
-            cmd.Parameters.AddWithValue("@nombreReservante", reserva.NombreReservante);
-            cmd.Parameters.AddWithValue("@telefono", reserva.Telefono);
-            cmd.Parameters.AddWithValue("@correo", reserva.Correo ?? (object)DBNull.Value);
-            cmd.Parameters.AddWithValue("@numHabitacion", reserva.NumHabitacion);
+            cmd.Parameters.AddWithValue("@FechaInicio", reserva.FechaInicio);
+            cmd.Parameters.AddWithValue("@FechaFinal", reserva.FechaFinal);
+            cmd.Parameters.AddWithValue("@Nombre", reserva.Nombre);
+            cmd.Parameters.AddWithValue("@Telefono", reserva.Telefono);
+            cmd.Parameters.AddWithValue("@Correo", reserva.Correo);
+            cmd.Parameters.AddWithValue("@HabitacionId", reserva.HabitacionId);
+            cmd.Parameters.AddWithValue("@Estado" , reserva.Estado);
 
             await cmd.ExecuteNonQueryAsync();
         }
@@ -75,39 +68,11 @@ namespace hotelproyecto.Data
                     IdReserva = reader.GetInt32(0),
                     FechaInicio = reader.GetDateTime(1),
                     FechaFinal = reader.GetDateTime(2),
-                    NombreReservante = reader.GetString(3),
-                    Telefono = reader.GetInt32(4),
-                    Correo = reader.IsDBNull(5) ? null : reader.GetString(5),
-                    NumHabitacion = reader.GetInt32(6)
-                });
-            }
-            return lista;
-        }
-        #endregion
-
-        #region "ListarPorFechaInicio"
-        public async Task<List<Reserva>> ListarReservasPorFechaInicioAsync(DateTime fechaDesde)
-        {
-            var lista = new List<Reserva>();
-
-            using var conexion = await _conexionDB.ObtenerConexionAsync();
-            using var cmd = new SqlCommand("sp_ListarReservaPorFecha", conexion);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@fechaDesde", fechaDesde);
-
-            using var reader = await cmd.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
-            {
-                lista.Add(new Reserva
-                {
-                    IdReserva = reader.GetInt32(0),
-                    FechaInicio = reader.GetDateTime(1),
-                    FechaFinal = reader.GetDateTime(2),
-                    NombreReservante = reader.GetString(3),
-                    Telefono = reader.GetInt32(4),
-                    Correo = reader.IsDBNull(5) ? null : reader.GetString(5),
-                    NumHabitacion = reader.GetInt32(6)
+                    Nombre = reader.GetString(3),
+                    Telefono = reader.GetString(4),
+                    Correo = reader.GetString(5),
+                    HabitacionId = reader.GetInt32(6),
+                    Estado = reader.GetBoolean(7)
                 });
             }
             return lista;
@@ -131,24 +96,26 @@ namespace hotelproyecto.Data
                     IdReserva = reader.GetInt32(0),
                     FechaInicio = reader.GetDateTime(1),
                     FechaFinal = reader.GetDateTime(2),
-                    NombreReservante = reader.GetString(3),
-                    Telefono = reader.GetInt32(4),
-                    Correo = reader.IsDBNull(5) ? null : reader.GetString(5),
-                    NumHabitacion = reader.GetInt32(6)
+                    Nombre = reader.GetString(3),
+                    Telefono = reader.GetString(4),
+                    Correo = reader.GetString(5),
+                    HabitacionId = reader.GetInt32(6),
+                    Estado = reader.GetBoolean(7)
                 };
             }
             return null;
         }
         #endregion
 
-        #region "Eliminar"
-        public async Task EliminarReservaAsync(int idReserva)
+        #region "Estado"
+        public async Task CambiarEstadoReservaAsync(int idReserva, bool estado)
         {
             using var conexion = await _conexionDB.ObtenerConexionAsync();
-            using var cmd = new SqlCommand("sp_EliminarReserva", conexion);
+            using var cmd = new SqlCommand("sp_EstadoReserva", conexion);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("@IdReserva", idReserva);
+            cmd.Parameters.AddWithValue("@Estado", estado);
 
             await cmd.ExecuteNonQueryAsync();
         }

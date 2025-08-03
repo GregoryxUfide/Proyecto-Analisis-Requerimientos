@@ -25,6 +25,7 @@
             <table class="cleaning-table">
                 <thead>
                     <tr>
+                        <th>Habitación</th>
                         <th>Conserje</th>
                         <th>Tareas Completadas</th>
                         <th>Fecha/Hora</th>
@@ -35,8 +36,11 @@
                     @foreach (var limpieza in Model)
                     {
                         <tr>
+                            <td data-label="Habitación">
+                                <i class="bi bi-door-open"></i> @limpieza.NumHabitacion
+                            </td>
                             <td data-label="Conserje">
-                                <div class="employee-info">                                    
+                                <div class="employee-info">
                                     <span>@limpieza.NombreConserje</span>
                                 </div>
                             </td>
@@ -54,16 +58,17 @@
                                 </div>
                             </td>
                             <td data-label="Acciones" class="actions">
-                                <a asp-action="Editar" asp-route-id="@limpieza.Id" class="btn-action edit">
-                                     Editar
-                                </a>
                                 <a asp-action="Detalles" asp-route-id="@limpieza.Id" class="btn-action details">
                                     Detalles
+                                </a>
+                                <a asp-action="Editar" asp-route-id="@limpieza.Id" class="btn-action edit">
+                                    Editar
                                 </a>
                             </td>
                         </tr>
                     }
                 </tbody>
+
             </table>
         </div>
     </div>

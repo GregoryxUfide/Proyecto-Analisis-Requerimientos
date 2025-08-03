@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE sp_ListarReservaPorFecha
+﻿/*CREATE PROCEDURE sp_ListarReservaPorFecha
     @fechaDesde DATE
 AS
 BEGIN
@@ -16,3 +16,4 @@ BEGIN
     INNER JOIN dbo.Habitacion H ON R.numHabitacion = H.NumHabitacion
     WHERE R.fechaInicio >= @fechaDesde;
 END;
+*/

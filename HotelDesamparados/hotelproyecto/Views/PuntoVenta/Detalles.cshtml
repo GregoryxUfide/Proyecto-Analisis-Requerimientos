@@ -1,0 +1,55 @@
+﻿@model hotelproyecto.ViewModel.PuntoVentaViewModel
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Detalles de la Venta";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>Detalles de la Venta</h2>
+    </div>
+
+    <div class="card-body">
+        <div class="role-details">
+            <div class="detail-item">
+                <span class="detail-label">ID:</span>
+                <span class="detail-value">@Model.Id</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Descripción Venta:</span>
+                <span class="detail-value">@Model.DescripcionVenta</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Método de Pago:</span>
+                <span class="detail-value">@Model.Metodo_Pago</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Descuento (%):</span>
+                <span class="detail-value">@Model.Descuento.ToString("F2")</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Reserva:</span>
+                <span class="detail-value">@Model.ReservaDetalle</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Empleado:</span>
+                <span class="detail-value">@Model.EmpleadoNombre</span>
+            </div>
+        </div>
+
+        <div class="detail-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Listado
+            </a>
+            <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-primary">
+                <i class="bi bi-pencil"></i> Editar Venta
+            </a>
+        </div>
+    </div>
+</div>

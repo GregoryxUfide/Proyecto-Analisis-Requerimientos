@@ -1,0 +1,39 @@
+﻿@model List<hotelproyecto.ViewModel.PuntoVentaViewModel>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Gestión de Punto de Venta";
+}
+
+<div class="admin-card">
+    <div class="card-header">
+        <h2>Listado de Punto de Venta</h2>
+        <a asp-action="Crear" class="btn btn-primary">Crear Nueva Venta</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="roles-table">
+            <thead>
+                <tr>
+                    <th>Descripción Venta</th>
+                    <th>Método de Pago</th>
+                    <th>Descuento (%)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var venta in Model)
+                {
+                    <tr>
+                        <td data-label="Descripción Venta">@venta.DescripcionVenta</td>
+                        <td data-label="Método de Pago">@venta.Metodo_Pago</td>
+                        <td data-label="Descuento">@venta.Descuento.ToString("F2")</td>
+                        <td data-label="Acciones" class="actions">
+                            <a asp-action="Detalles" asp-route-id="@venta.Id" class="btn-action details">Detalles</a>
+                            <a asp-action="Editar" asp-route-id="@venta.Id" class="btn-action edit">Editar</a>                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

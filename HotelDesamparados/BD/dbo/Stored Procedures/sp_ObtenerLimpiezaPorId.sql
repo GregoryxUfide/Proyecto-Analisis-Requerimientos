@@ -2,7 +2,14 @@
     @Id INT
 AS
 BEGIN
-    SELECT Id, TareasCompletadas, NombreConserje, Foto, FechaHora
-    FROM LimpiezaHabitacion
-    WHERE Id = @Id;
+    SELECT 
+        lh.Id, 
+        lh.TareasCompletadas, 
+        lh.NombreConserje, 
+        lh.Foto, 
+        lh.FechaHora,
+        h.NumHabitacion
+    FROM LimpiezaHabitacion lh
+    INNER JOIN Habitacion h ON lh.HabitacionId = h.Id
+    WHERE lh.Id = @Id;
 END;

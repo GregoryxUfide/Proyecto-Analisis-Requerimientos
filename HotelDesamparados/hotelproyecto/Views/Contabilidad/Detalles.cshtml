@@ -1,48 +1,50 @@
 ﻿@model hotelproyecto.ViewModel.ContabilidadViewModel
 
 @{
-    ViewData["Title"] = "Detalles";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Detalles de Contabilidad";
 }
 
-<h1>Detalles</h1>
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
 
-<div>
-    <h4>ContabilidadViewModel</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdContabilidad)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdContabilidad)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Monto)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Monto)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Detalle)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Detalle)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Comentario)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Comentario)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Editar", "Editar", new { id = Model.IdContabilidad}) |
-    <a asp-action="Index">Volver al listado</a>
+    <div class="card-body">
+        <div class="employee-details">
+            <div class="detail-item">
+                <span class="detail-label">ID Contabilidad:</span>
+                <span class="detail-value">@Model.IdContabilidad</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Fecha:</span>
+                <span class="detail-value">@Model.Fecha.ToString()</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Monto:</span>
+                <span class="detail-value">@Model.Monto.ToString("C")</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Detalle:</span>
+                <span class="detail-value">@Model.Detalle</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Comentario:</span>
+                <span class="detail-value">@Model.Comentario</span>
+            </div>
+        </div>
+
+        <div class="detail-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Listado
+            </a>
+            <a asp-action="Editar" asp-route-id="@Model.IdContabilidad" class="btn btn-primary">
+                Editar Contabilidad
+            </a>
+        </div>
+    </div>
 </div>

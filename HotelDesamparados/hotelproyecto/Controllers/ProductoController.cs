@@ -53,7 +53,7 @@ namespace hotelproyecto.Controllers
             var vm = await _productoService.ObtenerProductoViewModelPorIdAsync(id);
             if (vm == null) return NotFound();
 
-            // Ya trae las ubicaciones cargadas, si no, se podría cargar aquí también
+            vm.Ubicaciones = await _productoService.ObtenerUbicacionesSelectListAsync();
             return View(vm);
         }
 

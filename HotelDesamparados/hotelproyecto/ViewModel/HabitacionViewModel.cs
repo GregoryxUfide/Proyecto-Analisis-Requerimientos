@@ -31,6 +31,7 @@ namespace hotelproyecto.ViewModel
         [StringLength(500, ErrorMessage = "Los comentarios no pueden superar los 500 caracteres.")]
         public string Comentarios { get; set; }
 
-
-        }
+        [Display(Name = "Estado")]
+        public bool Estado { get; set; } // true = Activo, false = Inactivo
+    }
 }

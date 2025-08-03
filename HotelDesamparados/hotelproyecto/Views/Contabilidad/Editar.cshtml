@@ -1,49 +1,63 @@
 ﻿@model hotelproyecto.ViewModel.ContabilidadViewModel
 
 @{
-    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewData["Title"] = "Editar Contabilidad";
 }
 
-<h1>Editar</h1>
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
 
-<h4>ContabilidadViewModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Editar">
+    <div class="card-body">
+        <form asp-action="Editar" method="post" class="contabilidad-form">
             @Html.HiddenFor(model => model.IdContabilidad)
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
-                <span asp-validation-for="Fecha" class="text-danger"></span>
+
+            <div class="form-group mb-3">
+                <label asp-for="Fecha" class="form-label"></label>
+                <input asp-for="Fecha" class="form-control" type="date" />
+                <span asp-validation-for="Fecha" class="validation-message text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Monto" class="control-label"></label>
-                <input asp-for="Monto" class="form-control" />
-                <span asp-validation-for="Monto" class="text-danger"></span>
+
+            <div class="form-group mb-3">
+                <label asp-for="Monto" class="form-label"></label>
+                <div class="input-group">
+                    <span class="input-group-text">₡</span>
+                    <input asp-for="Monto" class="form-control" placeholder="Ej: 50000" />
+                </div>
+                <span asp-validation-for="Monto" class="validation-message text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Detalle" class="control-label"></label>
-                <input asp-for="Detalle" class="form-control" />
-                <span asp-validation-for="Detalle" class="text-danger"></span>
+
+            <div class="form-group mb-3">
+                <label asp-for="Detalle" class="form-label"></label>
+                <input asp-for="Detalle" class="form-control" placeholder="Descripción del movimiento" />
+                <span asp-validation-for="Detalle" class="validation-message text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Comentario" class="control-label"></label>
-                <input asp-for="Comentario" class="form-control" />
-                <span asp-validation-for="Comentario" class="text-danger"></span>
+
+            <div class="form-group mb-3">
+                <label asp-for="Comentario" class="form-label"></label>
+                <textarea asp-for="Comentario" class="form-control" placeholder="Comentarios adicionales..."></textarea>
+                <span asp-validation-for="Comentario" class="validation-message text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Volver al Listado</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>        
+        document.getElementById('Monto').addEventListener('blur', function () {
+            if (this.value) {
+                this.value = parseFloat(this.value).toFixed(2);
+            }
+        });
+    </script>
 }

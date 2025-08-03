@@ -34,21 +34,15 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Usuario" asp-action="Index" class="nav-link">
-                            <i class="bi bi-people"></i>
-                            <span>Usuarios</span>
-                        </a>
-                    </li>
-                    <li>
                         <a asp-controller="Rol" asp-action="Index" class="nav-link">
                             <i class="bi bi-shield-lock"></i>
                             <span>Roles</span>
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Producto" asp-action="Index" class="nav-link">
-                            <i class="bi bi-box-seam"></i>
-                            <span>Productos</span>
+                        <a asp-controller="Usuario" asp-action="Index" class="nav-link">
+                            <i class="bi bi-people"></i>
+                            <span>Usuarios</span>
                         </a>
                     </li>
                     <li>
@@ -57,6 +51,12 @@
                             <span>Empleados</span>
                         </a>
                     </li>
+                    <li>
+                        <a asp-controller="Contabilidad" asp-action="Index" class="nav-link">
+                            <i class="bi bi-cash-coin"></i>
+                            <span>Contabilidad</span>
+                        </a>
+                    </li>                    
                     <li>
                         <a asp-controller="Habitacion" asp-action="Index" class="nav-link">
                             <i class="bi bi-door-open"></i>
@@ -70,6 +70,13 @@
                         </a>
                     </li>
                     <li>
+                        <a asp-controller="PuntoVenta" asp-action="Index" class="nav-link">
+                            <i class="bi bi-building-add"></i>
+                            <span>Punto Venta</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a asp-controller="LimpiezaHabitacion" asp-action="Index" class="nav-link">
                             <i class="bi bi-bucket"></i>
                             <span>Limpieza</span>
@@ -82,14 +89,14 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-controller="Contabilidad" asp-action="Index" class="nav-link">
-                            <i class="bi bi-pin-map"></i>
-                            <span>Contabilidad</span>
+                        <a asp-controller="Producto" asp-action="Index" class="nav-link">
+                            <i class="bi bi-box-seam"></i>
+                            <span>Productos</span>
                         </a>
                     </li>
                     <li>
                         <a asp-controller="Reporteria" asp-action="Index" class="nav-link">
-                            <i class="bi bi-pin-map"></i>
+                            <i class="bi bi-flag"></i>
                             <span>Reporteria</span>
                         </a>
                     </li>

@@ -6,6 +6,7 @@
     [NumCamas]      INT             NOT NULL,
     [Extras]        NVARCHAR (500)  NULL,
     [Comentarios]   NVARCHAR (500)  NULL,
+    [Estado]        BIT             DEFAULT ((1)) NOT NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [UQ_NumHabitacion] UNIQUE NONCLUSTERED ([NumHabitacion] ASC)
 );

@@ -4,6 +4,8 @@
     [NombreConserje]    NVARCHAR (100)  NOT NULL,
     [Foto]              VARBINARY (MAX) NULL,
     [FechaHora]         DATETIME        DEFAULT (getdate()) NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    [HabitacionId]      INT             NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_LimpiezaHabitacion_Habitacion] FOREIGN KEY ([HabitacionId]) REFERENCES [dbo].[Habitacion] ([Id])
 );
 

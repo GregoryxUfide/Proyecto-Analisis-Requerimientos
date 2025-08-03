@@ -3,7 +3,7 @@ using hotelproyecto.Services;
 using hotelproyecto.ViewModel;
 
 namespace hotelproyecto.Controllers
-{    
+{
     public class HabitacionController : Controller
     {
         private readonly HabitacionService _habitacionService;
@@ -34,7 +34,7 @@ namespace hotelproyecto.Controllers
             try
             {
                 await _habitacionService.CrearHabitacionAsync(vm);
-                TempData["Success"] = "Habitación creada exitosamente!"; // Feedback al usuario
+                TempData["Success"] = "Habitación creada exitosamente!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -75,6 +75,13 @@ namespace hotelproyecto.Controllers
         }
         #endregion
 
-
+        #region "Cambiar Estado"
+        [HttpPost]
+        public async Task<IActionResult> CambiarEstado(int id, bool estado)
+        {
+            await _habitacionService.CambiarEstadoHabitacionAsync(id, estado);
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
     }
 }

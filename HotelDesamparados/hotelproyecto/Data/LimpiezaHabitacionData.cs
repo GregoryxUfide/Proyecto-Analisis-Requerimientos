@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Data;
+using System.Threading.Tasks;
 using hotelproyecto.Models;
 using Microsoft.Data.SqlClient;
 
@@ -22,6 +24,7 @@ namespace hotelproyecto.Data
 
             cmd.Parameters.AddWithValue("@TareasCompletadas", limpieza.TareasCompletadas);
             cmd.Parameters.AddWithValue("@NombreConserje", limpieza.NombreConserje);
+            cmd.Parameters.AddWithValue("@HabitacionId", limpieza.HabitacionId);
             cmd.Parameters.Add("@Foto", SqlDbType.VarBinary, -1).Value = limpieza.Foto != null ? limpieza.Foto : (object)DBNull.Value;
 
             await cmd.ExecuteNonQueryAsync();
@@ -38,7 +41,8 @@ namespace hotelproyecto.Data
             cmd.Parameters.AddWithValue("@Id", limpieza.Id);
             cmd.Parameters.AddWithValue("@TareasCompletadas", limpieza.TareasCompletadas);
             cmd.Parameters.AddWithValue("@NombreConserje", limpieza.NombreConserje);
-            var fotoParam = cmd.Parameters.Add("@Foto", SqlDbType.VarBinary); fotoParam.Value = limpieza.Foto != null && limpieza.Foto.Length > 0? limpieza.Foto : (object)DBNull.Value;
+            var fotoParam = cmd.Parameters.Add("@Foto", SqlDbType.VarBinary, -1);
+            fotoParam.Value = limpieza.Foto != null && limpieza.Foto.Length > 0 ? limpieza.Foto : (object)DBNull.Value;
 
             await cmd.ExecuteNonQueryAsync();
         }
@@ -61,7 +65,10 @@ namespace hotelproyecto.Data
                     Id = reader.GetInt32(0),
                     TareasCompletadas = reader.GetString(1),
                     NombreConserje = reader.GetString(2),
-                    FechaHora = reader.GetDateTime(3)
+                    FechaHora = reader.GetDateTime(3),
+                    HabitacionId = reader.GetInt32(4), // si lo incluyes en el SP
+                    // No puedes asignar NumHabitacion aquí porque LimpiezaHabitacion no tiene ese campo
+                    // Si quieres ese dato, sería en ViewModel o creando un nuevo modelo DTO
                 });
             }
             return lista;
@@ -86,7 +93,9 @@ namespace hotelproyecto.Data
                     TareasCompletadas = reader.GetString(1),
                     NombreConserje = reader.GetString(2),
                     Foto = reader.IsDBNull(3) ? null : (byte[])reader["Foto"],
-                    FechaHora = reader.GetDateTime(4)
+                    FechaHora = reader.GetDateTime(4),
+                    HabitacionId = reader.GetInt32(5)
+                    // Nuevamente, NumHabitacion se maneja en ViewModel o DTO
                 };
             }
             return null;
@@ -111,7 +120,8 @@ namespace hotelproyecto.Data
                 {
                     Id = reader.GetInt32(0),
                     TareasCompletadas = reader.GetString(1),
-                    FechaHora = reader.GetDateTime(2)
+                    FechaHora = reader.GetDateTime(2),
+                    HabitacionId = reader.GetInt32(3) // si agregas al SP
                 });
             }
             return lista;

@@ -26,6 +26,7 @@ namespace hotelproyecto.Data
             cmd.Parameters.AddWithValue("@NumCamas", habitacion.NumCamas);
             cmd.Parameters.AddWithValue("@Extras", habitacion.Extras ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@Comentarios", habitacion.Comentarios ?? (object)DBNull.Value);
+            // Estado se define por defecto en 1 (activo) dentro del SP
 
             await cmd.ExecuteNonQueryAsync();
         }
@@ -45,6 +46,7 @@ namespace hotelproyecto.Data
             cmd.Parameters.AddWithValue("@NumCamas", habitacion.NumCamas);
             cmd.Parameters.AddWithValue("@Extras", habitacion.Extras ?? (object)DBNull.Value);
             cmd.Parameters.AddWithValue("@Comentarios", habitacion.Comentarios ?? (object)DBNull.Value);
+            // Estado no se actualiza aquí, se modifica con sp_EstadoHabitacion
 
             await cmd.ExecuteNonQueryAsync();
         }
@@ -70,7 +72,8 @@ namespace hotelproyecto.Data
                     NumHabitacion = reader.GetInt32(3),
                     NumCamas = reader.GetInt32(4),
                     Extras = reader.IsDBNull(5) ? null : reader.GetString(5),
-                    Comentarios = reader.IsDBNull(6) ? null : reader.GetString(6)
+                    Comentarios = reader.IsDBNull(6) ? null : reader.GetString(6),
+                    Estado = reader.GetBoolean(7)
                 });
             }
             return lista;
@@ -97,12 +100,26 @@ namespace hotelproyecto.Data
                     NumHabitacion = reader.GetInt32(3),
                     NumCamas = reader.GetInt32(4),
                     Extras = reader.IsDBNull(5) ? null : reader.GetString(5),
-                    Comentarios = reader.IsDBNull(6) ? null : reader.GetString(6)
+                    Comentarios = reader.IsDBNull(6) ? null : reader.GetString(6),
+                    Estado = reader.GetBoolean(7)
                 };
             }
             return null;
         }
         #endregion
 
+        #region "CambiarEstado"
+        public async Task CambiarEstadoHabitacionAsync(int id, bool estado)
+        {
+            using var conexion = await _conexionDB.ObtenerConexionAsync();
+            using var cmd = new SqlCommand("sp_EstadoHabitacion", conexion);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Id", id);
+            cmd.Parameters.AddWithValue("@Estado", estado);
+
+            await cmd.ExecuteNonQueryAsync();
+        }
+        #endregion
     }
 }

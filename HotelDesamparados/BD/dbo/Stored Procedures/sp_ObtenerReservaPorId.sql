@@ -5,14 +5,16 @@ BEGIN
     SET NOCOUNT ON;
 
     SELECT 
-        IdReserva,
-        fechaInicio,
-        fechaFinal,
-        nombreReservante,
-        telefono,
-        correo,
-        numHabitacion
-    FROM dbo.Reservas
-    WHERE IdReserva = @IdReserva;
-END;
-
+        r.IdReserva,
+        r.FechaInicio,
+        r.FechaFinal,
+        r.Nombre,
+        r.Telefono,
+        r.Correo,
+        r.HabitacionId,
+        r.Estado,
+        h.NumHabitacion
+    FROM Reservas r
+    INNER JOIN Habitacion h ON r.HabitacionId = h.Id
+    WHERE r.IdReserva = @IdReserva;
+END

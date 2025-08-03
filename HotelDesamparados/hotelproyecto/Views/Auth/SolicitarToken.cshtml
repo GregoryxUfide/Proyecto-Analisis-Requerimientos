@@ -1,0 +1,45 @@
+﻿@model hotelproyecto.ViewModel.RecuperacionContrasenaViewModel
+
+@{
+    ViewData["Title"] = "Solicitar Recuperación de Contraseña";
+    Layout = "_Layout";
+}
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2>@ViewData["Title"]</h2>
+            <p>Ingresa tu correo para recibir el código de recuperación</p>
+        </div>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="login-alert">@ViewBag.Error</div>
+        }
+
+        <form asp-action="SolicitarToken" method="post" class="login-form">
+            <div class="form-group">
+                <label asp-for="Gmail" class="form-label">Correo Electrónico</label>
+                <div class="input-group">
+                    <input asp-for="Gmail" class="form-input" placeholder="tu@correo" />
+                </div>
+                <span asp-validation-for="Gmail" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="login-button">Enviar Código</button>
+
+            <div class="login-divider">
+                <span></span>
+            </div>
+
+            <p class="register-link">
+                <a asp-action="Login" asp-controller="Auth">¿Ya tienes el código? Inicia sesión</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+

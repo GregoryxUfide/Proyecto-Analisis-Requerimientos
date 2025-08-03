@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using hotelproyecto.Models;
 
 namespace hotelproyecto.ViewModel
 {
@@ -26,5 +27,14 @@ namespace hotelproyecto.ViewModel
 
         [Display(Name = "Fecha y Hora de Registro")]
         public DateTime FechaHora { get; set; } = DateTime.Now;
+
+        [Required(ErrorMessage = "Debe seleccionar una habitación.")]
+        [Display(Name = "Habitación")]
+        public int HabitacionId { get; set; }
+
+        // Campo para mostrar el número de habitación en vistas
+        [Display(Name = "Número de Habitación")]
+        public int NumHabitacion { get; set; }
+        public List<HabitacionViewModel> Habitaciones { get; set; } = new List<HabitacionViewModel>();
     }
 }

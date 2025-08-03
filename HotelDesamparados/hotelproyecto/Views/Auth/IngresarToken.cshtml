@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Recuperación de Contraseña";
+    
+    var usuarioId = ViewBag.UsuarioId;
+    var gmail = ViewBag.Gmail;
+}
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <h2>Recuperación de Contraseña</h2>
+            <p>Ingresa el código enviado a tu correo</p>
+        </div>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="login-alert">@ViewBag.Error</div>
+        }
+
+        <form asp-action="IngresarToken" method="post" class="login-form">
+            <input type="hidden" name="usuarioId" value="@usuarioId" />
+
+            <div class="form-group">
+                <label for="token" class="form-label">Código de Verificación</label>
+                <div class="input-group">
+                    <input type="text" class="form-input" name="token" placeholder="Ingresa el token" required />
+                </div>
+            </div>
+
+            <button type="submit" class="login-button">Validar Token</button>
+
+            <div class="login-divider">
+                <span></span>
+            </div>
+
+            <p class="register-link">
+                ¿No recibiste el código? <a asp-action="SolicitarToken" asp-controller="Auth">Solicitar de nuevo</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+

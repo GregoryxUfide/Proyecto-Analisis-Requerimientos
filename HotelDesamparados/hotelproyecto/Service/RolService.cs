@@ -105,6 +105,11 @@ namespace hotelproyecto.Services
                 .Select(r => MapearARolViewModel(r))
                 .ToList();
         }
+        public async Task<int?> ObtenerRolIdPorNombreAsync(string nombreRol)
+        {
+            var roles = await _rolData.ListarRolesAsync(); // o donde los obtengas
+            return roles.FirstOrDefault(r => r.Nombre.ToLower() == nombreRol.ToLower())?.Id;
+        }
 
     }
 }

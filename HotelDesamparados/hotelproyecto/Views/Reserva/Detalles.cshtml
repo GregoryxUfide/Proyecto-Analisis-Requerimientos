@@ -1,8 +1,7 @@
 ﻿@model hotelproyecto.ViewModel.ReservaViewModel
-
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    ViewData["Title"] = "Detalles de Reserva";
+    ViewData["Title"] = "Detalles de la Reserva";
 }
 
 <div class="admin-card">
@@ -11,41 +10,55 @@
     </div>
 
     <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-3">ID Reserva:</dt>
-            <dd class="col-sm-9">@Model.IdReserva</dd>
+        <div class="product-details">
+            <div class="detail-item">
+                <span class="detail-label">Fecha Inicio:</span>
+                <span class="detail-value">@Model.FechaInicio.ToString("g")</span>
+            </div>
 
-            <dt class="col-sm-3">Fecha Inicio:</dt>
-            <dd class="col-sm-9">@Model.FechaInicio.ToString("dd/MM/yyyy")</dd>
+            <div class="detail-item">
+                <span class="detail-label">Fecha Final:</span>
+                <span class="detail-value">@Model.FechaFinal.ToString("g")</span>
+            </div>
 
-            <dt class="col-sm-3">Fecha Final:</dt>
-            <dd class="col-sm-9">@Model.FechaFinal.ToString("dd/MM/yyyy")</dd>
+            <div class="detail-item">
+                <span class="detail-label">Nombre:</span>
+                <span class="detail-value">@Model.Nombre</span>
+            </div>
 
-            <dt class="col-sm-3">Nombre Reservante:</dt>
-            <dd class="col-sm-9">@Model.NombreReservante</dd>
+            <div class="detail-item">
+                <span class="detail-label">Teléfono:</span>
+                <span class="detail-value">@Model.Telefono</span>
+            </div>
 
-            <dt class="col-sm-3">Teléfono:</dt>
-            <dd class="col-sm-9">
-                @if (Model.Telefono.ToString().Length == 8)
-                {
-                    @($"{Model.Telefono.ToString().Substring(0, 4)}-{Model.Telefono.ToString().Substring(4)}")
-                }
-                else
-                {
-                    @Model.Telefono
-                }
-            </dd>
+            <div class="detail-item">
+                <span class="detail-label">Correo:</span>
+                <span class="detail-value">@Model.Correo</span>
+            </div>
 
-            <dt class="col-sm-3">Correo Electrónico:</dt>
-            <dd class="col-sm-9">@(!string.IsNullOrEmpty(Model.Correo) ? Model.Correo : "N/A")</dd>
+            <div class="detail-item">
+                <span class="detail-label">Habitación:</span>
+                <span class="detail-value">
+                    @Model.Habitaciones?.FirstOrDefault(h => h.Value == Model.HabitacionId.ToString())?.Text
+            </div>
 
-            <dt class="col-sm-3">Número de Habitación:</dt>
-            <dd class="col-sm-9">@Model.NumHabitacion</dd>
-        </dl>
-    </div>
+            <div class="detail-item">
+                <span class="detail-label">Estado:</span>
+                <span class="detail-value">
+                    <span class="status-badge @(Model.Estado ? "active" : "inactive")">
+                        @(Model.Estado ? "Reserva Activa" : "Finalizó Reserva")
+                    </span>
+                </span>
+            </div>
+        </div>
 
-    <div class="mt-4">
-        <a asp-action="Index" class="btn btn-outline-primary">Volver al Listado</a>
-        <a asp-action="Editar" asp-route-id="@Model.IdReserva" class="btn btn-warning ms-2">Editar</a>
+        <div class="detail-actions">
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Volver al Listado
+            </a>
+            <a asp-action="Editar" asp-route-id="@Model.IdReserva" class="btn btn-primary">
+                Editar Reserva
+            </a>
+        </div>
     </div>
 </div>

@@ -111,7 +111,6 @@
     <Build Include="dbo\Tables\Reservas.sql" />
     <Build Include="dbo\Stored Procedures\sp_ActualizarReserva.sql" />
     <Build Include="dbo\Stored Procedures\sp_CrearReserva.sql" />
-    <Build Include="dbo\Stored Procedures\sp_EliminarReserva.sql" />
     <Build Include="dbo\Stored Procedures\sp_ListarReservaPorFecha.sql" />
     <Build Include="dbo\Stored Procedures\sp_ListarReservas.sql" />
     <Build Include="dbo\Stored Procedures\sp_ObtenerReservaPorId.sql" />
@@ -125,5 +124,13 @@
     <Build Include="dbo\Stored Procedures\sp_FiltrarContabilidadPorFecha.sql" />
     <Build Include="dbo\Stored Procedures\sp_CrearContabilidad.sql" />
     <Build Include="dbo\Stored Procedures\sp_ActualizarContabilidad.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ObtenerPuntoVentaPorId.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ListarPuntoVenta.sql" />
+    <Build Include="dbo\Stored Procedures\sp_CrearPuntoVenta.sql" />
+    <Build Include="dbo\Stored Procedures\sp_ActualizarPuntoVenta.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EstadoHabitacion.sql" />
+    <Build Include="dbo\Stored Procedures\sp_CambiarEstadoReserva.sql" />
+    <Build Include="dbo\Tables\PuntoVenta.sql" />
+    <Build Include="dbo\Stored Procedures\sp_EstadoReserva.sql" />
   </ItemGroup>
 </Project>

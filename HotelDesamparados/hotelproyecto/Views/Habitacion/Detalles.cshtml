@@ -40,8 +40,23 @@
                 <span class="detail-label">Comentarios:</span>
                 <span class="detail-value">@(string.IsNullOrEmpty(Model.Comentarios) ? "No hay comentarios" : Model.Comentarios)</span>
             </div>
-        </div>
-        
+            <div class="detail-item">
+                <span class="detail-label">Estado de Limpieza:</span>
+                <span class="detail-value">
+                    <span class="status-badge @(Model.Estado ? "active" : "inactive")">
+                        @if (Model.Estado)
+                        {
+                            <i class="bi bi-check-circle"></i>
+                        }
+                        else
+                        {
+                            <i class="bi bi-exclamation-circle"></i>
+                        }
+                        @(Model.Estado ? "Limpia" : "Sucia")
+                    </span>
+                </span>
+            </div>
+        </div>     
         <div class="detail-actions">
             <a asp-action="Index" class="btn btn-secondary">
                 <i class="bi bi-arrow-left"></i> Volver al Listado

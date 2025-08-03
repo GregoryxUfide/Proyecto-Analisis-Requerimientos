@@ -26,7 +26,8 @@
                     <th>Número</th>
                     <th>Capacidad</th>
                     <th>Precio</th>
-                    <th>Camas</th>                    
+                    <th>Camas</th>
+					<th>Estado</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -35,24 +36,43 @@
                 {
                     <tr>
                         <td data-label="Número">@habitacion.NumHabitacion</td>
+
                         <td data-label="Capacidad">
                             <span class="room-capacity">
                                 <i class="bi bi-people"></i> @habitacion.Capacidad
                             </span>
                         </td>
-                        <td data-label="Precio" class="text-nowrap">@habitacion.Precio.ToString("C")</td>
+
+                        <td data-label="Precio" class="text-nowrap">
+                            @habitacion.Precio.ToString("C")
+                        </td>
+
                         <td data-label="Camas">
                             <span class="room-beds">
                                 <i class="bi bi-badge-ad"></i> @habitacion.NumCamas
                             </span>
                         </td>
+
+                        <td data-label="Estado">
+                            <span class="status-badge @(habitacion.Estado ? "active" : "inactive")">
+                                @(habitacion.Estado ? "Limpia" : "Sucia")
+                            </span>
+                        </td>
+
                         <td data-label="Acciones" class="actions">
+                            <a asp-action="Detalles" asp-route-id="@habitacion.Id" class="btn-action details">
+                                 Detalles
+                            </a>
                             <a asp-action="Editar" asp-route-id="@habitacion.Id" class="btn-action edit">
                                 Editar
                             </a>
-                            <a asp-action="Detalles" asp-route-id="@habitacion.Id" class="btn-action details">
-                                <i class="bi bi-info-circle"></i> Detalles
-                            </a>
+                            <form asp-action="CambiarEstado" method="post" style="display:inline">
+                                <input type="hidden" name="id" value="@habitacion.Id" />
+                                <input type="hidden" name="estado" value="@(habitacion.Estado ? "false" : "true")" />
+                                <button type="submit" class="btn-action @(habitacion.Estado ? "deactivate" : "activate")">
+                                    @(habitacion.Estado ? "Marcar como Sucia" : "Marcar como Limpia")
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 }

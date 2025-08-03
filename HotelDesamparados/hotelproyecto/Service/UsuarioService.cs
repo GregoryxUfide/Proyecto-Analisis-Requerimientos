@@ -144,6 +144,6 @@ namespace hotelproyecto.Services
             return await _usuarioData.ExisteCorreoAsync(gmail);
         }
         #endregion
-        
-        }
+
     }
+}
