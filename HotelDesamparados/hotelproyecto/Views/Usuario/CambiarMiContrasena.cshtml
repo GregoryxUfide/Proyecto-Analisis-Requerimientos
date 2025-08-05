@@ -1,7 +1,5 @@
-﻿@model hotelproyecto.ViewModel.RecuperacionContrasenaViewModel
-
-@{
-    ViewData["Title"] = "Nueva Contraseña";
+﻿@{
+    ViewData["Title"] = "Cambiar Contraseña";
     Layout = "_Layout";
 }
 
@@ -12,20 +10,15 @@
             <p>Establece tu nueva contraseña para continuar</p>
         </div>
 
-        @if (ViewBag.Error != null)
+        @if (TempData["Mensaje"] != null)
         {
-            <div class="auth-alert">@ViewBag.Error</div>
+            <div class="auth-alert">@TempData["Mensaje"]</div>
         }
 
-        <form asp-action="NuevaContrasena" method="post" class="auth-form">
-            <input type="hidden" name="usuarioId" value="@ViewBag.UsuarioId" />
-            <input type="hidden" name="tokenId" value="@ViewBag.TokenId" />
-
+        <form asp-action="CambiarMiContrasena" method="post" class="auth-form">
             <div class="form-group">
-                <label asp-for="NuevaContrasena" class="form-label">Nueva Contraseña</label>
-                <input asp-for="NuevaContrasena" type="password" class="form-input" required minlength="6" placeholder="••••••••" />
-                <span asp-validation-for="NuevaContrasena" class="text-danger"></span>
-
+                <label for="nuevaContrasena" class="form-label">Nueva Contraseña</label>
+                <input type="password" name="nuevaContrasena" class="form-input" required minlength="6" placeholder="••••••••" />
                 <div class="password-strength">
                     <div class="strength-bar-container">
                         <div class="strength-bar"></div>
@@ -35,20 +28,23 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="ConfirmarContrasena" class="form-label">Confirmar Contraseña</label>
-                <input asp-for="ConfirmarContrasena" type="password" class="form-input" required minlength="6" placeholder="••••••••" />
-                <span asp-validation-for="ConfirmarContrasena" class="text-danger"></span>
+                <label for="confirmarContrasena" class="form-label">Confirmar Contraseña</label>
+                <input type="password" name="confirmarContrasena" class="form-input" required minlength="6" placeholder="••••••••" />
             </div>
 
-            <button type="submit" class="auth-button">Actualizar Contraseña</button>
+            <div class="form-actions">
+                <button type="submit" class="auth-button">Actualizar Contraseña</button>
+                <a class="auth-button" href="@Url.Action("EditarMiPerfil", "Usuario")">Volver</a>
+            </div>
         </form>
+
     </div>
 </div>
 
 @section Scripts {
     <script>
         // Validación de fuerza de contraseña
-        document.querySelector('input[name="NuevaContrasena"]').addEventListener('input', function () {
+        document.querySelector('input[name="nuevaContrasena"]').addEventListener('input', function () {
             const strengthBar = document.querySelector('.strength-bar');
             const strengthText = document.querySelector('.strength-text');
             const password = this.value;

@@ -20,10 +20,25 @@ namespace hotelproyecto.Controllers
             ViewBag.WhatsApp = "https://wa.me/tunumerowhatsapp";
             return View();
         }
+
         public IActionResult Privacy()
         {
             return View();
         }
+
+        public IActionResult Reserva()
+        {
+            ViewBag.Telefono = "+1 (234) 567-890";
+            ViewBag.Correo = "reservas@granhoteldeseado.com";
+            ViewBag.WhatsApp = "1234567890"; // Número sin símbolos ni espacios para enlace WhatsApp
+
+            return View();
+        }
+        public IActionResult AccesoDenegado()
+        {
+            return View();
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,11 +1,15 @@
 using hotelproyecto.Data;
+using hotelproyecto.Filters;
 using hotelproyecto.Service;
 using hotelproyecto.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<PermisoAttribute>();
+});
 
 // Registro de dependencias de ADO.NET
 builder.Services.AddScoped<ConexionDB>();

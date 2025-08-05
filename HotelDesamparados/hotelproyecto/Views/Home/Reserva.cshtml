@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Reserva";
+}
+<div class="reserva-container">
+    <header class="reserva-header">
+        <h1>Reserva <span>tu experiencia</span></h1>
+        <p>Disfruta de una estancia inolvidable en Gran Hotel Deseado. Para garantizar tu reserva, contáctanos a través de nuestros canales disponibles.</p>
+    </header>
+
+    <div class="reserva-grid">
+        <!-- Sección de información -->
+        <div class="info-card">
+            <h2>Detalles de reserva</h2>
+
+            <div class="info-feature">
+                <div class="info-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="info-content">
+                    <h3>Política de reservas</h3>
+                    <p>Se requiere un depósito del 30% para confirmar tu reserva. El saldo restante se pagará al momento del check-in.</p>
+                </div>
+            </div>
+
+            <div class="info-feature">
+                <div class="info-icon">
+                    <i class="fas fa-concierge-bell"></i>
+                </div>
+                <div class="info-content">
+                    <h3>Servicios incluidos</h3>
+                    <p>Todas nuestras habitaciones incluyen desayuno gourmet, acceso ilimitado al spa y conexión WiFi de alta velocidad.</p>
+                </div>
+            </div>
+
+            <div class="info-feature">
+                <div class="info-icon">
+                    <i class="fas fa-bed"></i>
+                </div>
+                <div class="info-content">
+                    <h3>Tipos de habitación</h3>
+                    <p>Desde habitaciones clásicas hasta suites premium con vista al mar, diseñadas para tu máximo confort.</p>
+                </div>
+            </div>
+
+            <div class="info-feature">
+                <div class="info-icon">
+                    <i class="fas fa-exchange-alt"></i>
+                </div>
+                <div class="info-content">
+                    <h3>Política de cancelación</h3>
+                    <p>Cancelaciones sin costo hasta 48 horas antes. Cancelaciones tardías incurren en cargo del depósito.</p>
+                </div>
+            </div>
+
+            <div class="payment-section">
+                <h3><i class="fas fa-credit-card"></i> Métodos de pago</h3>
+                <div class="payment-methods">
+                    <div class="payment-method">
+                        <img src="https://cdn-icons-png.flaticon.com/512/196/196578.png" alt="Visa">
+                        <span>Visa</span>
+                    </div>
+                    <div class="payment-method">
+                        <img src="https://cdn-icons-png.flaticon.com/512/196/196561.png" alt="Mastercard">
+                        <span>Mastercard</span>
+                    </div>
+                    <div class="payment-method">
+                        <img src="https://www.lateja.cr/resizer/FNmrXFK_vKZLWL2BX_Ej5Lh0e9k=/arc-anglerfish-arc2-prod-gruponacion/public/3YF3MFDF5JAX5MT3RA4QO7VPEU.png" alt="Sinpe Movil">
+                        <span>Sinpe Movil</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de contacto -->
+        <div class="contact-panel">
+            <h2>Contacto directo</h2>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <div class="contact-details">
+                    <h3>Llamada telefónica</h3>
+                    <a href="tel:@ViewBag.Telefono">@ViewBag.Telefono</a>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="contact-details">
+                    <h3>Correo electrónico</h3>
+                    <a href="mailto:@ViewBag.Correo">@ViewBag.Correo</a>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="contact-details">
+                    <h3>WhatsApp</h3>
+                    <p>Respuesta inmediata</p>
+                </div>
+            </div>
+
+            <a href="https://wa.me/@ViewBag.WhatsApp" class="whatsapp-cta" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-whatsapp"></i> Enviar mensaje
+            </a>
+            <div class="hours-section">
+                <h3>Horario de atención</h3>
+                <ul class="hours-list">
+                    <li><span>Lunes - Viernes:</span> <span>8:00 - 20:00</span></li>
+                    <li><span>Sábados:</span> <span>9:00 - 18:00</span></li>
+                    <li><span>Domingos:</span> <span>9:00 - 14:00</span></li>
+                </ul>
+            </div>
+
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256836171!2d-73.9878446845937!3d40.75798597932683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQ1JzI4LjgiTiA3M8KwNTknMTQuMiJX!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

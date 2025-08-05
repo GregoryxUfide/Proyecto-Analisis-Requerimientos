@@ -4,7 +4,7 @@ using hotelproyecto.ViewModel;
 
 namespace hotelproyecto.Controllers
 {    
-    public class ProductoController : Controller
+    public class ProductoController :  Controller
     {
         private readonly ProductoService _productoService;
 

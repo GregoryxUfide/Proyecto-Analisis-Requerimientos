@@ -160,6 +160,83 @@ namespace hotelproyecto.Controllers
             await _usuarioService.CambiarEstadoUsuarioAsync(id, estado);
             return RedirectToAction("Index");
         }
+        #endregion
+
+        #region"EditarPerfil"
+        [HttpGet]
+        public async Task<IActionResult> EditarMiPerfil()
+        {
+            var usuarioId = HttpContext.Session.GetInt32("UsuarioID");
+            if (usuarioId == null)
+                return RedirectToAction("Login", "Auth");
+
+            var vm = await _usuarioService.ObtenerUsuarioViewModelPorIdAsync(usuarioId.Value);
+            if (vm == null) return NotFound();
+            
+            return View("EditarMiPerfil", vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditarMiPerfil(UsuarioViewModel vm)
+        {
+            var usuarioId = HttpContext.Session.GetInt32("UsuarioID");
+            if (usuarioId == null || usuarioId != vm.Id)
+                return Unauthorized();
+
+            if (!ModelState.IsValid)
+                return View("EditarMiPerfil", vm);
+            
+            var original = await _usuarioService.ObtenerUsuarioViewModelPorIdAsync(vm.Id);
+            vm.Estado = original.Estado;
+            vm.RolId = original.RolId;
+
+            await _usuarioService.ActualizarUsuarioAsync(vm);
+            TempData["Mensaje"] = "Perfil actualizado correctamente";
+
+            return RedirectToAction("EditarMiPerfil");
+        }
+        #endregion
+
+        #region "Cambiar mi contraseña"
+        [HttpGet]
+        public async Task<IActionResult> CambiarMiContrasena()
+        {
+            var usuarioId = HttpContext.Session.GetInt32("UsuarioID");
+            if (usuarioId == null)
+                return RedirectToAction("Login", "Auth");
+            ViewBag.UsuarioId = usuarioId.Value;
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CambiarMiContrasena(string nuevaContrasena, string confirmarContrasena)
+        {
+            var usuarioId = HttpContext.Session.GetInt32("UsuarioID");
+            if (usuarioId == null)
+                return Unauthorized();
+
+            var regex = new System.Text.RegularExpressions.Regex(@"^(?=.*[!@#$%^&*(),.?""{}|<>]).{6,}$");
+
+            if (string.IsNullOrWhiteSpace(nuevaContrasena) || !regex.IsMatch(nuevaContrasena))
+            {
+                ModelState.AddModelError("", "La contraseña debe tener al menos 6 caracteres y un carácter especial.");
+            }
+            else if (nuevaContrasena != confirmarContrasena)
+            {
+                ModelState.AddModelError("", "Las contraseñas no coinciden.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.UsuarioId = usuarioId.Value;
+                return View("CambiarMiContrasena");
+            }
+            
+            var hash = BCrypt.Net.BCrypt.HashPassword(nuevaContrasena);
+            await _usuarioService.ActualizarContrasenaAsync(usuarioId.Value, hash);
+
+            TempData["Mensaje"] = "Contraseña actualizada correctamente.";
+            return RedirectToAction("CambiarMiContrasena");
+        }
+        #endregion
     }
 }
-#endregion
+

@@ -1,46 +1,56 @@
-﻿@model hotelproyecto.ViewModel.RecuperacionContrasenaViewModel
-
-@{
-    ViewData["Title"] = "Nueva Contraseña";
-    Layout = "_Layout";
+﻿﻿@{
+Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+ViewData["Title"] = "Cambiar Contraseña";
 }
 
-<div class="auth-container">
-    <div class="auth-card">
-        <div class="auth-header">
-            <h2>@ViewData["Title"]</h2>
-            <p>Establece tu nueva contraseña para continuar</p>
-        </div>
+<div class="admin-card">
+    <div class="card-header">
+        <h2>@ViewData["Title"]</h2>
+    </div>
 
-        @if (ViewBag.Error != null)
-        {
-            <div class="auth-alert">@ViewBag.Error</div>
-        }
-
-        <form asp-action="NuevaContrasena" method="post" class="auth-form">
-            <input type="hidden" name="usuarioId" value="@ViewBag.UsuarioId" />
-            <input type="hidden" name="tokenId" value="@ViewBag.TokenId" />
+    <div class="card-body">
+        <form asp-action="CambiarContrasena" method="post" class="password-form">
+            <input type="hidden" name="id" value="@ViewBag.UsuarioId" />
 
             <div class="form-group">
-                <label asp-for="NuevaContrasena" class="form-label">Nueva Contraseña</label>
-                <input asp-for="NuevaContrasena" type="password" class="form-input" required minlength="6" placeholder="••••••••" />
-                <span asp-validation-for="NuevaContrasena" class="text-danger"></span>
-
-                <div class="password-strength">
-                    <div class="strength-bar-container">
-                        <div class="strength-bar"></div>
-                    </div>
-                    <p class="strength-text">Contraseña débil</p>
+                <label class="form-label">Nueva Contraseña</label>
+                <div class="password-input">
+                    <input type="password" name="nuevaContrasena" class="form-control"
+                           placeholder="Ingrese la nueva contraseña" required />
                 </div>
             </div>
 
             <div class="form-group">
-                <label asp-for="ConfirmarContrasena" class="form-label">Confirmar Contraseña</label>
-                <input asp-for="ConfirmarContrasena" type="password" class="form-input" required minlength="6" placeholder="••••••••" />
-                <span asp-validation-for="ConfirmarContrasena" class="text-danger"></span>
+                <label class="form-label">Confirmar Contraseña</label>
+                <div class="password-input">
+                    <input type="password" name="confirmarContrasena" class="form-control"
+                           placeholder="Confirme la nueva contraseña" required />
+                </div>
             </div>
 
-            <button type="submit" class="auth-button">Actualizar Contraseña</button>
+            <div class="password-strength">
+                <div class="strength-bar"></div>
+                <div class="strength-text">Seguridad de la contraseña</div>
+            </div>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p class="mb-1"><i class="bi bi-exclamation-circle"></i> @error.ErrorMessage</p>
+                    }
+                </div>
+            }
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-check-circle"></i> Guardar Cambios
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+            </div>
         </form>
     </div>
 </div>
@@ -48,21 +58,24 @@
 @section Scripts {
     <script>
         // Validación de fuerza de contraseña
-        document.querySelector('input[name="NuevaContrasena"]').addEventListener('input', function () {
+        document.querySelector('input[name="nuevaContrasena"]').addEventListener('input', function() {
             const strengthBar = document.querySelector('.strength-bar');
             const strengthText = document.querySelector('.strength-text');
             const password = this.value;
             let strength = 0;
 
+            // Validaciones de complejidad
             if (password.length > 0) strength += 1;
             if (password.length >= 8) strength += 1;
             if (/[A-Z]/.test(password)) strength += 1;
             if (/[0-9]/.test(password)) strength += 1;
             if (/[^A-Za-z0-9]/.test(password)) strength += 1;
 
+            // Actualizar barra y texto
             const width = (strength / 5) * 100;
             strengthBar.style.width = width + '%';
 
+            // Cambiar colores según fuerza
             if (strength <= 2) {
                 strengthBar.style.backgroundColor = '#e74c3c';
                 strengthText.textContent = 'Contraseña débil';
@@ -75,6 +88,4 @@
             }
         });
     </script>
-
-    @await Html.PartialAsync("_ValidationScriptsPartial")
 }
