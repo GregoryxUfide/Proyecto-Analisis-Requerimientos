@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{1e659509-84d2-483f-b9b1-3bae42e2bd92}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -132,5 +132,8 @@
     <Build Include="dbo\Stored Procedures\sp_CambiarEstadoReserva.sql" />
     <Build Include="dbo\Tables\PuntoVenta.sql" />
     <Build Include="dbo\Stored Procedures\sp_EstadoReserva.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="BD.publish.xml" />
   </ItemGroup>
 </Project>
