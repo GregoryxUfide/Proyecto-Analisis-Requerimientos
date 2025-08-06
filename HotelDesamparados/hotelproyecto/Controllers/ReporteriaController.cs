@@ -50,8 +50,44 @@ namespace hotelproyecto.Controllers
                 var pdfBytes = _service.GenerarPdfDeRoles(roles);
                 return File(pdfBytes, "application/pdf", "Reporte_Roles.pdf");
             }
+            if (nombreTabla == "Contabilidad")
+            {
+                var contabilidad = await _service.ObtenerDatosContabilidadAsync();
+                var pdfBytes = _service.GenerarPdfDeContabilidad(contabilidad);
+                return File(pdfBytes, "application/pdf", "Reporte_Contabilidad.pdf");
+            }
+
+            if (nombreTabla == "Reserva")
+            {
+                var reservas = await _service.ObtenerDatosReservasAsync(); 
+                var pdfBytes = _service.GenerarPdfDeReservas(reservas); 
+                return File(pdfBytes, "application/pdf", "Reporte_Reserva.pdf");
+            }
+
+
+            if (nombreTabla == "Empleado")
+            {
+                var empleados = await _service.ObtenerDatosEmpleadosAsync();
+                var pdfBytes = _service.GenerarPdfDeEmpleados(empleados);
+                return File(pdfBytes, "application/pdf", "Reporte_Empleados.pdf");
+            }
+
+            if (nombreTabla == "Habitacion")
+            {
+                var habitaciones = await _service.ObtenerDatosHabitacionesAsync();
+                var pdfBytes = _service.GenerarPdfDeHabitaciones(habitaciones);
+                return File(pdfBytes, "application/pdf", "Reporte_Habitaciones.pdf");
+            }
+
+            if (nombreTabla == "PuntoVenta")
+            {
+                var puntoVenta = await _service.ObtenerDatosPuntoVentaAsync();
+                var pdfBytes = _service.GenerarPdfDePuntoVenta(puntoVenta);
+                return File(pdfBytes, "application/pdf", "Reporte_PuntoVenta.pdf");
+            }
 
             return RedirectToAction("Index");
         }
     }
 }
+
