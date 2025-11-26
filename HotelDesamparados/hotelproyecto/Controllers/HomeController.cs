@@ -15,9 +15,6 @@ namespace hotelproyecto.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.Facebook = "https://facebook.com/tuperfil";
-            ViewBag.Instagram = "https://www.instagram.com/granhotel_desamparados?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
-            ViewBag.WhatsApp = "https://wa.me/tunumerowhatsapp";
             return View();
         }
 
@@ -28,9 +25,9 @@ namespace hotelproyecto.Controllers
 
         public IActionResult Reserva()
         {
-            ViewBag.Telefono = "+1 (234) 567-890";
-            ViewBag.Correo = "reservas@granhoteldeseado.com";
-            ViewBag.WhatsApp = "1234567890"; // Número sin símbolos ni espacios para enlace WhatsApp
+            ViewBag.Telefono = "+(506)8646-7728";
+            ViewBag.Correo = "recuperacionhotelproy@gmail.com";
+            ViewBag.WhatsApp = "https://wa.me/50686467728";
 
             return View();
         }

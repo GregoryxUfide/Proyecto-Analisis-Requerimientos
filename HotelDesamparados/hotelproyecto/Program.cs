@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add<PermisoAttribute>();
+    options.Filters.Add<FooterFilter>();
 });
 
 // Registro de dependencias de ADO.NET
@@ -40,7 +41,8 @@ builder.Services.AddScoped<LimpiezaHabitacionService>();
 builder.Services.AddScoped<ReservaService>();
 builder.Services.AddScoped<ContabilidadService>();
 builder.Services.AddScoped<ReporteriaService>();
-builder.Services.AddScoped<PuntoVentaService>();    
+builder.Services.AddScoped<PuntoVentaService>();
+builder.Services.AddScoped<FooterFilter>();
 
 // Tiempo de sesión y autenticación
 builder.Services.AddSession(options =>
